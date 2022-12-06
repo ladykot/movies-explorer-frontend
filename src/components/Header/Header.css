@@ -14,24 +14,30 @@
 .header__links {
     display: flex;
     list-style: none;
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
     margin: 0;
 }
 
-.header__link-item {
+.header__link {
     text-decoration: none;
-    padding-left: 30px;
     color: black;
-    width: 76px;
-    height: auto;
-    
 }
 
-.header__link_login {
+.header__link-item {
+    display: flex;
+    list-style: none;
+    margin-left: 30px;
+    color: black;
+    width: 76px;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__link-item_login {
     text-align: center;
     background: rgba(43, 224, 128, 1);
+    border-radius: 3px;
 }

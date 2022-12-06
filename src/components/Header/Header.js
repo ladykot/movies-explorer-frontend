@@ -10,15 +10,14 @@ function Header() {
       
         <ul className="header__links">
           <li className="header__link-item">
-          
-            <Link to="/signup" className="header__link">
-              Регистрация
-            </Link>
+              <Link to="/signup" className="header__link">
+                Регистрация
+              </Link>
           </li>
-          <li className="header__link-item">
-            <Link to="/signin" className="header__link header__link_login">
-              Войти
-            </Link>
+          <li className="header__link-item header__link-item_login">
+              <Link to="/signin" className="header__link">
+                Войти
+              </Link>
           </li>
         </ul>
 
