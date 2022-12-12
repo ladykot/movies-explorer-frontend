@@ -1,0 +1,42 @@
+.about-me {
+    padding: 70px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 40px;
+}
+
+.about-me__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.about-me__pic {
+    width: 100%;
+}
+
+.section-title {
+    padding-bottom: 20px;
+}
+
+.section-subtitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.section-text {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0;
+    padding-top: 20pх;
+}
+
+.about-me__link {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+}

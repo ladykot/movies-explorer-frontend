@@ -1,0 +1,79 @@
+.about-project {
+    padding: 70px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.section-name {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.04em;
+    height: 51px;
+    border-bottom-style: solid;
+    border-width: 1px;
+    margin: 0;
+}
+
+.two-columns {
+    display: flex;
+    gap: 56px;
+    flex-direction: column;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+}
+
+.two-columns__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding-bottom: 16px;
+}
+
+.two-columns__text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0;
+}
+
+.about-project__progress {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 100px 184px;
+    grid-template-rows: 35px 35px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+}
+
+.about-project__progress-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-project__progress-item:nth-child(1) {
+    background-color: #2BE080;
+    color: black;
+}
+
+.about-project__progress-item:nth-child(2) {
+    background-color: #F2F2F2;
+    color: black;
+}
+
+.about-project__progress-item:nth-child(3) {
+    color: #A0A0A0;
+}
+
+.about-project__progress-item:nth-child(4) {
+    color: #A0A0A0;
+}

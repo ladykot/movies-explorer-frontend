@@ -1,4 +1,5 @@
 import React from 'react';
+import './AboutProject.css';
 
 function AboutProject() {
   return (
@@ -26,15 +27,16 @@ function AboutProject() {
         </div>
       </div>
 
-      <div className='about-project__progress'>
-        <div className='about-project__progress-item'>1 неделя</div>
-        <div className='about-project__progress-item'>4 недели</div>
+      <div className="about-project__progress">
+        <div className="about-project__progress-item">
+          1 неделя
+        </div>
+        <div className="about-project__progress-item">
+          4 недели
+        </div>
+        <div className="about-project__progress-item">Back-end</div>
+        <div className="about-project__progress-item">Front-end</div>
       </div>
-      <div className='about-project__progress'>
-        <div className='about-project__progress-item'>Back-end</div>
-        <div className='about-project__progress-item'>Front-end</div>
-      </div>
-
     </section>
   );
 }
