@@ -40,4 +40,37 @@
     line-height: 15px;
     color: #A0A0A0;
     padding-top: 30px;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .footer {
+        display: grid;
+        padding: 90px 30px 20px;
+    }
+
+    .footer__description {
+        justify-content: center;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    .footer__list {
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 20px 0 0;
+    }
+
+    .footer__copyright {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        text-align: left;
+        font-size: 13px;
+        line-height: 16px;
+        color: black;
+        padding-top: 20px;
+    }
 }

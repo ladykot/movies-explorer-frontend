@@ -1,13 +1,15 @@
 import React from 'react';
 import './Techs.css';
+import SectionName from 'components/SectionName/SectionName';
+
 
 function Techs() {
   return (
     <section className="techs">
-      <p className="section-name">Технологии</p>
-      <div className='title-group'>
-        <h2 className="section-title">7 технологий</h2>
-        <p className="section-subtitle">
+      <SectionName name='Технологии' />
+      <div className='techs-group'>
+        <h2 className="techs__title">7 технологий</h2>
+        <p className="techs__subtitle">
           На курсе веб-разработки мы освоили технологии, которые применили в
           дипломном проекте.
         </p>
