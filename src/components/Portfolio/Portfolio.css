@@ -19,6 +19,7 @@
     flex-direction: column;
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .portfolio__item {
@@ -50,6 +51,8 @@
 @media screen and (min-width: 768px) {
     .portfolio__title {
         font-size: 18px;
+        padding: 24px 0 30px;
+        padding-bottom: 30px;
     }
 
     .portfolio__item-text {
@@ -60,4 +63,12 @@
     .portfolio__item {
         padding-bottom: 19px;
     }
+}
+
+@media screen and (min-width: 1280px) {
+    .portfolio {
+        /* padding-top: 34px; */
+    }
+
+    
 }

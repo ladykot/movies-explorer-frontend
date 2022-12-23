@@ -38,3 +38,9 @@
         line-height: 52px;
     }
 }
+
+@media screen and (min-width: 1280px) {
+    .promo {
+        padding: 20px 40px;
+    }
+}

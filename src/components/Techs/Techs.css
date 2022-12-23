@@ -78,7 +78,27 @@
     .techs__list {
         display: flex;
     }
+}
 
+@media screen and (min-width: 768px) {
+    .techs {
+        padding: 100px 70px;
+        gap: 90px;
+    }
 
+    .techs__subtitle {
+        font-size: 14px;
+        line-height: 20px;
+    }
 
+}
+
+@media screen and (min-width: 1280px) {
+    .techs__list-item {
+        width: 90px;
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    
 }

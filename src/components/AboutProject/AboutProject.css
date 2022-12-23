@@ -71,6 +71,13 @@
     .two-columns {
         flex-direction: row;
         gap: 40px;
+        margin: 0;
+    }
+
+    .two-columns__item {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
     }
 
     .two-columns__title {
@@ -79,4 +86,33 @@
         line-height: 24px;
         letter-spacing: -0.04em;
     }
+}
+
+@media screen and (min-width: 1280px) {
+    .about-project {
+        padding: 90px 70px 110px;
+    }
+
+    .two-columns__title {
+        font-size: 20px;
+        line-height: 24px;
+        padding-bottom: 26px;
+    }
+
+    .about-project__progress {
+        padding-top: 40px;
+        grid-template-columns: 228px auto;
+        grid-template-rows: 36px 36px;
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .about-project__progress-item:nth-child(4) {
+        padding-top: 14px;
+    }
+
+    .about-project__progress-item:nth-child(3) {
+        padding-top: 14px;
+    }
+
 }

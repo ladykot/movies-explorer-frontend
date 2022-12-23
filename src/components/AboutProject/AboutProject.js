@@ -26,7 +26,6 @@ function AboutProject() {
             text="У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было
             соблюдать, чтобы успешно защититься."
           />
-          <p className="two-columns__text"></p>
         </div>
       </div>
 

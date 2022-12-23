@@ -31,8 +31,21 @@
 
 @media screen and (min-width: 768px) {
     .promo__navigation {
-        display: flex;
         gap: 10px;
+        grid-template-columns: repeat(3, 96px);
         padding-bottom: 30px;
+    }
+
+    .promo__navigation-item {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .promo__navigation-item {
+        min-height: 36px;
+        
     }
 }
