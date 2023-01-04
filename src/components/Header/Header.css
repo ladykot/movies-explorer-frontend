@@ -54,11 +54,13 @@
 @media screen and (min-width: 320px) {
     .header__links-movies {
         display: none;
-        /* background-image: url(../../images/icon__COLOR_icon-main.svg); */
     }
 }
 
 @media screen and (min-width: 768px) {
+    .header {
+        padding: 18px 30px;
+    }
     .header__links {
         font-size: 12px;
         line-height: 16px;

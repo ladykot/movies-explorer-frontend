@@ -4,7 +4,10 @@ import Form from 'components/Form/Form';
 function Register() {
   return (
     <>
-      <Form />
+      <Form 
+      title="Добро пожаловать!"
+      buttonText='Зарегистрироваться'
+      />
     </>
   );
 }

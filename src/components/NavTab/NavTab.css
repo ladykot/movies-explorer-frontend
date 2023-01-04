@@ -48,4 +48,8 @@
         min-height: 36px;
         
     }
+
+    .promo__navigation {
+        padding-top: 0;
+    }
 }

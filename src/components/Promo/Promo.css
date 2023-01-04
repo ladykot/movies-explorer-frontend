@@ -17,7 +17,7 @@
 }
 
 .promo__title {
-    /* margin: 0 235px; */
+    margin: 0;
     align-items: center;
     text-align: center;
     font-style: normal;
@@ -37,10 +37,23 @@
         font-size: 40px;
         line-height: 52px;
     }
+
+    .promo__background {
+        height: 834px;
+    }
 }
 
 @media screen and (min-width: 1280px) {
     .promo {
         padding: 20px 40px;
+    }
+
+    .promo__background {
+        height: 493px;
+    }
+
+    .promo__title {
+        font-size: 50px;
+        line-height: 58px;
     }
 }
