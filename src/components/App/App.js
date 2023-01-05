@@ -12,14 +12,13 @@ import Movies from 'components/Movies/Movies';
 // нажитмаем на Войти - открывается Login
 
 function App() {
-
   return (
     <div className="page">
       <Route exact path="/signin">
         <Login />
       </Route>
       <Route exact path="/signup">
-        <Register />
+        <Register title="Добро пожаловать!" buttonText='Зарегистрироваться' linkText='Войти' />
       </Route>
       <Route exact path="/movies">
         <Movies />
