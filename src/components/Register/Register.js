@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Form from 'components/Form/Form';
 
 
-function Register({title, buttonText, linkText}) {
+function Register({title, buttonText, linkText, bottomText}) {
     // переменные состояний инпутов
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -60,14 +60,15 @@ function Register({title, buttonText, linkText}) {
         title={title}
         buttonText={buttonText}
         linkText={linkText}
+        bottomText={bottomText}
       >
       <fieldset className="form__inputs-register">
             <label className="form__label">Имя</label>
             <input
               type="name"
               className="form__inputs-item"
-              minLength="2"
-              maxLength="35"
+              minLength={2}
+              maxLength={35}
               placeholder="Имя"
               id="name"
               value={name || ''}
@@ -91,8 +92,8 @@ function Register({title, buttonText, linkText}) {
               className="form__inputs-item"
               placeholder="Придумайте пароль"
               required
-              minLength="2"
-              maxLength="35"
+              minLength={2}
+              maxLength={35}
               value={password || ''}
               onChange={handlePasswordChange}
             />

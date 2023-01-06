@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '../../images/logo.svg';
 import './Form.css';
 
-function Form({ title, buttonText, linkText, children}) {
+function Form({ title, buttonText, linkText, bottomText, children}) {
 
 
   return (
@@ -21,7 +21,7 @@ function Form({ title, buttonText, linkText, children}) {
               {buttonText}
             </button>
             <div className="form__bottom-signin">
-              <p className="form__bottom-text">Уже зарегистрированы?</p>
+              <p className="form__bottom-text">{bottomText}</p>
               <Link to="/signin" className="form__bottom-link">
                 {linkText}
               </Link>
@@ -31,9 +31,20 @@ function Form({ title, buttonText, linkText, children}) {
       </Route>
 
       <Route exact path="/signin">
-        <button type="submit" className="button__sumbit">
-          {buttonText}
-        </button>
+        <form className='form'>
+        {children}
+          <div className="form__bottom">
+            <button type="submit" className="button__sumbit">
+              {buttonText}
+            </button>
+            <div className="form__bottom-signin">
+              <p className="form__bottom-text">{bottomText}</p>
+              <Link to="/signin" className="form__bottom-link">
+                {linkText}
+              </Link>
+            </div>
+          </div>
+        </form>
       </Route>
     </div>
   );
