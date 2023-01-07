@@ -10,42 +10,42 @@ import PageNotFound from 'components/PageNotFound/PageNotFound';
 import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
 
-// handler Login
-// нажитмаем на Войти - открывается Login
 
 function App() {
   return (
     <div className="page">
-      <Route exact path="/signin">
-        <Login
-          title="Рады видеть!"
-          buttonText="Войти"
-          linkText="Регистрация"
-          bottomText="Уже зарегистрированы?"
-        />
-      </Route>
-      <Route exact path="/signup">
-        <Register
-          title="Добро пожаловать!"
-          buttonText="Зарегистрироваться"
-          linkText="Войти"
-          bottomText="Ещё не зарегистрированы?"
-        />
-      </Route>
-      <Route exact path="/movies">
-        <Movies />
-      </Route>
-      <Route exact path="/profile">
-        <Profile />
-      </Route>
-      <Route exact path="/">
-        <Header />
-        <Main />
-        <Footer />
-      </Route>
-      <Route path="*">
-        <PageNotFound />
-      </Route>
+      <Switch>
+        <Route exact path="/">
+          <Header />
+          <Main />
+          <Footer />
+        </Route>
+        <Route exact path="/signin">
+          <Login
+            title="Рады видеть!"
+            buttonText="Войти"
+            linkText="Регистрация"
+            bottomText="Уже зарегистрированы?"
+          />
+        </Route>
+        <Route exact path="/signup">
+          <Register
+            title="Добро пожаловать!"
+            buttonText="Зарегистрироваться"
+            linkText="Войти"
+            bottomText="Ещё не зарегистрированы?"
+          />
+        </Route>
+        <Route exact path="/movies">
+          <Movies />
+        </Route>
+        <Route exact path="/profile">
+          <Profile title='Привет, Виталий!'/>
+        </Route>
+        <Route exact path="*">
+          <PageNotFound />
+        </Route>
+      </Switch>
     </div>
   );
 }
