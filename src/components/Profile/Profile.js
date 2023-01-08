@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Profile.css';
 import HeaderAuth from 'components/HeaderAuth/HeaderAuth';
-import '../Form/Form.css';
+import Header from 'components/Header/Header';
+// import '../Form/Form.css';
 import './Profile.css';
 
 function Profile({ title }) {
@@ -18,7 +19,6 @@ function Profile({ title }) {
   const [errorEmail, setErrorEmail] = useState('');
 
   // обработчики инпутов
-
   function handleNameChange(event) {
     setName(event.target.value);
     const input = event.target;
@@ -45,9 +45,9 @@ function Profile({ title }) {
 
   return (
     <div className="profile">
-      <HeaderAuth />
+      <Header />
       <div className="profile__content">
-        <p className="form__title">{title}</p>
+        <p className="form-profile__title">{title}</p>
         <form className="form-profile">
           <fieldset className="form-profile__inputs">
             <label className="form-profile__label">Имя</label>

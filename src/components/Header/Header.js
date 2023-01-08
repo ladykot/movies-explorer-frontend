@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
+import menuLogo from '../../images/icon__COLOR_icon-main.svg';
 
 function Header() {
   return (
@@ -26,7 +27,7 @@ function Header() {
 
       <Route path={['/movies', '/saved-movies', '/profile']}>
         <nav className="header__links-movies">
-          <Link to="/movies" className="header__link">
+          <Link to="/movies" className="header__link header__link_active">
             Фильмы
           </Link>
           <Link to="/saved-movies" className="header__link">
@@ -34,6 +35,7 @@ function Header() {
           </Link>
         </nav>
         <button className="profile-button">Аккаунт</button>
+        <img className='header__menu-icon' src={menuLogo} alt="иконка меню" />
       </Route>
 
       {/* {loggedIn && <p className="header__mail">{userData}</p>} */}

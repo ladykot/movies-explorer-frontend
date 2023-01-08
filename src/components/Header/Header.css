@@ -1,7 +1,9 @@
 .header {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* justify-content: space-between; */
     height: 74px;
     align-items: center;
     padding: 18px 14px;
@@ -11,20 +13,32 @@
 .header__logo {
     width: 38px;
     height: 38px;
+    /* flex-grow: 1; */
 }
 
 .header__links {
     display: flex;
     list-style: none;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
     margin: 0;
+    width: 100%;
+}
+
+.header__links-movies {
+    justify-self: center;
 }
 
 .header__link {
     text-decoration: none;
     color: black;
+    padding: 0px;
+    margin-left: 8px;
+}
+
+.header__link:active {
+    font-weight: 500;
 }
 
 .header__link-item {
@@ -40,6 +54,11 @@
     line-height: 16px;
 }
 
+.header__menu-icon {
+    grid-column-start: 3;
+    justify-self: end;
+}
+
 .header__link-item_login {
     margin-left: 30px;
     padding: 0 12px;
@@ -48,8 +67,14 @@
     border-radius: 3px;
 }
 
-.profile-button {}
-
+.profile-button {
+    display: none;
+    height: 32px;
+    border: none;
+    padding: 0 20px;
+    width: max-content;
+    justify-self: end;
+}
 
 @media screen and (min-width: 320px) {
     .header__links-movies {
@@ -61,6 +86,7 @@
     .header {
         padding: 18px 30px;
     }
+
     .header__links {
         font-size: 12px;
         line-height: 16px;
@@ -85,5 +111,8 @@
         /* background-image: url(../../images/icon__COLOR_icon-main.svg); */
     }
 
+    .profile-button {
+        display: block;
+    }
 
 }
