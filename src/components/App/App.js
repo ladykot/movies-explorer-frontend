@@ -9,17 +9,24 @@ import Login from 'components/Login/Login';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
 import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
-
+import { useHistory } from "react-router-dom";
 
 function App() {
+  const history = useHistory();
+
+  const handelEditProfile = () => {
+    // установить новые данные
+  }
+
+  const handelLogUot = () => {
+    // перенаправить на /login
+    history.push('/login');
+  }
+
   return (
     <div className="page">
       <Switch>
-        <Route exact path="/">
-          <Header />
-          <Main />
-          <Footer />
-        </Route>
+
         <Route exact path="/signin">
           <Login
             title="Рады видеть!"
@@ -40,7 +47,17 @@ function App() {
           <Movies />
         </Route>
         <Route exact path="/profile">
-          <Profile title='Привет, Виталий!'/>
+          <Profile
+            title="Привет, Виталий!"
+            handelEditProfile={handelEditProfile}
+            handelLogUot={handelLogUot}
+            buttonText='Сохранить'
+          />
+        </Route>
+        <Route exact path="/">
+          <Header />
+          <Main />
+          <Footer />
         </Route>
         <Route exact path="*">
           <PageNotFound />

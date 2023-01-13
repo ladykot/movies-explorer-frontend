@@ -1,34 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FilterCheckbox from 'components/FilterCheckbox/FilterCheckbox';
+import './SearchForm.css';
 
 function SearchForm() {
-  // return (
-  //   <div className="search-form">
+  // состояние чекбокса для выбора короткометражек
+  const [shorts, setShorts] = useState(false);
 
-  //       <div className='search-form__'>
-  //       <input
-  //           type="text"
-  //           id="title-input"
-  //           name="movie"
-  //           value={name || ""}
-  //           onChange={handleChangeName}
-  //           placeholder="Название"
-  //           className="popup__inputs-item popup__inputs-item_type_title"
-  //           required
-  //           minLength="2"
-  //           maxLength="30"
-  //         />
-  //       <button
-  //           type="submit"
-  //           className="popup__button-save"
-  //           aria-label="Поиск"
-  //         >
-  //           Поиск
-  //         </button>
-  //       </div>
-  //     <FilterCheckbox />
-  //   </div>
-  // );
+  const [inputValue, setInputValue] = useState("");
+  const handleSubmit = () => {
+    // если в инпутах есть значение - отобразить только короткометражки
+    // и вызвать функцию handleSearch
+  };
+
+  const handelCheckbox = () => {
+    // меняем на противоположное
+    setShorts(!shorts);
+  };
+  
+  const handeleInput = (evt) => {
+    setInputValue(evt.target.value);
+  }
+
+  return (
+    <div className="search-container">
+      <form className="search-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          id="title-input"
+          name="movie"
+          placeholder="Название"
+          className="search-form__input"
+          onChange={handeleInput}
+          required
+        />
+        <button
+          type="submit"
+          className="search-form__button"
+          aria-label="Поиск"
+        >
+          Поиск
+        </button>
+      </form>
+      <FilterCheckbox value={shorts} onChange={handelCheckbox} />
+      <div className="search-container__line"></div>
+    </div>
+  );
 }
 
 export default SearchForm;

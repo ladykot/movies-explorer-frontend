@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import './Profile.css';
-import HeaderAuth from 'components/HeaderAuth/HeaderAuth';
 import Header from 'components/Header/Header';
-// import '../Form/Form.css';
+import '../Form/Form.css';
 import './Profile.css';
 
-function Profile({ title }) {
+function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
   // переменные состояний инпутов
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +16,11 @@ function Profile({ title }) {
   // состояния ошибок
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
+
+  // обработчик кнопки Выйти вызывает внешнюю функцию, переданную пропсом
+  const handelLogoutProfile = () => {
+    handelLogUot();
+  };
 
   // обработчики инпутов
   function handleNameChange(event) {
@@ -62,7 +66,7 @@ function Profile({ title }) {
               onChange={handleNameChange}
             />
             <span className="form__inputs-error">{errorName}</span>
-            <div className='form__line'></div>
+            <div className="form__line"></div>
             <label className="form-profile__label">E-mail</label>
             <input
               type="email"
@@ -75,11 +79,21 @@ function Profile({ title }) {
             <span className="form__inputs-error">{errorEmail}</span>
           </fieldset>
         </form>
+        <button type="submit" className="button__sumbit">
+          {buttonText}
+        </button>
         <div className="profile__links">
-          <button type="button" className="profile__links-item">
+          <button
+            type="button"
+            className="profile__links-item"
+            onClick={handelEditProfile}
+          >
             Редактировать
           </button>
-          <button className="profile__links-item profile__links-item_signout">
+          <button
+            className="profile__links-item profile__links-item_signout"
+            onClick={handelLogoutProfile}
+          >
             Выйти из аккаунта
           </button>
         </div>

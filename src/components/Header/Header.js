@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import menuLogo from '../../images/icon__COLOR_icon-main.svg';
 
+// вместе с бургер-меню
 function Header() {
+  const [activeBurger, setActiveBurger] = useState(false);
+
+  function handleOpenBurger() {
+    setActiveBurger(!activeBurger);
+  }
   return (
     <header className="header">
+      {/* <Link to="/"> */}
       <img className="header__logo" src={logo} alt="логотип" />
+      {/* </Link> */}
 
       {/* две группы роутов "/" и остальные */}
       <Route exact path="/">
@@ -34,18 +42,40 @@ function Header() {
             Сохрененные фильмы
           </Link>
         </nav>
-        <button className="profile-button">Аккаунт</button>
-        <img className='header__menu-icon' src={menuLogo} alt="иконка меню" />
+        <button className="profile-button" onClick={handleOpenBurger}>
+          Аккаунт
+        </button>
+        <img
+          className="header__menu-icon"
+          src={menuLogo}
+          alt="иконка меню"
+          onClick={handleOpenBurger}
+        />
+        {/* {activeBurger && ( */}
+          <div className="burger-menu">
+            <button
+              onClick={handleOpenBurger}
+              type="button"
+              className="burger-menu__button-close"
+            ></button>
+            <nav className='burger-menu__container'>
+              <ul className='burger-menu__list'>
+                <li className='burger-menu__list-item'>
+                  <NavLink to='/' className='burger-menu__link' activeClassName='burger-menu__link-active'>Главная</NavLink>
+                </li>
+                <li className='burger-menu__list-item'>
+                  <NavLink to='/movies' className='burger-menu__link' activeClassName='burger-menu__link-active'>Фильмы</NavLink>
+                </li>
+                <li className='burger-menu__list-item'>
+                  <NavLink to='/saved-movies' className='burger-menu__link' activeClassName='burger-menu__link-active'>Сохранённые фильмы</NavLink>
+                </li>
+              </ul>
+            </nav>
+            <button className='profile-button'>Аккаунт</button>
+          </div>
+        {/* )} */}
       </Route>
 
-      {/* {loggedIn && <p className="header__mail">{userData}</p>} */}
-      {/* <NavLink
-        to="/signin"
-        className="header__mail header__mail_active"
-        // onClick={handlerSubmit}
-        >
-        Выйти
-      </NavLink> */}
     </header>
   );
 }

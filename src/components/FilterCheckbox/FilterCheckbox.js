@@ -1,8 +1,9 @@
 import React from 'react';
+import './FilterCheckbox.css';
 
 function FilterCheckbox({ value, onChange }) {
   return (
-    <div className="filter" htmlFor="shorts">
+    <div className="filter">
       <label className="filter__checkbox">
         <input
           type="checkbox"
@@ -12,7 +13,7 @@ function FilterCheckbox({ value, onChange }) {
         />
         <span className="filter__round" />
       </label>
-      <p className="filter__title">Short movies</p>
+      <p className="filter__title">Короткометражки</p>
     </div>
   );
 }
