@@ -30,6 +30,7 @@
 
 .header__link {
     text-decoration: none;
+    align-self: center;
     color: black;
     padding: 0px;
     margin-left: 8px;
@@ -66,13 +67,21 @@
 }
 
 .profile-button {
-    display: none;
     height: 32px;
     border: none;
     border-radius: 20px;
     padding: 0 20px;
     width: max-content;
+    justify-self: center;
+}
+
+.profile-button-wraper {
+    display: none;
     justify-self: end;
+}
+
+.profile-button-wraper-burger {
+    justify-self: center;
 }
 
 .burger-menu {
@@ -84,6 +93,7 @@
     height: 100vh;
     top: 0;
     right: 0;
+    padding-bottom: 46px;
     background: white;
     min-width: 320px;
     max-width: 520px;
@@ -98,7 +108,7 @@
     border: none;
     background-color: transparent;
     background-size: cover;
-    align-self: end;
+    justify-self: end;
 }
 
 .burger-menu__container {
@@ -156,6 +166,7 @@
         font-size: 12px;
         min-height: 32px;
     }
+
 }
 
 @media screen and (min-width: 1280px) {
@@ -171,8 +182,14 @@
         /* background-image: url(../../images/icon__COLOR_icon-main.svg); */
     }
 
-    .profile-button {
+    /* убрать позже */
+    .burger-menu {
+        display: none;
+    }
+
+    .profile-button-wraper {
         display: block;
     }
+
 
 }

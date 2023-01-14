@@ -3,19 +3,21 @@ import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import menuLogo from '../../images/icon__COLOR_icon-main.svg';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 // вместе с бургер-меню
 function Header() {
   const [activeBurger, setActiveBurger] = useState(false);
 
-  function handleOpenBurger() {
+  function handleActiveBurger() {
     setActiveBurger(!activeBurger);
   }
+
   return (
     <header className="header">
-      {/* <Link to="/"> */}
-      <img className="header__logo" src={logo} alt="логотип" />
-      {/* </Link> */}
+      <Link to="/">
+        <img className="header__logo" src={logo} alt="логотип" />
+      </Link>
 
       {/* две группы роутов "/" и остальные */}
       <Route exact path="/">
@@ -42,40 +44,64 @@ function Header() {
             Сохрененные фильмы
           </Link>
         </nav>
-        <button className="profile-button" onClick={handleOpenBurger}>
-          Аккаунт
-        </button>
+        <Link to="/profile" className="profile-button-wraper">
+          <button className="profile-button">Аккаунт</button>
+        </Link>
+
         <img
           className="header__menu-icon"
           src={menuLogo}
           alt="иконка меню"
-          onClick={handleOpenBurger}
+          onClick={handleActiveBurger}
         />
-        {/* {activeBurger && ( */}
+
+        {activeBurger && (
           <div className="burger-menu">
             <button
-              onClick={handleOpenBurger}
+              onClick={handleActiveBurger}
               type="button"
               className="burger-menu__button-close"
             ></button>
-            <nav className='burger-menu__container'>
-              <ul className='burger-menu__list'>
-                <li className='burger-menu__list-item'>
-                  <NavLink to='/' className='burger-menu__link' activeClassName='burger-menu__link-active'>Главная</NavLink>
+            <nav className="burger-menu__container">
+              <ul className="burger-menu__list">
+                <li className="burger-menu__list-item">
+                  <NavLink
+                    exact
+                    to="/"
+                    className="burger-menu__link"
+                    activeClassName="burger-menu__link-active"
+                  >
+                    Главная
+                  </NavLink>
                 </li>
-                <li className='burger-menu__list-item'>
-                  <NavLink to='/movies' className='burger-menu__link' activeClassName='burger-menu__link-active'>Фильмы</NavLink>
+                <li className="burger-menu__list-item">
+                  <NavLink
+                    exact
+                    to="/movies"
+                    className="burger-menu__link"
+                    activeClassName="burger-menu__link-active"
+                  >
+                    Фильмы
+                  </NavLink>
                 </li>
-                <li className='burger-menu__list-item'>
-                  <NavLink to='/saved-movies' className='burger-menu__link' activeClassName='burger-menu__link-active'>Сохранённые фильмы</NavLink>
+                <li className="burger-menu__list-item">
+                  <NavLink
+                    exact
+                    to="/saved-movies"
+                    className="burger-menu__link"
+                    activeClassName="burger-menu__link-active"
+                  >
+                    Сохранённые фильмы
+                  </NavLink>
                 </li>
               </ul>
             </nav>
-            <button className='profile-button'>Аккаунт</button>
+            <Link className='profile-button-wraper-burger' to="/profile">
+              <button className="profile-button">Аккаунт</button>
+            </Link>
           </div>
-        {/* )} */}
+        )}
       </Route>
-
     </header>
   );
 }
