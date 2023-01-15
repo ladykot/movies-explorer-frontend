@@ -79,6 +79,7 @@ function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
             <span className="form__inputs-error">{errorEmail}</span>
           </fieldset>
         </form>
+        {/* кнопка появилась в неактивном виде после клика на Редактировать. Меняется состояние. */}
         <button type="submit" className="button__sumbit">
           {buttonText}
         </button>

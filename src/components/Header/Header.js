@@ -37,12 +37,20 @@ function Header() {
 
       <Route path={['/movies', '/saved-movies', '/profile']}>
         <nav className="header__links-movies">
-          <Link to="/movies" className="header__link header__link_active">
+          <NavLink
+            to="/movies"
+            className="header__link"
+            activeClassName="header__link_active"
+          >
             Фильмы
-          </Link>
-          <Link to="/saved-movies" className="header__link">
+          </NavLink>
+          <NavLink
+            to="/saved-movies"
+            className="header__link"
+            activeClassName="header__link_active"
+          >
             Сохрененные фильмы
-          </Link>
+          </NavLink>
         </nav>
         <Link to="/profile" className="profile-button-wraper">
           <button className="profile-button">Аккаунт</button>
@@ -56,50 +64,52 @@ function Header() {
         />
 
         {activeBurger && (
-          <div className="burger-menu">
-            <button
-              onClick={handleActiveBurger}
-              type="button"
-              className="burger-menu__button-close"
-            ></button>
-            <nav className="burger-menu__container">
-              <ul className="burger-menu__list">
-                <li className="burger-menu__list-item">
-                  <NavLink
-                    exact
-                    to="/"
-                    className="burger-menu__link"
-                    activeClassName="burger-menu__link-active"
-                  >
-                    Главная
-                  </NavLink>
-                </li>
-                <li className="burger-menu__list-item">
-                  <NavLink
-                    exact
-                    to="/movies"
-                    className="burger-menu__link"
-                    activeClassName="burger-menu__link-active"
-                  >
-                    Фильмы
-                  </NavLink>
-                </li>
-                <li className="burger-menu__list-item">
-                  <NavLink
-                    exact
-                    to="/saved-movies"
-                    className="burger-menu__link"
-                    activeClassName="burger-menu__link-active"
-                  >
-                    Сохранённые фильмы
-                  </NavLink>
-                </li>
-              </ul>
-            </nav>
-            <Link className='profile-button-wraper-burger' to="/profile">
-              <button className="profile-button">Аккаунт</button>
-            </Link>
-          </div>
+          <section className='burger-menu-section'>
+            <div className="burger-menu">
+              <button
+                onClick={handleActiveBurger}
+                type="button"
+                className="burger-menu__button-close"
+              ></button>
+              <nav className="burger-menu__container">
+                <ul className="burger-menu__list">
+                  <li className="burger-menu__list-item">
+                    <NavLink
+                      exact
+                      to="/"
+                      className="burger-menu__link"
+                      activeClassName="burger-menu__link-active"
+                    >
+                      Главная
+                    </NavLink>
+                  </li>
+                  <li className="burger-menu__list-item">
+                    <NavLink
+                      exact
+                      to="/movies"
+                      className="burger-menu__link"
+                      activeClassName="burger-menu__link-active"
+                    >
+                      Фильмы
+                    </NavLink>
+                  </li>
+                  <li className="burger-menu__list-item">
+                    <NavLink
+                      exact
+                      to="/saved-movies"
+                      className="burger-menu__link"
+                      activeClassName="burger-menu__link-active"
+                    >
+                      Сохранённые фильмы
+                    </NavLink>
+                  </li>
+                </ul>
+              </nav>
+              <Link className="profile-button-wraper-burger" to="/profile">
+                <button className="profile-button">Аккаунт</button>
+              </Link>
+            </div>
+          </section>
         )}
       </Route>
     </header>

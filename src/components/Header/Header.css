@@ -36,7 +36,7 @@
     margin-left: 8px;
 }
 
-.header__link:active {
+.header__link_active {
     font-weight: 500;
 }
 
@@ -84,6 +84,16 @@
     justify-self: center;
 }
 
+.burger-menu-section {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 11;
+    background: rgba(0, 0, 0, 0.3);
+}
+
 .burger-menu {
     z-index: 12;
     position: absolute;
@@ -95,8 +105,7 @@
     right: 0;
     padding-bottom: 46px;
     background: white;
-    min-width: 320px;
-    max-width: 520px;
+    width: 320px;
 }
 
 .burger-menu__button-close {
@@ -133,7 +142,6 @@
     padding-top: 15px;
     display: flex;
     height: 29px;
-    /* align-items: center; */
 }
 
 .burger-menu__link {
@@ -167,6 +175,10 @@
         min-height: 32px;
     }
 
+    .burger-menu {
+        width: 520px;
+        padding-bottom: 90px;
+    }
 }
 
 @media screen and (min-width: 1280px) {
@@ -182,14 +194,7 @@
         /* background-image: url(../../images/icon__COLOR_icon-main.svg); */
     }
 
-    /* убрать позже */
-    .burger-menu {
-        display: none;
-    }
-
     .profile-button-wraper {
         display: block;
     }
-
-
 }
