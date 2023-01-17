@@ -1,12 +1,13 @@
 .header {
     width: 100%;
-    position: relative;
+    position: fixed;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     height: 74px;
     align-items: center;
     padding: 18px 14px;
     box-sizing: border-box;
+    background-color: white;
 }
 
 .header__logo {
@@ -15,7 +16,9 @@
 }
 
 .header__links {
+    padding: 0;
     display: flex;
+    justify-content: flex-end;
     list-style: none;
     font-weight: 400;
     font-size: 13px;
@@ -33,7 +36,6 @@
     align-self: center;
     color: black;
     padding: 0px;
-    margin-left: 8px;
 }
 
 .header__link_active {
@@ -59,7 +61,7 @@
 }
 
 .header__link-item_login {
-    margin-left: 30px;
+    margin-left: 14px;
     padding: 0 12px;
     text-align: center;
     background: rgba(43, 224, 128, 1);
@@ -179,6 +181,11 @@
         width: 520px;
         padding-bottom: 90px;
     }
+
+    .header__link-item_login {
+        margin-left: 30px;
+        padding: 0 20px;
+    }
 }
 
 @media screen and (min-width: 1280px) {
@@ -191,7 +198,15 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 18px;
-        /* background-image: url(../../images/icon__COLOR_icon-main.svg); */
+    }
+
+    .header__links {
+        grid-column: 3;
+        justify-self: end;
+    }
+
+    .header__link-item_login {
+        margin-left: 50px;
     }
 
     .profile-button-wraper {
