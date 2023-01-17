@@ -1,22 +1,23 @@
 import React from 'react';
 import MoviesCard from 'components/MoviesCard/MoviesCard';
+import './MoviesCardList.css';
 
 // данные карточек пока что получаем из макета
 
 
-function MoviesCardList(movies) {
+function MoviesCardList(movies, onCardLike) {
 
+  // обработчик кнопки Еще
   const showMoreMovies = () => {
-    
   }
 
   return (
-    <section className="movies__card-list">
-      <ul className="movies__list">
-        {movies.map((movie) => (
-          <MoviesCard key={movie.id || movie.movieId} movie={movie} />
-        ))}
-      </ul>
+    <section className="movies__cards-section">
+          {/* {movies.map(() => ( */}
+              <MoviesCard onCardLike={onCardLike}/>
+              <MoviesCard onCardLike={onCardLike}/>
+              <MoviesCard onCardLike={onCardLike}/>
+          {/* ))} */}
       <button className="movies__more-button" onClick={showMoreMovies}>
         Ещё
       </button>

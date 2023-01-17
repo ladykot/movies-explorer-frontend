@@ -13,7 +13,7 @@ function Footer() {
           <li className="footer__list-item">Github</li>
         </ul>
       </nav>
-      <p className="footer__copyright">© 2020</p>
+      <p className="footer__copyright">© 2023</p>
     </footer>
   );
 }

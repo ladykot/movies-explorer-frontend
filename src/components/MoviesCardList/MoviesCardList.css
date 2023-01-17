@@ -1,0 +1,35 @@
+.movies__cards-section {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    justify-items: center;
+}
+
+.movies__more-button {
+    width: 240px;
+    height: 36px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    background: white;
+    border: solid 1px #E8E8E8;
+    border-radius: 5px;
+    margin: 50px 0 80px;
+    padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .movies__cards-section {
+        justify-items: stretch;
+        gap: 40px;
+        padding: 30px;
+    }
+
+    .movies__more-button {
+        width: 320px;
+        justify-self: center;
+    }
+};

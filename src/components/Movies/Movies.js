@@ -6,21 +6,26 @@ import Header from 'components/Header/Header';
 import Preloader from 'components/Preloader/Preloader';
 import './Movies.css';
 
-function Movies() {
+function Movies(onCardLike) {
+  // начальное состояние фильмов - это пустой список
+  const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false); // состояние загрузки фильмов из базы
+
+  const handleButtonSearch = () => {
+    setLoading(!loading)
+  }
 
   return (
     <>
       <Header />
       <div className="movies">
         <SearchForm />
-        {/* {loading ? (
+        {loading ? (
         <Preloader />
       ) : (
-        <MoviesCardList movies={movies} errorMessage={errorMessage} />
-      )} */}
-
-        <Preloader />
+        <MoviesCardList movies={movies} onCardLike={onCardLike}/>
+      )}
+        {/* <Preloader /> */}
         
         {/* <MoviesCardList /> */}
       </div>

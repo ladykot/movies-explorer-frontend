@@ -23,6 +23,11 @@ function App() {
     history.push('/login');
   }
 
+  // обработка лайка
+  function handleCardLike() {
+  
+  }
+
   return (
     <div className="page">
       <Switch>
@@ -44,7 +49,7 @@ function App() {
           />
         </Route>
         <Route exact path="/movies">
-          <Movies />
+          <Movies onCardLike={handleCardLike}/>
         </Route>
         <Route exact path="/profile">
           <Profile
