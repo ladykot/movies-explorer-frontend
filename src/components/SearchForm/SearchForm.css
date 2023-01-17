@@ -1,5 +1,5 @@
 .search-container {
-    padding: 70px 14px 63px;
+    padding: 70px 4px 60px;
     display: grid;
     gap: 30px;
     flex-direction: column;
@@ -51,10 +51,16 @@
 
 @media screen and (min-width: 768px) {
     .search-container {
-        padding: 70px 30px 21px;
+        padding: 70px 0px 40px;
     }
 
     .search-container__line {
         margin-top: -30px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .search-container {
+        padding: 70px 0px 50px;
     }
 }
