@@ -6,7 +6,7 @@ import menuLogo from '../../images/icon__COLOR_icon-main.svg';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 // вместе с бургер-меню
-function Header() {
+function Header(loggedIn) {
   const [activeBurger, setActiveBurger] = useState(false);
 
   function handleActiveBurger() {
@@ -21,7 +21,7 @@ function Header() {
 
       {/* две группы роутов "/" и остальные */}
       <Route exact path="/">
-        <ul className="header__links">
+        {!loggedIn && <ul className="header__links">
           <li className="header__link-item">
             <Link to="/signup" className="header__link">
               Регистрация
@@ -32,7 +32,8 @@ function Header() {
               Войти
             </Link>
           </li>
-        </ul>
+        </ul>}
+        
       </Route>
 
       <Route path={['/movies', '/saved-movies', '/profile']}>

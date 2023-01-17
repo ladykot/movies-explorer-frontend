@@ -1,9 +1,11 @@
 .search-container {
     padding: 70px 4px 60px;
+    position: relative;
     display: grid;
     gap: 30px;
     flex-direction: column;
     align-self: start;
+    z-index: -1;
 }
 
 .search-container__line {

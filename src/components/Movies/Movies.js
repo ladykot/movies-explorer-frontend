@@ -17,7 +17,6 @@ function Movies(onCardLike) {
 
   return (
     <>
-      <Header />
       <div className="movies">
         <SearchForm />
         {loading ? (
@@ -26,11 +25,8 @@ function Movies(onCardLike) {
         <MoviesCardList movies={movies} onCardLike={onCardLike}/>
       )}
         {/* <Preloader /> */}
-        
         {/* <MoviesCardList /> */}
       </div>
-
-      <Footer />
     </>
   );
 }

@@ -12,6 +12,8 @@ import Movies from 'components/Movies/Movies';
 import { useHistory } from "react-router-dom";
 
 function App() {
+  // состояние, когда мы залогинились, равно true
+  const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
 
   const handelEditProfile = () => {
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <div className="page">
+      <Header loggedIn={loggedIn}/>
       <Switch>
 
         <Route exact path="/signin">
@@ -60,14 +63,15 @@ function App() {
           />
         </Route>
         <Route exact path="/">
-          <Header />
+          
           <Main />
-          <Footer />
+          
         </Route>
         <Route exact path="*">
           <PageNotFound />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }

@@ -15,9 +15,8 @@
     height: 20px;
     background-color: #EBEBEB;
     border-radius: 16px;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    z-index: 1;
+    /* z-index: 1; */
   }
   
   .filter__input {
@@ -33,7 +32,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 36px;
     padding: 6px;
@@ -48,7 +46,6 @@
     top: 2px;
     bottom: 2px;
     background-color: #fff;
-    -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
     transition: background-color .3s;
@@ -63,8 +60,6 @@
   }
   
   .filter__input:checked+.filter__round:before {
-    -webkit-transform: translateX(14px);
-    -ms-transform: translateX(14px);
     transform: translateX(14px);
   }
   
