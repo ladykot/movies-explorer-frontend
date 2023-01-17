@@ -17,7 +17,9 @@
 }
 
 .promo__title {
+    max-width: 80%;
     margin: 0;
+    justify-self: center;
     align-items: center;
     text-align: center;
     font-style: normal;
@@ -28,14 +30,19 @@
 }
 
 @media screen and (min-width: 768px) {
+
+}
+
+@media screen and (min-width: 768px) {
     .promo {
         padding: 20px;
     }
 
     .promo__title {
-        max-width: 680px;
+        max-width: 90%;
         font-size: 40px;
         line-height: 52px;
+        
     }
 
     .promo__background {
@@ -53,6 +60,7 @@
     }
 
     .promo__title {
+        max-width: 730px;
         font-size: 50px;
         line-height: 58px;
     }
