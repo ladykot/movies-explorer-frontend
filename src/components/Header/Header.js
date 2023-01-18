@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 // вместе с бургер-меню
 function Header(loggedIn) {
   const [activeBurger, setActiveBurger] = useState(false);
+  loggedIn = false;
 
   function handleActiveBurger() {
     setActiveBurger(!activeBurger);

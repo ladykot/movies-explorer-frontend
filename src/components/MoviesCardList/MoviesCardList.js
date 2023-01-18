@@ -17,6 +17,7 @@ function MoviesCardList(movies, onCardLike) {
               <MoviesCard onCardLike={onCardLike}/>
               <MoviesCard onCardLike={onCardLike}/>
               <MoviesCard onCardLike={onCardLike}/>
+              <MoviesCard onCardLike={onCardLike}/>
           {/* ))} */}
       <button className="movies__more-button" onClick={showMoreMovies}>
         Ещё

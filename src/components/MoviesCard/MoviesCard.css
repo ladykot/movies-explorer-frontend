@@ -5,7 +5,7 @@
 .movies-card__item-content {
     width: 100%;
     display: grid;
-    grid-template-columns: auto max-content;
+    grid-template-columns: minmax(calc(max-content + 5px)) max-content;
 }
 
 .movies-card__pic {
@@ -13,6 +13,7 @@
     max-width: 100%;
     object-fit: cover;
     background-repeat: no-repeat;
+    box-sizing: border-box;
 }
 
 .movies-card__text {
@@ -55,7 +56,6 @@
     }
 
     .movies-card__pic {
-        /* box-sizing: border-box; */
         height: 122px;
         padding: 6px;
         grid-column: 2/3;

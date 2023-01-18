@@ -35,7 +35,7 @@
     text-decoration: none;
     align-self: center;
     color: black;
-    padding: 0px;
+    padding: 0px 8px;
 }
 
 .header__link_active {
@@ -192,6 +192,7 @@
     .header {
         padding: 18px 70px;
         z-index: 100;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
     .header__links-movies {
