@@ -4,21 +4,21 @@ import './MoviesCardList.css';
 
 // данные карточек пока что получаем из макета
 
-
-function MoviesCardList(movies, onCardLike) {
-
+function MoviesCardList({ cards, onCardLike, onCardClick }) {
   // обработчик кнопки Еще
-  const showMoreMovies = () => {
-  }
+  const showMoreMovies = () => {};
 
   return (
     <section className="movies__cards-section">
-          {/* {movies.map(() => ( */}
-              <MoviesCard onCardLike={onCardLike}/>
-              <MoviesCard onCardLike={onCardLike}/>
-              <MoviesCard onCardLike={onCardLike}/>
-              <MoviesCard onCardLike={onCardLike}/>
-          {/* ))} */}
+      {/* проходим по массиву с карточками */}
+      {cards.map((card) => (
+        <MoviesCard
+          onCardLike={onCardLike}
+          onCardClick={onCardClick}
+          card={card}
+          key={card._id}
+        />
+      ))}
       <button className="movies__more-button" onClick={showMoreMovies}>
         Ещё
       </button>

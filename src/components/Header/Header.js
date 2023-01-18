@@ -10,6 +10,7 @@ function Header(loggedIn) {
   const [activeBurger, setActiveBurger] = useState(false);
   loggedIn = false;
 
+  // переключатель бургер-меню
   function handleActiveBurger() {
     setActiveBurger(!activeBurger);
   }
@@ -108,7 +109,7 @@ function Header(loggedIn) {
                 </ul>
               </nav>
               <Link className="profile-button-wraper-burger" to="/profile">
-                <button className="profile-button">Аккаунт</button>
+                <button className="profile-button" onClick={handleActiveBurger}>Аккаунт</button>
               </Link>
             </div>
           </section>

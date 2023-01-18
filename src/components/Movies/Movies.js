@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
 import SearchForm from 'components/SearchForm/SearchForm';
 import MoviesCardList from 'components/MoviesCardList/MoviesCardList';
-import Footer from 'components/Footer/Footer';
-import Header from 'components/Header/Header';
 import Preloader from 'components/Preloader/Preloader';
 import './Movies.css';
 
-function Movies(onCardLike) {
-  // начальное состояние фильмов - это пустой список
-  const [movies, setMovies] = useState([]);
+function Movies({ cards, onCardLike, onCardClick }) {
   const [loading, setLoading] = useState(false); // состояние загрузки фильмов из базы
+  console.log(cards)
 
   const handleButtonSearch = () => {
-    setLoading(!loading)
-  }
+    setLoading(!loading);
+  };
 
   return (
     <>
       <div className="movies">
         <SearchForm />
         {loading ? (
-        <Preloader />
-      ) : (
-        <MoviesCardList movies={movies} onCardLike={onCardLike}/>
-      )}
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            cards={cards}
+            onCardLike={onCardLike}
+            onCardClick={onCardClick}
+          />
+        )}
         {/* <Preloader /> */}
-        {/* <MoviesCardList /> */}
       </div>
     </>
   );
