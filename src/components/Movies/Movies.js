@@ -13,7 +13,6 @@ function Movies({ cards, onCardLike, onCardClick }) {
   };
 
   return (
-    <>
       <div className="movies">
         <SearchForm />
         {loading ? (
@@ -27,7 +26,6 @@ function Movies({ cards, onCardLike, onCardClick }) {
         )}
         {/* <Preloader /> */}
       </div>
-    </>
   );
 }
 

@@ -49,6 +49,14 @@
     justify-self: end;
 }
 
+.movies-card__like_type_notliked {
+    background-image: url('../../images/button-empty-like.svg');
+}
+
+.movies-card__like_type_selected {
+    background-image: url('../../images/button-dislike.svg');
+}
+
 @media screen and (min-width: 768px) {
     .movies-card__item-content {
         grid-template-columns: 1fr 1fr;

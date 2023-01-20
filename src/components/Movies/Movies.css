@@ -2,11 +2,13 @@
     margin: 74px 0 0;
     padding: 0 10px;
     align-self: start;
+    box-sizing: border-box;
 }
 
 @media screen and (min-width: 768px) {
     .movies {
         padding: 0 30px;
+        width: 100%;
     }
 }
 

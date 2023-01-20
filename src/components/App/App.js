@@ -3,7 +3,7 @@ import './App.css';
 import Header from 'components/Header/Header';
 import Main from 'components/Main/Main';
 import Footer from 'components/Footer/Footer';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch } from  'react-router-dom';
 import Register from 'components/Register/Register';
 import Login from 'components/Login/Login';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
@@ -12,7 +12,6 @@ import Movies from 'components/Movies/Movies';
 import { useHistory } from 'react-router-dom';
 
 function App() {
-  
   // временный объект с данными для карточек (не забыть добавить link)
   const data = [
     {
@@ -30,7 +29,7 @@ function App() {
       duration: '1ч 42м',
       _id: '3',
     },
-  ]
+  ];
 
   const [cards] = useState(data);
 
@@ -70,7 +69,6 @@ function App() {
 
   return (
     <div className="page">
-      <Header loggedIn={loggedIn} onSignOut={onSignOut} />
       <Switch>
         <Route exact path="/signin">
           <Login
@@ -89,11 +87,22 @@ function App() {
           />
         </Route>
         <Route exact path="/movies">
+          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
           <Movies
             onCardLike={handleCardLike}
             onCardClick={handleCardClick}
             cards={cards}
           />
+          <Footer />
+        </Route>
+        <Route exact path="/saved-movies">
+          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
+          <Movies
+            onCardLike={handleCardLike}
+            onCardClick={handleCardClick}
+            cards={cards}
+          />
+          <Footer />
         </Route>
         <Route exact path="/profile">
           <Profile
@@ -104,13 +113,14 @@ function App() {
           />
         </Route>
         <Route exact path="/">
+          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
           <Main />
+          <Footer />
         </Route>
         <Route path="/*">
           <PageNotFound />
         </Route>
       </Switch>
-      <Footer />
     </div>
   );
 }

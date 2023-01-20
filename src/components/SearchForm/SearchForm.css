@@ -1,11 +1,10 @@
 .search-container {
     padding: 70px 4px 60px;
-    position: relative;
+    /* position: relative; */
     display: grid;
     gap: 30px;
     flex-direction: column;
     align-self: start;
-    z-index: -1;
 }
 
 .search-container__line {
@@ -17,7 +16,6 @@
 
 .search-form {
     display: grid;
-
     justify-items: end;
     align-items: center;
 }
@@ -61,7 +59,7 @@
     }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1280px) {
     .search-container {
         padding: 70px 0px 50px;
     }
