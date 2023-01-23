@@ -29,6 +29,10 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
 
       <Route exact path="/signin">
         <form className="form">
+          <div className="form-top">
+            <img className="header__logo" src={logo} alt="логотип" />
+            <p className="form__title">{title}</p>
+          </div>
           {children}
           <div className="form__bottom">
             <button type="submit" className="button__sumbit">
@@ -40,6 +44,14 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
                 {linkText}
               </Link>
             </div>
+          </div>
+        </form>
+      </Route>
+
+      <Route exact path="/profile">
+        <form className='form'>
+        <div className="form-top">
+            <p className="form__title">{title}</p>
           </div>
         </form>
       </Route>

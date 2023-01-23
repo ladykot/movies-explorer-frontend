@@ -2,7 +2,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import link from '../../images/pic__card.png';
 import './MoviesCard.css';
-import { matchPath } from 'react-router';
 
 function MoviesCard({ card, onCardLike, onCardClick }) {
   // обработчик клика на Сердечко

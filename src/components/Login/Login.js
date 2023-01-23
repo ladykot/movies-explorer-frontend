@@ -36,7 +36,12 @@ function Login({ title, buttonText, linkText, bottomText }) {
   }
 
   return (
-    <Form title={title} buttonText={buttonText} linkText={linkText} bottomText={bottomText}>
+    <Form
+      title={title}
+      buttonText={buttonText}
+      linkText={linkText}
+      bottomText={bottomText}
+    >
       <fieldset className="form__inputs-register">
         <label className="form__label">E-mail</label>
         <input

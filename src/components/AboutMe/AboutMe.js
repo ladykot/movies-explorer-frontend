@@ -7,10 +7,10 @@ import './AboutMe.css';
 
 function AboutMe() {
   return (
-    <section className="about-me">
+    <section id='about-me' className="about-me">
       <SectionName name="Студент" />
       <div className="about-me__content">
-        <img className="about-me__pic" src={pic} />
+        <img className="about-me__pic" src={pic} alt='фото студента'/>
         <div className="about-me__text">
           <h2 className="about-me__title">Виталий</h2>
           <p className="about-me__subtitle">Фронтенд-разработчик, 30 лет</p>
@@ -21,7 +21,7 @@ function AboutMe() {
         как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и
         ушёл с постоянной работы."
           />
-          <a className="about-me__link">Github</a>
+          <a href='ladykot' className="about-me__link">Github</a>
         </div>
       </div>
 

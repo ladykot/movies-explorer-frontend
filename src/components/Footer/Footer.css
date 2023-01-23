@@ -36,12 +36,17 @@
 
 .footer__copyright {
     margin: 0;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
     color: #A0A0A0;
     padding-top: 30px;
     text-align: center;
+}
+
+.footer__list-item {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
 }
 
 @media screen and (min-width: 768px) {
@@ -62,6 +67,12 @@
         flex-direction: row;
         justify-content: flex-end;
         padding: 20px 0 0;
+        gap: 20px;
+    }
+
+    .footer__list-item {
+        font-size: 13px;
+        line-height: 16px;
     }
 
     .footer__copyright {
@@ -69,9 +80,6 @@
         grid-column-end: 2;
         grid-row-start: 2;
         text-align: left;
-        font-size: 13px;
-        line-height: 16px;
-        color: black;
         padding-top: 20px;
     }
 }
@@ -80,5 +88,9 @@
     .footer {
         padding: 79px 70px 20px;
         background: #FAFAFA;
+    }
+
+    .footer__list-item {
+        
     }
 }

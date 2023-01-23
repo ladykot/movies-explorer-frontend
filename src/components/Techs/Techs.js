@@ -5,8 +5,8 @@ import SectionName from 'components/SectionName/SectionName';
 
 function Techs() {
   return (
-    <section className="techs">
-      <SectionName name='Технологии' />
+    <section id='tech' className="techs">
+      <SectionName name='Технологии'/>
       <div className='techs-group'>
         <h2 className="techs__title">7 технологий</h2>
         <p className="techs__subtitle">

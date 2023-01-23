@@ -5,7 +5,7 @@ import SectionText from 'components/SectionText/SectionText';
 
 function AboutProject() {
   return (
-    <section className="about-project">
+    <section id='about-project' className="about-project">
       <SectionName name="О проекте" />
 
       <div className="two-columns">

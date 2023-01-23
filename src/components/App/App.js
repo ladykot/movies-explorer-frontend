@@ -51,7 +51,7 @@ function App() {
   //обработка кнопки Выйти
   const handelLogUot = () => {
     // перенаправить на /login
-    history.push('/login');
+    history.push('/signin');
   };
 
   // обработка лайка
@@ -107,7 +107,7 @@ function App() {
         <Route exact path="/profile">
           <Profile
             title="Привет, Виталий!"
-            handelEditProfile={handelEditProfile}
+            onUpdateUser={handelEditProfile}
             handelLogUot={handelLogUot}
             buttonText="Сохранить"
           />

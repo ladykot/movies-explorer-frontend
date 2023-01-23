@@ -9,11 +9,29 @@ function Footer() {
       </p>
       <nav>
         <ul className="footer__list">
-          <li className="footer__list-item">Яндекс.Практикум</li>
-          <li className="footer__list-item">Github</li>
+          <li>
+            <a
+              href="https://github.com/ladykot"
+              className="footer__list-item"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Яндекс.Практикум
+            </a>
+          </li>
+          <li className="footer__list-item">
+            <a
+              href="https://practicum.yandex.ru"
+              className="footer__list-item"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github
+            </a>
+          </li>
         </ul>
       </nav>
-      <p className="footer__copyright">© 2023</p>
+      <p className="footer__list-item footer__copyright">© 2023</p>
     </footer>
   );
 }

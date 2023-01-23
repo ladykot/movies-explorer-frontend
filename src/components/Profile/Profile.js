@@ -4,7 +4,7 @@ import Header from 'components/Header/Header';
 import '../Form/Form.css';
 import './Profile.css';
 
-function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
+function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   // переменные состояний инпутов
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,6 +16,9 @@ function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
   // состояния ошибок
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
+
+  // состояние сообщения о сохранении данных
+  const [isSaveData, setIsSaveData] = useState(false);
 
   // обработчик кнопки Выйти вызывает внешнюю функцию, переданную пропсом
   const handelLogoutProfile = () => {
@@ -47,9 +50,22 @@ function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
     }
   }
 
+  // обработчик кнопки Редактировать
+  const handleSubmitProfile = (e) => {
+    e.preventDefault();
+    // Передаём значения управляемых компонентов во внешний обработчик
+    onUpdateUser({
+      name,
+      email,
+    });
+    // после сохранения данных выводим сообщение
+    setIsSaveData(!isSaveData);
+  }
+
   return (
     <div className="profile">
       <Header />
+
       <div className="profile__content">
         <p className="form-profile__title">{title}</p>
         <form className="form-profile">
@@ -65,7 +81,10 @@ function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
               maxLength={35}
               onChange={handleNameChange}
             />
-            <span className="form__inputs-error">{errorName}</span>
+            <span className="form__inputs-error form__inputs-error_profile">
+              {errorName}
+            </span>
+
             <div className="form__line"></div>
             <label className="form-profile__label">E-mail</label>
             <input
@@ -76,18 +95,23 @@ function Profile({ title, handelEditProfile, handelLogUot, buttonText }) {
               value={email || ''}
               onChange={handleEmailChange}
             />
-            <span className="form__inputs-error">{errorEmail}</span>
+            <span className="form__inputs-error form__inputs-error_profile">
+              {errorEmail}
+            </span>
           </fieldset>
         </form>
-        {/* кнопка появилась в неактивном виде после клика на Редактировать. Меняется состояние. */}
-        <button type="submit" className="button__sumbit">
-          {buttonText}
-        </button>
+
         <div className="profile__links">
+          {isSaveData && (
+            <span className="profile__links-item profile__edit-message">
+              Данные успешно сохранены
+            </span>
+          )}
+
           <button
+            onClick={handleSubmitProfile}
             type="button"
             className="profile__links-item"
-            onClick={handelEditProfile}
           >
             Редактировать
           </button>
