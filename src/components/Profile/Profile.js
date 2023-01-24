@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './Profile.css';
 import Header from 'components/Header/Header';
 import '../Form/Form.css';
@@ -26,6 +26,8 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   // состояние кнопки Редактировать
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
+  // const input = useRef();
+
   // обработчик кнопки Выйти вызывает внешнюю функцию, переданную пропсом
   const handelLogoutProfile = () => {
     handelLogUot();
@@ -35,9 +37,10 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   React.useEffect(() => {
     setMessage('');
   }, [name, email])
-  
+
   // обработчики инпутов
   function handleNameChange(event) {
+    setIsActiveEdit(true);
     setName(event.target.value);
     const input = event.target;
     setName(input.value);
@@ -50,6 +53,7 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   }
 
   function handleEmailChange(event) {
+    setIsActiveEdit(true);
     setEmail(event.target.value);
     const input = event.target;
     setEmail(input.value);
@@ -64,20 +68,23 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   // обработчик кнопки Редактировать
   const handleSubmitProfile = (e) => {
     e.preventDefault();
+    // setIsActiveEdit(false)
     // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({
-      name,
-      email,
-    });
+    // onUpdateUser({
+    //   name,
+    //   email,
+    // });
+
     // после сохранения/несохранения данных выводим сообщение
-    if (isSaveData) {
+    if (!isSaveData) {
       setMessage('Данные успешно сохранены');
-
-    // } else {
-    //   setMessage('Что-то пошло не так');
+      setIsSaveData(false); // начальное состояние
+    } else {
+      setMessage('Что-то пошло не так');
     }
-
-    setIsSaveData(!isSaveData);
+    
+    setIsActiveEdit(false)
+    
   };
 
   return (
@@ -132,8 +139,8 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
 
           <button
             onClick={handleSubmitProfile}
-            type="button"
-            disabled={isActiveEdit}
+            type="submit"
+            disabled={!isActiveEdit}
             className="profile__links-item"
           >
             Редактировать

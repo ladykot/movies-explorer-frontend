@@ -123,6 +123,7 @@ profile__edit-message_disable {
 
 .form__inputs-error_profile {
     text-align: right;
+    width: 60%;
 }
 
 .form__line {
