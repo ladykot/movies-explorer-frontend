@@ -17,14 +17,25 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
 
-  // состояние сообщения о сохранении данных
+  // успех/неуспех сохранения данных
   const [isSaveData, setIsSaveData] = useState(false);
+
+  // состояние сообщения о сохранении данных
+  const [message, setMessage] = useState('');
+
+  // состояние кнопки Редактировать
+  const [isActiveEdit, setIsActiveEdit] = useState(false);
 
   // обработчик кнопки Выйти вызывает внешнюю функцию, переданную пропсом
   const handelLogoutProfile = () => {
     handelLogUot();
   };
 
+  // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
+  React.useEffect(() => {
+    setMessage('');
+  }, [name, email])
+  
   // обработчики инпутов
   function handleNameChange(event) {
     setName(event.target.value);
@@ -58,9 +69,16 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
       name,
       email,
     });
-    // после сохранения данных выводим сообщение
+    // после сохранения/несохранения данных выводим сообщение
+    if (isSaveData) {
+      setMessage('Данные успешно сохранены');
+
+    // } else {
+    //   setMessage('Что-то пошло не так');
+    }
+
     setIsSaveData(!isSaveData);
-  }
+  };
 
   return (
     <div className="profile">
@@ -70,31 +88,37 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
         <p className="form-profile__title">{title}</p>
         <form className="form-profile">
           <fieldset className="form-profile__inputs">
-            <label className="form-profile__label">Имя</label>
-            <input
-              type="name"
-              className="form-profile__inputs-item"
-              placeholder="Имя"
-              required
-              value={name || ''}
-              minLength={2}
-              maxLength={35}
-              onChange={handleNameChange}
-            />
+            <label className="form-profile__label">
+              Имя
+              <input
+                type="name"
+                className="form-profile__inputs-item"
+                placeholder="Имя"
+                required
+                value={name || ''}
+                minLength={2}
+                maxLength={35}
+                onChange={handleNameChange}
+              />
+            </label>
+
             <span className="form__inputs-error form__inputs-error_profile">
               {errorName}
             </span>
-
             <div className="form__line"></div>
-            <label className="form-profile__label">E-mail</label>
-            <input
-              type="email"
-              className="form-profile__inputs-item"
-              placeholder="E-mail"
-              required
-              value={email || ''}
-              onChange={handleEmailChange}
-            />
+
+            <label className="form-profile__label">
+              E-mail
+              <input
+                type="email"
+                className="form-profile__inputs-item"
+                placeholder="E-mail"
+                required
+                value={email || ''}
+                onChange={handleEmailChange}
+              />
+            </label>
+
             <span className="form__inputs-error form__inputs-error_profile">
               {errorEmail}
             </span>
@@ -102,23 +126,19 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
         </form>
 
         <div className="profile__links">
-          {isSaveData && (
-            <span className="profile__links-item profile__edit-message">
-              Данные успешно сохранены
-            </span>
-          )}
+          <span className="profile__links-item profile__edit-message">
+            {message}
+          </span>
 
           <button
             onClick={handleSubmitProfile}
             type="button"
+            disabled={isActiveEdit}
             className="profile__links-item"
           >
             Редактировать
           </button>
-          <button
-            className="profile__links-item profile__links-item_signout"
-            onClick={handelLogoutProfile}
-          >
+          <button className="profile__links-item" onClick={handelLogoutProfile}>
             Выйти из аккаунта
           </button>
         </div>

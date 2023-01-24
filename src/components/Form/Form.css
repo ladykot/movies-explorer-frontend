@@ -90,13 +90,16 @@
     padding: 157px 0 0;
 }
 
-.form__inputs-error {
+/*.form__inputs-error {
+    display: inline;
+    float: left;
     font-weight: 400;
     font-size: 10px;
     line-height: 12px;
     color: #EE3465;
     padding-top: 6px;
-}
+}*/
+
 
 .button__sumbit {
     background: #2BE080;

@@ -61,18 +61,21 @@ function Register({ title, buttonText, linkText, bottomText }) {
       bottomText={bottomText}
     >
       <fieldset className="form__inputs-register">
-        <label className="form__label">Имя</label>
-        <input
-          type="name"
-          className="form__inputs-item"
-          minLength={2}
-          maxLength={35}
-          placeholder="Имя"
-          id="name"
-          value={name || ''}
-          onChange={handleNameChange}
-          required
-        />
+        <label className="form__label">
+          Имя
+          <input
+            type="name"
+            className="form__inputs-item"
+            minLength={2}
+            maxLength={35}
+            placeholder="Имя"
+            id="name"
+            value={name || ''}
+            onChange={handleNameChange}
+            required
+          />
+        </label>
+
         <span className="form__inputs-error">{errorName}</span>
         <label className="form__label">E-mail</label>
         <input
