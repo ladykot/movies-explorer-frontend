@@ -3,6 +3,7 @@ import './Profile.css';
 import Header from 'components/Header/Header';
 import '../Form/Form.css';
 import './Profile.css';
+import '../../vendor/hover.css';
 
 function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   // переменные состояний инпутов
@@ -141,11 +142,11 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
             onClick={handleSubmitProfile}
             type="submit"
             disabled={!isActiveEdit}
-            className="profile__links-item"
+            className={`profile__links-item ${isActiveEdit && "hover"}`}
           >
             Редактировать
           </button>
-          <button className="profile__links-item" onClick={handelLogoutProfile}>
+          <button className="profile__links-item hover" onClick={handelLogoutProfile}>
             Выйти из аккаунта
           </button>
         </div>

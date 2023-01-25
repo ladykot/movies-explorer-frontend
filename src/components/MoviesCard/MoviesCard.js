@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import link from '../../images/pic__card.png';
 import './MoviesCard.css';
+import '../../vendor/hover.css';
 
 function MoviesCard({ card, onCardLike, onCardClick }) {
   // обработчик клика на Сердечко
@@ -36,14 +37,14 @@ function MoviesCard({ card, onCardLike, onCardClick }) {
         {location.pathname === '/saved-movies' ? (
           <button
             type="button"
-            className="movies-card__like movies-card__like_type_selected"
+            className="movies-card__like movies-card__like_type_selected hover"
             aria-label="лайк"
             onClick={handleLikeClick}
           ></button>
         ) : (
           <button
             type="button"
-            className={isLiked ? "movies-card__like" : "movies-card__like movies-card__like_type_notliked"}
+            className={isLiked ? "movies-card__like hover" : "movies-card__like movies-card__like_type_notliked hover"}
             aria-label="лайк"
             onClick={handleLikeClick}
           ></button>

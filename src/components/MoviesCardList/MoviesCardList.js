@@ -19,7 +19,7 @@ function MoviesCardList({ cards, onCardLike, onCardClick }) {
           key={card._id}
         />
       ))}
-      <button className="movies__more-button" onClick={showMoreMovies}>
+      <button className="movies__more-button hover" onClick={showMoreMovies}>
         Ещё
       </button>
     </section>

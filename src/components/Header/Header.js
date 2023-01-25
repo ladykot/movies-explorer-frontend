@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
+import '../../vendor/hover.css';
 import menuLogo from '../../images/icon__COLOR_icon-main.svg';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -25,12 +26,12 @@ function Header(loggedIn) {
       <Route exact path="/">
         {!loggedIn && <ul className="header__links">
           <li className="header__link-item">
-            <Link to="/signup" className="header__link">
+            <Link to="/signup" className="header__link hover">
               Регистрация
             </Link>
           </li>
           <li className="header__link-item header__link-item_login">
-            <Link to="/signin" className="header__link">
+            <Link to="/signin" className="header__link hover">
               Войти
             </Link>
           </li>
@@ -42,25 +43,25 @@ function Header(loggedIn) {
         <nav className="header__links-movies">
           <NavLink
             to="/movies"
-            className="header__link"
+            className="header__link hover"
             activeClassName="header__link_active"
           >
             Фильмы
           </NavLink>
           <NavLink
             to="/saved-movies"
-            className="header__link"
+            className="header__link hover"
             activeClassName="header__link_active"
           >
             Сохрененные фильмы
           </NavLink>
         </nav>
         <Link to="/profile" className="profile-button-wraper">
-          <button className="profile-button">Аккаунт</button>
+          <button className="profile-button hover">Аккаунт</button>
         </Link>
 
         <img
-          className="header__menu-icon"
+          className="header__menu-icon hover"
           src={menuLogo}
           alt="иконка меню"
           onClick={handleActiveBurger}
@@ -80,7 +81,7 @@ function Header(loggedIn) {
                     <NavLink
                       exact
                       to="/"
-                      className="burger-menu__link"
+                      className="burger-menu__link hover"
                       activeClassName="burger-menu__link-active"
                     >
                       Главная
@@ -90,7 +91,7 @@ function Header(loggedIn) {
                     <NavLink
                       exact
                       to="/movies"
-                      className="burger-menu__link"
+                      className="burger-menu__link hover"
                       activeClassName="burger-menu__link-active"
                     >
                       Фильмы
@@ -100,7 +101,7 @@ function Header(loggedIn) {
                     <NavLink
                       exact
                       to="/saved-movies"
-                      className="burger-menu__link"
+                      className="burger-menu__link hover"
                       activeClassName="burger-menu__link-active"
                     >
                       Сохранённые фильмы
@@ -109,7 +110,7 @@ function Header(loggedIn) {
                 </ul>
               </nav>
               <Link className="profile-button-wraper-burger" to="/profile">
-                <button className="profile-button" onClick={handleActiveBurger}>Аккаунт</button>
+                <button className="profile-button hover" onClick={handleActiveBurger}>Аккаунт</button>
               </Link>
             </div>
           </section>

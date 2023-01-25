@@ -6,26 +6,28 @@ import './Movies.css';
 
 function Movies({ cards, onCardLike, onCardClick }) {
   const [loading, setLoading] = useState(false); // состояние загрузки фильмов из базы
-  console.log(cards)
+  console.log(cards);
 
+  // обработчик кнопки Найти
   const handleButtonSearch = () => {
-    setLoading(!loading);
+    setLoading(true);
   };
 
   return (
-      <div className="movies">
-        <SearchForm />
-        {loading ? (
-          <Preloader />
-        ) : (
-          <MoviesCardList
-            cards={cards}
-            onCardLike={onCardLike}
-            onCardClick={onCardClick}
-          />
-        )}
-        {/* <Preloader /> */}
-      </div>
+    <div className="movies">
+      <SearchForm onClick={handleButtonSearch} />
+      {/* {loading && <Preloader /> } */}
+      {loading ? (
+        <Preloader />
+      ) : (
+        <MoviesCardList
+          cards={cards}
+          onCardLike={onCardLike}
+          onCardClick={onCardClick}
+        />
+      )}
+      {/* <Preloader /> */}
+    </div>
   );
 }
 

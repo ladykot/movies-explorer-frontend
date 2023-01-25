@@ -14,12 +14,12 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
           </div>
           {children}
           <div className="form__bottom">
-            <button type="submit" className="button__sumbit">
+            <button type="submit" className="button__sumbit hover">
               {buttonText}
             </button>
             <div className="form__bottom-signin">
               <p className="form__bottom-text">{bottomText}</p>
-              <Link to="/signin" className="form__bottom-link">
+              <Link to="/signin" className="form__bottom-link hover">
                 {linkText}
               </Link>
             </div>
@@ -35,12 +35,12 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
           </div>
           {children}
           <div className="form__bottom">
-            <button type="submit" className="button__sumbit">
+            <button type="submit" className="button__sumbit hover">
               {buttonText}
             </button>
             <div className="form__bottom-signin">
               <p className="form__bottom-text">{bottomText}</p>
-              <Link to="/signin" className="form__bottom-link">
+              <Link to="/signin" className="form__bottom-link hover">
                 {linkText}
               </Link>
             </div>
