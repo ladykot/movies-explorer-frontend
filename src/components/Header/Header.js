@@ -22,26 +22,27 @@ function Header(loggedIn) {
         <img className="header__logo" src={logo} alt="логотип" />
       </Link>
 
-      {/* две группы роутов "/" и остальные */}
       <Route exact path="/">
-        {!loggedIn && <ul className="header__links">
-          <li className="header__link-item">
-            <Link to="/signup" className="header__link hover">
-              Регистрация
-            </Link>
-          </li>
-          <li className="header__link-item header__link-item_login">
-            <Link to="/signin" className="header__link hover">
-              Войти
-            </Link>
-          </li>
-        </ul>}
-        
+        {!loggedIn && (
+          <ul className="header__links">
+            <li className="header__link-item">
+              <Link to="/signup" className="header__link hover">
+                Регистрация
+              </Link>
+            </li>
+            <li className="header__link-item header__link-item_login">
+              <Link to="/signin" className="header__link hover">
+                Войти
+              </Link>
+            </li>
+          </ul>
+        )}
       </Route>
 
       <Route path={['/movies', '/saved-movies', '/profile']}>
         <nav className="header__links-movies">
           <NavLink
+            exact
             to="/movies"
             className="header__link hover"
             activeClassName="header__link_active"
@@ -49,6 +50,7 @@ function Header(loggedIn) {
             Фильмы
           </NavLink>
           <NavLink
+            exact
             to="/saved-movies"
             className="header__link hover"
             activeClassName="header__link_active"
@@ -68,7 +70,7 @@ function Header(loggedIn) {
         />
 
         {activeBurger && (
-          <section className='burger-menu-section'>
+          <section className="burger-menu-section">
             <div className="burger-menu">
               <button
                 onClick={handleActiveBurger}
@@ -110,7 +112,12 @@ function Header(loggedIn) {
                 </ul>
               </nav>
               <Link className="profile-button-wraper-burger" to="/profile">
-                <button className="profile-button hover" onClick={handleActiveBurger}>Аккаунт</button>
+                <button
+                  className="profile-button hover"
+                  onClick={handleActiveBurger}
+                >
+                  Аккаунт
+                </button>
               </Link>
             </div>
           </section>
