@@ -75,7 +75,7 @@ function App() {
             title="Рады видеть!"
             buttonText="Войти"
             linkText="Регистрация"
-            bottomText="Уже зарегистрированы?"
+            bottomText="Ещё не зарегистрированы?"
           />
         </Route>
         <Route exact path="/signup">
@@ -83,7 +83,7 @@ function App() {
             title="Добро пожаловать!"
             buttonText="Зарегистрироваться"
             linkText="Войти"
-            bottomText="Ещё не зарегистрированы?"
+            bottomText="Уже зарегистрированы?"
           />
         </Route>
         <Route exact path="/movies">

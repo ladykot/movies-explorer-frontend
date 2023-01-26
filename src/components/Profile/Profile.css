@@ -110,20 +110,11 @@ profile__edit-message_disable {
 
 .form__inputs-error {
     float: right;
-    /* display: inline; */
-    /* grid-column-end: span 2; */
     font-weight: 400;
     font-size: 10px;
     line-height: 12px;
-    color: #EE3465;
     padding-top: 2px;
-    width: 100%;
     max-width: 396px;
-}
-
-.form__inputs-error_profile {
-    text-align: right;
-    width: 60%;
 }
 
 .form__line {

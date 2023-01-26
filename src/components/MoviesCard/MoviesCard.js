@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import link from '../../images/pic__card.png';
 import './MoviesCard.css';
 import '../../vendor/hover.css';
 
 function MoviesCard({ card, onCardLike, onCardClick }) {
+  const [isLiked, setIsLiked] = useState(false);
   // обработчик клика на Сердечко
   // onCardLike - свойство карточки, и обработчик извне
   function handleLikeClick() {
     // onCardLike();
-    console.log('like!');
+    setIsLiked(!isLiked);
   }
 
   // для проверки url и установки нужной кнопки Лайка на карточке
   const location = useLocation();
-  const isLiked = true; // при false отображаются серые сердечки
 
   // обработчик клика по карточке для перехода на терейлер youtube
   function handleImageClick() {
