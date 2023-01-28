@@ -5,19 +5,19 @@ import Preloader from 'components/Preloader/Preloader';
 import './Movies.css';
 
 function Movies({ cards, onCardLike, onCardClick }) {
-  const [loading, setLoading] = useState(false); // состояние загрузки фильмов из базы
-  console.log(cards);
+  const [isLoading, setLoading] = useState(false); // состояние загрузки фильмов из базы
 
   // обработчик кнопки Найти
   const handleButtonSearch = () => {
     setLoading(true);
   };
 
+  // обработчик кнопки Еще
+
   return (
     <div className="movies">
       <SearchForm onClick={handleButtonSearch} />
-      {/* {loading && <Preloader /> } */}
-      {loading ? (
+      {!isLoading ? (
         <Preloader />
       ) : (
         <MoviesCardList
@@ -26,7 +26,6 @@ function Movies({ cards, onCardLike, onCardClick }) {
           onCardClick={onCardClick}
         />
       )}
-      {/* <Preloader /> */}
     </div>
   );
 }

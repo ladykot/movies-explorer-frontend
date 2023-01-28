@@ -6,10 +6,13 @@ function SearchForm({onClick}) {
   // состояние чекбокса для выбора короткометражек
   const [shorts, setShorts] = useState(false);
 
+  // состояние инпута
   const [inputValue, setInputValue] = useState("");
-  const handleSubmit = () => {
-    // если в инпутах есть значение - отобразить только короткометражки
-    // и вызвать функцию handleSearch
+
+  // 
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
   };
 
   const handelCheckbox = () => {

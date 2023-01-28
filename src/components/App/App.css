@@ -1,6 +1,8 @@
 
 .page {
   display: grid;
+  grid-template-columns: minmax(320px, 1200px);
+  justify-content: center;
   /* align-self: stretch; */
   /* align-items: center; */
   width: 100%;
