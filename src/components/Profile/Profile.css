@@ -126,6 +126,10 @@ profile__edit-message_disable {
 }
 
 @media screen and (min-width: 768px) {
+    .header {
+        align-content: center;
+        width: 100%;
+    }
 
     .form-profile {
         align-content: center;
@@ -134,8 +138,12 @@ profile__edit-message_disable {
         padding: 0 0 96px;
     }
 
+    .profile {
+        align-items: center;
+    }
+
     .profile__links {
-        padding-top: 210px;
+        padding-top: 170px;
     }
 
     .form-profile {

@@ -146,7 +146,7 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
           >
             Редактировать
           </button>
-          <button className="profile__links-item hover" onClick={handelLogoutProfile}>
+          <button className="profile__links-item profile__links-item_signout hover" onClick={handelLogoutProfile}>
             Выйти из аккаунта
           </button>
         </div>
