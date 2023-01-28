@@ -89,7 +89,8 @@
 
 .form__inputs-item:focus {
     border-bottom: 1px solid #2BE080;
-    outline: none;
+    outline: 1px solid #2BE080;
+    font-weight: 500;
 }
 
 .form__inputs-item:invalid {
@@ -102,7 +103,7 @@
     flex-direction: column;
     justify-content: end;
     /* align-items: end; */
-    padding: 157px 0 0;
+    padding: 134px 0 0;
 }
 
 .form__inputs-error {
@@ -181,5 +182,21 @@
     .form__title {
         text-align: left;
         padding: 40px 0;
+    }
+
+    .form__bottom-text {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .form__bottom-link {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    .button__sumbit {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
     }
 }

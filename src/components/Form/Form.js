@@ -150,7 +150,6 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
               ></input>
               <span className="form__inputs-error">{errorName}</span>
             </label>
-
             <label className="form__label">
               <span className="form__label_title">E-mail</span>
               <input
@@ -163,7 +162,6 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
               />
               <span className="form__inputs-error">{errorEmail}</span>
             </label>
-
           </fieldset>
           <div className="form__bottom">
             <button
@@ -176,7 +174,7 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
             </button>
             <div className="form__bottom-signin">
               <p className="form__bottom-text">{bottomText}</p>
-              <Link to="/signin" className="form__bottom-link hover">
+              <Link to="/signup" className="form__bottom-link hover">
                 {linkText}
               </Link>
             </div>
