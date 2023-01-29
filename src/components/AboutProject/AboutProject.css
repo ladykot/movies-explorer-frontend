@@ -95,7 +95,7 @@
 
 @media screen and (min-width: 1280px) {
     .about-project {
-        padding: 90px 70px 110px;
+        padding: 90px 70px 105px;
     }
 
     .two-columns__title {
@@ -113,11 +113,11 @@
     }
 
     .about-project__progress-item:nth-child(4) {
-        padding-top: 14px;
+        padding-top: 9px;
     }
 
     .about-project__progress-item:nth-child(3) {
-        padding-top: 14px;
+        padding-top: 9px;
     }
 
 }

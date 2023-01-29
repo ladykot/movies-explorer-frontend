@@ -58,7 +58,6 @@ portfolio__list-item-wrap {
     .portfolio__title {
         font-size: 18px;
         padding: 24px 0 30px;
-        padding-bottom: 30px;
     }
 
     .portfolio__item-text {
@@ -81,8 +80,9 @@ portfolio__list-item-wrap {
 }
 
 @media screen and (min-width: 1280px) {
-    .portfolio {
-        /* padding-top: 34px; */
+     
+    .portfolio__title { 
+        padding: 32px 0 30px;
     }
 
 

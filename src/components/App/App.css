@@ -17,3 +17,9 @@
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
 }
+
+@media screen and (min-width: 1280px) {
+  .page {
+    grid-template-columns: minmax(320px, 1280px);
+  }
+}

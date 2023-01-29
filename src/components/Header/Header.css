@@ -217,10 +217,6 @@
         justify-self: end;
     }
 
-    .header__link-item_login {
-        margin-left: 50px;
-    }
-
     .profile-button-wraper {
         display: block;
     }
