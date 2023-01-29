@@ -24,6 +24,7 @@
 }
 
 .form {
+    margin: 18px 0 18px;
     display: grid;
     grid-template-rows: max-content max-content auto;
     flex-direction: column;
@@ -58,14 +59,33 @@
     line-height: 12px;
     color: #A0A0A0;
     text-align: left;
-    height: 68px;
+    height: 48px;
 }
+
+.form__label_profile {
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
 
 .form__label_title {
     font-weight: 400;
     font-size: 10px;
     line-height: 12px;
+    position: absolute;
+    margin: 13px 0 0;
     /* padding-bottom: 5px; */
+}
+
+.form__label_title_profile {
+    justify-self: start;
+    grid-row: 1/3;
+    grid-column: 1;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: black;
 }
 
 .form__label:nth-child(1) {
@@ -87,10 +107,53 @@
     /* line-height: 17px; */
 }
 
+.form__inputs-item_profile {
+    
+    text-align: right;
+    width: 100%;
+    max-width: 411px;
+    height: 45px;
+    /* grid-row: 1/3; */
+}
+
+.form__inputs-item_profile_last {
+    padding: 0;
+    border: none;
+    height: 38px;
+}
+
+/* Стилизуем плейсхолдеры */
+.form__inputs-item_profile::-webkit-input-placeholder {
+    /* margin-top: -10px; */
+    font-size: 11px;
+    line-height: 13px;
+    color: #A0A0A0;
+}
+
+.form__inputs-item_profile::-moz-placeholder {
+    color: #A0A0A0;
+}
+
+.form__inputs-item_profile::-ms-input-placeholder {
+    color: #A0A0A0;
+}
+
 .form__inputs-item:focus {
-    border-bottom: 1px solid #2BE080;
+    /* border-bottom: 1px solid #2BE080; */
     outline: 1px solid #2BE080;
+    /* outline: none; */
     font-weight: 500;
+}
+
+.form__inputs-item_profile:focus {
+        /* border-bottom: 1px solid #2BE080; */
+    outline: 1px solid #2BE080;
+    /* outline: none; */
+    font-weight: 500;
+}
+
+.form__inputs-item:active {
+    border-bottom: 1px solid #2BE080;
 }
 
 .form__inputs-item:invalid {
@@ -114,13 +177,13 @@
     font-size: 10px;
     line-height: 12px;
     color: #EE3465;
-    padding-top: 6px;
 }
 
 .form__inputs-error_profile {
-    position: static;
+    top: 40px;
+    justify-self: end;
     text-align: right;
-    width: 75%;
+    z-index: 1;
 }
 
 .button__sumbit {

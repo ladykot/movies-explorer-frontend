@@ -44,7 +44,7 @@ function Header(loggedIn) {
           <NavLink
             exact
             to="/movies"
-            className="header__link hover"
+            className="header__link header__link_auth hover"
             activeClassName="header__link_active"
           >
             Фильмы
@@ -52,7 +52,7 @@ function Header(loggedIn) {
           <NavLink
             exact
             to="/saved-movies"
-            className="header__link hover"
+            className="header__link header__link_auth hover"
             activeClassName="header__link_active"
           >
             Сохрененные фильмы

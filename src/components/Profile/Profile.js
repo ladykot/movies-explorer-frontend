@@ -37,7 +37,7 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
   // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
   React.useEffect(() => {
     setMessage('');
-  }, [name, email])
+  }, [name, email]);
 
   // обработчики инпутов
   function handleNameChange(event) {
@@ -83,9 +83,8 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
     } else {
       setMessage('Что-то пошло не так');
     }
-    
-    setIsActiveEdit(false)
-    
+
+    setIsActiveEdit(false);
   };
 
   return (
@@ -94,10 +93,12 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
 
       <div className="profile__content">
         <p className="form-profile__title">{title}</p>
+
         <form className="form-profile">
-          <fieldset className="form-profile__inputs">
+          {/* <fieldset className="form-profile__inputs">
+          <span className="form__label_title">Имя</span>
             <label className="form-profile__label">
-              Имя
+              
               <input
                 type="name"
                 className="form-profile__inputs-item"
@@ -130,6 +131,36 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
             <span className="form__inputs-error form__inputs-error_profile">
               {errorEmail}
             </span>
+          </fieldset> */}
+          <fieldset className="form__inputs-register">
+            <label className="form__label form__label_profile">
+              <span className="form__label_title form__label_title_profile">Имя</span>
+              <input
+                type="name"
+                className="form__inputs-item form__inputs-item_profile"
+                minLength={2}
+                maxLength={35}
+                placeholder="Имя"
+                id="name"
+                value={name || ''}
+                onChange={handleNameChange}
+                required
+              ></input>
+              <span className="form__inputs-error form__inputs-error_profile">{errorName}</span>
+            </label>
+
+            <label className="form__label form__label_profile">
+              <span className="form__label_title form__label_title_profile">E-mail</span>
+              <input
+                type="email"
+                className="form__inputs-item_profile form__inputs-item_profile_last"
+                placeholder="E-mail"
+                required
+                value={email || ''}
+                onChange={handleEmailChange}
+              />
+              <span className="form__inputs-error form__inputs-error_profile ">{errorEmail}</span>
+            </label>
           </fieldset>
         </form>
 
@@ -142,11 +173,14 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
             onClick={handleSubmitProfile}
             type="submit"
             disabled={!isActiveEdit}
-            className={`profile__links-item ${isActiveEdit && "hover"}`}
+            className={`profile__links-item ${isActiveEdit && 'hover'}`}
           >
             Редактировать
           </button>
-          <button className="profile__links-item profile__links-item_signout hover" onClick={handelLogoutProfile}>
+          <button
+            className="profile__links-item profile__links-item_signout hover"
+            onClick={handelLogoutProfile}
+          >
             Выйти из аккаунта
           </button>
         </div>

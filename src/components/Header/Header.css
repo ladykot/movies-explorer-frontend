@@ -38,7 +38,11 @@
     text-decoration: none;
     align-self: center;
     color: black;
-    /* padding: 0px 8px; */
+
+}
+
+.header__link_auth {
+    padding: 0px 8px;
 }
 
 .header__link_active {
@@ -181,10 +185,6 @@
     .header__links {
         font-size: 12px;
         line-height: 16px;
-    }
-
-    .header__link {
-        padding: 0;
     }
 
     .header__link-item {

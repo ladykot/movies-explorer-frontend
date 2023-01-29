@@ -10,6 +10,7 @@
 .profile__content {
     display: grid;
     grid-template-rows: max-content max-content auto;
+    justify-self: center;
     height: 100%;
     flex-direction: column;
     margin-top: 74px;
@@ -21,25 +22,26 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
-    padding: 70px 0 80px;
+    padding: 70px 0 70px;
     margin: 0;
     text-align: center;
 }
 
 .form-profile {
+    /* margin-top: 5px ; */
     display: flex;
     flex-direction: column;
     height: 100%;
     max-height: min-content;
-    max-width: 396px;
+    /* max-width: 396px; */
     min-width: 260px;
     width: 100%;
 }
 
 /* fieldset */
 .form-profile__inputs {
-    /* display: grid; */
-    /* grid-template-columns: 1fr auto; */
+    display: grid;
+    grid-template-columns: 1fr auto;
     /* justify-content: stretch; */
     color: black;
     padding: 0;
@@ -50,7 +52,9 @@
 }
 
 .form-profile__inputs-item {
-    outline: none;
+    width: 100%;
+    outline: 1px solid ;
+    height: 20p;
     border: none;
     padding: 0;
     text-align: right;
@@ -60,7 +64,10 @@
 }
 
 .form-profile__label {
+    grid-column: span 2;
     display: flex;
+    /* display: grid; */
+    width: 100%;
     min-width: max-content;
     justify-content: space-between;
     font-weight: 500;
@@ -135,7 +142,7 @@ profile__edit-message_disable {
         align-content: center;
     }
     .form-profile__title {
-        padding: 0 0 96px;
+        padding: 0 0 83px;
     }
 
     .profile {
@@ -143,7 +150,7 @@ profile__edit-message_disable {
     }
 
     .profile__links {
-        padding-top: 170px;
+        padding-top: 150px;
     }
 
     .form-profile {
@@ -152,7 +159,7 @@ profile__edit-message_disable {
 
     .profile__content {
         align-content: center;
-        grid-template-rows: max-content max-content max-content;
+        width: 410px;
     }
 
 
