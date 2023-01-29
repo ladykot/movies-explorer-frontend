@@ -78,6 +78,9 @@
     padding: 0 20px;
     width: max-content;
     justify-self: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
 }
 
 .profile-button-wraper {
@@ -174,6 +177,10 @@
     .header__links {
         font-size: 12px;
         line-height: 16px;
+    }
+
+    .header__link {
+        padding: 0;
     }
 
     .header__link-item {

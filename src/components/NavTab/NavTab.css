@@ -40,7 +40,9 @@
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
+        height: 36px;
     }
+
 }
 
 @media screen and (min-width: 1280px) {

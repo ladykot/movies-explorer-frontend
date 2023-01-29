@@ -60,13 +60,15 @@
 @media screen and (min-width: 768px) {
     .techs {
         padding: 90px 50px;
-        gap: 83px;
+        gap: 80px;
         background: rgba(245, 245, 245, 1);
+        max-height: 567px;
     }
 
     .techs__title {
         font-size: 50px;
         line-height: 58px;
+        padding-bottom: 24px;
     }
 
     .techs__subtitle {
@@ -83,19 +85,6 @@
         grid-template-columns: repeat(7, 84px);
         
     }
-}
-
-@media screen and (min-width: 768px) {
-    .techs {
-        padding: 100px 50px;
-        gap: 90px;
-    }
-
-    .techs__subtitle {
-        font-size: 14px;
-        line-height: 20px;
-    }
-
 }
 
 @media screen and (min-width: 1280px) {

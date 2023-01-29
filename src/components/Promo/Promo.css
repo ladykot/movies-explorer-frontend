@@ -38,12 +38,16 @@
         max-width: 90%;
         font-size: 40px;
         line-height: 52px;
-        
+        align-self: center;
+        padding-top: 50px;
     }
 
     .promo__background {
         height: 834px;
+        grid-template-rows: 1fr;
     }
+
+    
 }
 
 @media screen and (min-width: 1280px) {
