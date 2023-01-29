@@ -1,8 +1,8 @@
 .about-project {
-    padding: 70px 18px;
+    padding: 56px 18px;
     display: flex;
     flex-direction: column;
-    gap: 56px;
+    gap: 60px;
 }
 
 .two-columns {
@@ -11,6 +11,10 @@
     flex-direction: column;
     justify-content: space-evenly;
     box-sizing: border-box;
+}
+
+.two-columns__item {
+    
 }
 
 .two-columns__title {

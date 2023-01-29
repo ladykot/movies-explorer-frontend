@@ -61,7 +61,9 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
       <Route exact path="/signup">
         <form className="form">
           <div className="form-top">
-            <img className="header__logo" src={logo} alt="логотип" />
+            <Link to="/">
+              <img className="header__logo" src={logo} alt="логотип" />
+            </Link>
             <p className="form__title">{title}</p>
           </div>
           <fieldset className="form__inputs-register">

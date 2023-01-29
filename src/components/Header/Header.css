@@ -24,8 +24,8 @@
     justify-content: flex-end;
     list-style: none;
     font-weight: 500;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 10px;
+    line-height: 16px;
     margin: 0;
     width: 100%;
 }
@@ -38,7 +38,7 @@
     text-decoration: none;
     align-self: center;
     color: black;
-    padding: 0px 8px;
+    /* padding: 0px 8px; */
 }
 
 .header__link_active {
@@ -166,6 +166,10 @@
 @media screen and (min-width: 320px) {
     .header__links-movies {
         display: none;
+    }
+
+    .header__link-item_login {
+        margin-left: 14px;
     }
 }
 
