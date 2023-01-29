@@ -85,11 +85,21 @@
 
 @media screen and (min-width: 1280px) {
     .about-me {
-        padding: 110px 70px;
+        padding: 112px 70px;
+        gap: 63px;
+    }
+
+    .about-me__content {
+        grid-template-columns: auto 270px;
+    }
+
+    .about-me__pic {
+        padding: 0;
+        height: 100%;
     }
 
     .about-me__title {
-        padding: 0 0 18px;
+        padding: 0px 0 23px;
         padding-top: 0;
         font-size: 50px;
         line-height: 58px;

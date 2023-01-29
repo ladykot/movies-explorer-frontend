@@ -82,10 +82,17 @@ portfolio__list-item-wrap {
 }
 
 @media screen and (min-width: 1280px) {
+    .portfolio {
+        padding: 5px 0 0;
+    }
 
     .portfolio__title {
         padding: 32px 0 30px;
     }
 
+    .portfolio__list {
+        padding-top: 0;
+        
+    }
 
 }
