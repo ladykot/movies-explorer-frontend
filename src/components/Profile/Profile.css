@@ -28,12 +28,11 @@
 }
 
 .form-profile {
-    /* margin-top: 5px ; */
     display: flex;
     flex-direction: column;
     height: 100%;
     max-height: min-content;
-    /* max-width: 396px; */
+    max-width: 410px;
     min-width: 260px;
     width: 100%;
 }
