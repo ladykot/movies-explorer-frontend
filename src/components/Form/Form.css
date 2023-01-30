@@ -167,8 +167,10 @@
     display: flex;
     flex-direction: column;
     justify-content: end;
+    height: 100%;
+    
     /* align-items: end; */
-    padding: 134px 0 0;
+    /* padding: 134px 0 0; */
 }
 
 .form__inputs-error {
@@ -236,8 +238,10 @@
     }
 
     .form {
-        align-content: center;
+        /* align-content: center; */
+        align-self: center;
         width: 396px;
+        height: 560px;
     }
 
     .form-top {
@@ -247,6 +251,10 @@
     .form__title {
         text-align: left;
         padding: 40px 0;
+    }
+
+    .form__bottom {
+        /* padding: 134px 0 0; */
     }
 
     .form__bottom-text {

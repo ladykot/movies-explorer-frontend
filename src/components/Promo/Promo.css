@@ -17,8 +17,9 @@
 }
 
 .promo__title {
-    max-width: 80%;
+    /* max-width: 90%; */
     margin: 0;
+    margin-top: 20px;
     justify-self: center;
     align-items: center;
     text-align: center;
@@ -39,7 +40,7 @@
         font-size: 40px;
         line-height: 52px;
         align-self: center;
-        padding-top: 50px;
+        margin-top: 50px;
     }
 
     .promo__background {
@@ -60,7 +61,7 @@
     }
 
     .promo__title {
-        padding: 0;
+        margin-top: 5px;
         max-width: 730px;
         font-size: 50px;
         line-height: 58px;
