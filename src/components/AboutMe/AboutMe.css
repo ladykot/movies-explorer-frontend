@@ -1,0 +1,119 @@
+.about-me {
+    padding: 80px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.about-me__content {
+    grid-template-columns: auto 255px;
+    gap: 50px;
+}
+
+.about-me__text {
+    margin-top: -5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 600px;
+}
+
+.about-me__pic {
+    width: 100%;
+    padding: 18px 0 0px;
+}
+
+.about-me__title {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding: 40px 0 20px;
+}
+
+.about-me__subtitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    padding-bottom: 20px;
+    margin: 0;
+}
+
+.about-me__link {
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    padding-top: 40px;
+}
+
+@media screen and (min-width: 768px) {
+    .about-me {
+        padding: 90px 50px;
+        gap: 66px;
+    }
+
+    .about-me__title {
+        font-size: 40px;
+        line-height: 40px;
+        padding: 0 0 16px;
+        padding-bottom: 16px;
+    }
+
+    .about-me__subtitle {
+        margin: 0;
+        padding-bottom: 20px;
+    }
+
+    .about-me__pic {
+        order: 4;
+        height: 307px;
+
+    }
+
+    .about-me__link {
+        padding-top: 87px;
+    }
+
+    .about-me__content {
+        display: grid;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .about-me {
+        padding: 112px 70px;
+        gap: 63px;
+    }
+
+    .about-me__content {
+        grid-template-columns: auto 270px;
+    }
+
+    .about-me__pic {
+        padding: 0;
+        height: 100%;
+    }
+
+    .about-me__title {
+        padding: 0px 0 23px;
+        padding-top: 0;
+        font-size: 50px;
+        line-height: 58px;
+    }
+
+    .about-me__subtitle {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+        padding-bottom: 26px;
+    }
+
+    .about-me__pic {
+        height: 327px;
+    }
+
+}
