@@ -1,4 +1,4 @@
-import { URL_MAIN } from '../constants/constants';
+import { BASE_URL } from './constants';
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -6,11 +6,11 @@ class MainApi {
     this._headers = headers;
   }
 
-  _checkResponse(res) {
+  _handleResponse(res) {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Something wrong: ${res.status}`);
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
   _getHeaders() {
@@ -27,10 +27,10 @@ register (name, email, password) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
+      body: JSON.stringify({ 
         name, email, password,
       }),
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   };
 
  authorize (email, password) {
@@ -43,7 +43,7 @@ register (name, email, password) {
       body: JSON.stringify({
         email, password
       }),
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   };
 
   getUserToken(jwt){
@@ -53,7 +53,7 @@ register (name, email, password) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${jwt}`,
       },
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   };
 
   // Получение юзером всех своих сохранненых карточек
@@ -61,7 +61,7 @@ register (name, email, password) {
     return fetch(`${this._baseUrl}/movies`, {
       method: "GET",
       headers: this._getHeaders(),
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   // Сохранение на сервере фильма юзера
@@ -81,7 +81,7 @@ register (name, email, password) {
         // nameRU: movie.nameRU,
         // nameEN: movie.nameEN,
         // thumbnail: movie.thumbnail,
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   // Удаление на сервере фильма юзера
@@ -89,7 +89,7 @@ register (name, email, password) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: "DELETE",
       headers: this._getHeaders(),
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   // Получение с сервера информация о пользователе
@@ -97,7 +97,7 @@ register (name, email, password) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._getHeaders(),
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   // Сохранение на сервере информация о пользователе
@@ -109,12 +109,12 @@ register (name, email, password) {
         name,
         email,
       }),
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 }
 
  const mainApi = new MainApi({
-  baseUrl: URL_MAIN,
+  baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

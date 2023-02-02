@@ -3,13 +3,16 @@ import './App.css';
 import Header from 'components/Header/Header';
 import Main from 'components/Main/Main';
 import Footer from 'components/Footer/Footer';
-import { Route, Switch } from  'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Register from 'components/Register/Register';
 import Login from 'components/Login/Login';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
 import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
 import { useHistory } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute';
+// импортируем контекст пользователя
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   // временный объект с данными для карточек (не забыть добавить link)
@@ -86,7 +89,7 @@ function App() {
             bottomText="Уже зарегистрированы?"
           />
         </Route>
-        <Route exact path="/movies">
+        <ProtectedRoute exact path="/movies"> 
           <Header loggedIn={loggedIn} onSignOut={onSignOut} />
           <Movies
             onCardLike={handleCardLike}
@@ -94,7 +97,7 @@ function App() {
             cards={cards}
           />
           <Footer />
-        </Route>
+        </ProtectedRoute>
         <Route exact path="/saved-movies">
           <Header loggedIn={loggedIn} onSignOut={onSignOut} />
           <Movies
