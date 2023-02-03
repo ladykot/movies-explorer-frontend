@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
+import { useForm, useFormState } from 'react-hook-form';
 import Form from 'components/Form/Form';
 
 function Register({ title, buttonText, linkText, bottomText, onRegister }) {
-  // const [name, setName] = React.useState("");
-  // const [email, setEmail] = React.useState("");
-  // const [password, setPassword] = React.useState("");
-
   // обработка сабмита регистрации
-  const handeleRegisterSubmit = (e) => {
-    e.preventDefault();
-    onRegister({ name, email, password });
-    resetForm();
-  };
+  // const handeleRegisterSubmit = (e, { name, email, password }) => {
+  //   console.log(e.target);
+  //   console.log('обработка')
+  //   e.preventDefault();
+  //   onRegister({ name, email, password });
+  // };
 
-  // reset email & password
-  const resetForm = () => {
-    setName("");
-    setEmail("");
-    setPassword("");
-  };
+  // форма из хука
+  const {
+    register,
+    formState: {errors},
+    handleSubmit,
+  } = useForm();
 
   return (
     <Form
-      onSubmit={handeleRegisterSubmit}
+      onSubmit={handleSubmit(onRegister)}
+      errors={errors}
+      register={register}
       title={title}
       buttonText={buttonText}
       linkText={linkText}

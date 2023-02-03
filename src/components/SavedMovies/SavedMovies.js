@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import SearchForm from 'components/SearchForm/SearchForm';
 import MoviesCardList from 'components/MoviesCardList/MoviesCardList';
 import Preloader from 'components/Preloader/Preloader';
-import './Movies.css';
+import './SavedMovies.css';
 
-function Movies({ cards, onCardLike, onCardClick }) {
+function SavedMovies({ cards, onCardLike, onCardClick }) {
   const [loading, setLoading] = useState(false); // состояние загрузки фильмов из базы
-  const [isLiked]
+  // const [isLiked]
   const handleButtonSearch = () => {
     setLoading(!loading);
   };
@@ -30,4 +30,4 @@ function Movies({ cards, onCardLike, onCardClick }) {
   );
 }
 
-export default Movies;
+export default SavedMovies;

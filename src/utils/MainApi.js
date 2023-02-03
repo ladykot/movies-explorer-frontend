@@ -21,7 +21,7 @@ class MainApi {
     };
   }
 
-register (name, email, password) {
+register ({name, email, password}) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: {

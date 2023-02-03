@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '../../images/logo.svg';
 import './Form.css';
 
-function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
+function Form({ title, buttonText, linkText, bottomText, onSubmit, errors, register }) {
+
+  
   // состояние кнопки Сохранить
   const [isDisabled, setIsDisabled] = useState(true);
   // состояния полей
@@ -20,8 +23,8 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
   const [errorPassword, setErrorPassword] = useState('');
 
   // обработчики инпутов
-  function handleNameChange(event) {
-    const input = event.target;
+  function handleNameChange(e) {
+    const input = e.target;
     setName(input.value);
     setIsValidName(input.validity.valid);
     if (!isValidName) {
@@ -59,9 +62,6 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
   return (
     <div
       className="form__container"
-      onClick={(e) => {
-        e.stopPropagation(); // Прекращает дальнейшую передачу текущего события.
-      }}
     >
       <Route exact path="/signup">
         <form className="form" onSubmit={onSubmit}>
@@ -75,6 +75,10 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
             <label className="form__label">
               <span className="form__label_title">Имя</span>
               <input
+                {...register("name", {
+                  required: 'Поле обязательно для заполнения', 
+                  onChange: handleNameChange
+                })}
                 type="name"
                 className="form__inputs-item"
                 minLength={2}
@@ -82,15 +86,19 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
                 placeholder="Имя"
                 id="name"
                 value={name || ''}
-                onChange={handleNameChange}
+                // onChange={handleNameChange}
                 required
               ></input>
-              <span className="form__inputs-error">{errorName}</span>
+              {errors?.name && <span className="form__inputs-error">Error</span>}
+              
             </label>
 
             <label className="form__label">
               <span className="form__label_title">E-mail</span>
               <input
+              {...register("email", {
+                required: 'Поле обязательно для заполнения',
+              })}
                 type="email"
                 className="form__inputs-item"
                 placeholder="E-mail"
@@ -98,12 +106,16 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
                 value={email || ''}
                 onChange={handleEmailChange}
               />
-              <span className="form__inputs-error">{errorEmail}</span>
+              {/* <span className="form__inputs-error">{errorEmail}</span> */}
+              {errors?.email && <span className="form__inputs-error">Error</span>}
             </label>
 
             <label className="form__label">
               <span className="form__label_title">Пароль</span>
               <input
+              {...register("password", {
+                required: 'Поле обязательно для заполнения',
+              })}
                 type="password"
                 className="form__inputs-item"
                 placeholder="Придумайте пароль"
@@ -113,7 +125,8 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
                 value={password || ''}
                 onChange={handlePasswordChange}
               />
-              <span className="form__inputs-error">{errorPassword}</span>
+              {/* <span className="form__inputs-error">{errorPassword}</span> */}
+              {errors?.email && <span className="form__inputs-error">Error</span>}
             </label>
           </fieldset>
           <div className="form__bottom">

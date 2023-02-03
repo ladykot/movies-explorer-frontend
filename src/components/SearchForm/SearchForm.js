@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FilterCheckbox from 'components/FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm({onClick}) {
+function SearchForm({}) {
   // состояние чекбокса для выбора короткометражек
   const [shorts, setShorts] = useState(false);
 
@@ -38,7 +38,7 @@ function SearchForm({onClick}) {
         />
         <button
           type="button"
-          onClick={onClick}
+          // onClick={onClick}
           className="search-form__button hover"
           aria-label="Поиск"
         >

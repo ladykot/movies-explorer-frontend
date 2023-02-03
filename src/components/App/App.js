@@ -9,9 +9,11 @@ import Login from 'components/Login/Login';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
 import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
+import SavedMovies from 'components/SavedMovies/SavedMovies';
 import { useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import mainApi from 'utils/MainApi';
+import { UNAUTHORIZED } from '../../utils/constants';
 // импортируем контекст пользователя
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -39,6 +41,8 @@ function App() {
 
   // состояние, когда мы залогинились, равно true
   const [loggedIn, setLoggedIn] = useState(true);
+
+  const [textError, setTextError] = useState('');
   const history = useHistory();
 
   // отобразим карточки при рендеринге (потом карточки появятся только после поиска)
@@ -58,8 +62,6 @@ function App() {
     history.push('/signin');
   };
 
-
-
   // обработка лайка
   function handleCardLike() {}
 
@@ -74,31 +76,52 @@ function App() {
   };
 
   // обработчик Логина
-  const handleLogin = ({email, password}) => {
-    
-  }
-
-  // обработчик Регистрации
-  const handleRegister = ({ name, email, password }) => {
-    // отправляем запрос на наш API
-    return mainApi
-      .register(name, email, password)
-      .then((data) => {
-        if (data) {
-          setInfoTooltipOpen({ isOpen: true, isSucess: true });
-          history.push('/signin');
-        } else {
-          setInfoTooltipOpen({ isOpen: true, isSucess: false });
+  const onLogin = ({ email, password }) => {
+    mainApi
+      .authorize(email, password)
+      .then((jwt) => {
+        if (jwt.token) {
+          localStorage.setItem('jwt', jwt.token);
+          setLoggedIn(true);
+          history.push('/movies');
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.status === UNAUTHORIZED) {
+          setTextError('Неверный логин или пароль');
+        } else {
+          console.log(err);
+          setTextError('Ошибка входа');
+        }
+        console.error(err);
+      })
+      .finally(() => {
+        setTextError('');
+      });
+  };
+
+  // обработчик Регистрации
+  const onRegister = ({name, email, password}) => {
+    console.log({name, email, password});
+    // отправляем запрос на наш API
+    mainApi
+      .register({ name, email, password })
+      .then((data) => {
+        console.log(data)
+        // после успешной регистрации логинимся
+        if (data) {
+          onLogin({ email, password });
+        } else {
+        }
+      })
+      .catch((err) => {
+        console.error(err);
       });
   };
 
   return (
     <div className="page">
-      <Route path={['/movies', '/saved-movies', '/']}>
+      <Route path={['/movies', '/saved-movies', '/', '/profile']}>
         <Header loggedIn={loggedIn} />
       </Route>
       <Switch>
@@ -108,7 +131,7 @@ function App() {
             buttonText="Войти"
             linkText="Регистрация"
             bottomText="Ещё не зарегистрированы?"
-            onLogin={handleLogin}
+            onLogin={onLogin}
           />
         </Route>
         <Route exact path="/signup">
@@ -117,41 +140,46 @@ function App() {
             buttonText="Зарегистрироваться"
             linkText="Войти"
             bottomText="Уже зарегистрированы?"
-            onRegister={handleRegister}
+            onRegister={onRegister}
           />
         </Route>
-        <ProtectedRoute path="/movies" loggedIn={loggedIn} >
-          <Movies
-            onCardLike={handleCardLike}
-            onCardClick={handleCardClick}
-            cards={cards}
-          />
-          <Footer />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/saved-movies" loggedIn={loggedIn}>
-          <Movies
-            onCardLike={handleCardLike}
-            onCardClick={handleCardClick}
-            cards={cards}
-          />
-          <Footer />
-        </ProtectedRoute>
-        <Route exact path="/profile">
-          <Profile
-            title="Привет, Виталий!"
-            onUpdateUser={handelEditProfile}
-            handelLogUot={handelLogUot}
-            buttonText="Сохранить"
-          />
-        </Route>
+
+        <ProtectedRoute
+          path="/movies"
+          loggedIn={loggedIn}
+          component={Movies}
+          onCardLike={handleCardLike} // добавить в избранное
+          onCardClick={handleCardClick} // ссылка на ролик
+          cards={cards}
+        />
+        <ProtectedRoute
+          exact
+          path="/saved-movies"
+          loggedIn={loggedIn}
+          component={SavedMovies}
+          onCardLike={handleCardLike}
+          onCardClick={handleCardClick}
+          cards={cards}
+        />
+        <ProtectedRoute
+          exact
+          path="/profile"
+          title="Привет, Виталий!"
+          component={Profile}
+          onUpdateUser={handelEditProfile}
+          handelLogUot={handelLogUot}
+          buttonText="Сохранить"
+        />
         <Route exact path="/">
           <Main />
-          <Footer />
         </Route>
         <Route path="/*">
           <PageNotFound />
         </Route>
       </Switch>
+      <Route exact path={['/', '/movies', '/saved-movies']}>
+        <Footer />
+      </Route>
     </div>
   );
 }
