@@ -11,6 +11,7 @@ import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
 import { useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
+import mainApi from 'utils/MainApi';
 // импортируем контекст пользователя
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -57,6 +58,8 @@ function App() {
     history.push('/signin');
   };
 
+
+
   // обработка лайка
   function handleCardLike() {}
 
@@ -70,15 +73,42 @@ function App() {
     history.push('/signin');
   };
 
+  // обработчик Логина
+  const handleLogin = ({email, password}) => {
+    
+  }
+
+  // обработчик Регистрации
+  const handleRegister = ({ name, email, password }) => {
+    // отправляем запрос на наш API
+    return mainApi
+      .register(name, email, password)
+      .then((data) => {
+        if (data) {
+          setInfoTooltipOpen({ isOpen: true, isSucess: true });
+          history.push('/signin');
+        } else {
+          setInfoTooltipOpen({ isOpen: true, isSucess: false });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="page">
+      <Route path={['/movies', '/saved-movies', '/']}>
+        <Header loggedIn={loggedIn} />
+      </Route>
       <Switch>
         <Route exact path="/signin">
           <Login
-            title="Рады видеть!"
+            title="Вход"
             buttonText="Войти"
             linkText="Регистрация"
             bottomText="Ещё не зарегистрированы?"
+            onLogin={handleLogin}
           />
         </Route>
         <Route exact path="/signup">
@@ -87,10 +117,10 @@ function App() {
             buttonText="Зарегистрироваться"
             linkText="Войти"
             bottomText="Уже зарегистрированы?"
+            onRegister={handleRegister}
           />
         </Route>
-        <ProtectedRoute exact path="/movies"> 
-          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
+        <ProtectedRoute path="/movies" loggedIn={loggedIn} >
           <Movies
             onCardLike={handleCardLike}
             onCardClick={handleCardClick}
@@ -98,15 +128,14 @@ function App() {
           />
           <Footer />
         </ProtectedRoute>
-        <Route exact path="/saved-movies">
-          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
+        <ProtectedRoute exact path="/saved-movies" loggedIn={loggedIn}>
           <Movies
             onCardLike={handleCardLike}
             onCardClick={handleCardClick}
             cards={cards}
           />
           <Footer />
-        </Route>
+        </ProtectedRoute>
         <Route exact path="/profile">
           <Profile
             title="Привет, Виталий!"
@@ -116,7 +145,6 @@ function App() {
           />
         </Route>
         <Route exact path="/">
-          <Header loggedIn={loggedIn} onSignOut={onSignOut} />
           <Main />
           <Footer />
         </Route>

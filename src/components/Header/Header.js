@@ -6,7 +6,7 @@ import '../../vendor/hover.css';
 import menuLogo from '../../images/icon__COLOR_icon-main.svg';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
-// вместе с бургер-меню
+// header вместе с бургер-меню
 function Header(loggedIn) {
   const [activeBurger, setActiveBurger] = useState(false);
   loggedIn = false;
@@ -18,11 +18,10 @@ function Header(loggedIn) {
 
   return (
     <header className="header">
-      <Link to="/">
-        <img className="header__logo" src={logo} alt="логотип" />
-      </Link>
-
       <Route exact path="/">
+        <Link to="/">
+          <img className="header__logo" src={logo} alt="логотип" />
+        </Link>
         {!loggedIn && (
           <ul className="header__links">
             <li className="header__link-item">
@@ -40,6 +39,9 @@ function Header(loggedIn) {
       </Route>
 
       <Route path={['/movies', '/saved-movies', '/profile']}>
+        <Link to="/">
+          <img className="header__logo" src={logo} alt="логотип" />
+        </Link>
         <nav className="header__links-movies">
           <NavLink
             exact

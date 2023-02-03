@@ -3,10 +3,10 @@ import { Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '../../images/logo.svg';
 import './Form.css';
 
-function Form({ title, buttonText, linkText, bottomText, children }) {
+function Form({ title, buttonText, linkText, bottomText, onSubmit }) {
   // состояние кнопки Сохранить
   const [isDisabled, setIsDisabled] = useState(true);
-
+  // состояния полей
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,9 +57,14 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
   }
 
   return (
-    <div className="form__container">
+    <div
+      className="form__container"
+      onClick={(e) => {
+        e.stopPropagation(); // Прекращает дальнейшую передачу текущего события.
+      }}
+    >
       <Route exact path="/signup">
-        <form className="form">
+        <form className="form" onSubmit={onSubmit}>
           <div className="form-top">
             <Link to="/">
               <img className="header__logo" src={logo} alt="логотип" />
@@ -131,7 +136,7 @@ function Form({ title, buttonText, linkText, bottomText, children }) {
       </Route>
 
       <Route exact path="/signin">
-        <form className="form">
+        <form className="form" onSubmit={onSubmit}>
           <div className="form-top">
             <Link to="/">
               <img className="header__logo" src={logo} alt="логотип" />
