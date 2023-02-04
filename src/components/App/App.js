@@ -41,6 +41,7 @@ function App() {
 
   // состояние, когда мы залогинились, равно true
   const [loggedIn, setLoggedIn] = useState(true);
+  const [userName, setUserName] = useState('');
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
@@ -100,14 +101,43 @@ function App() {
       });
   };
 
+   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
+   const auth = async (jwt) => {
+    return mainApi
+      .getUserInfoFromServer()
+      .then(({ data }) => {
+        // если такой есть, то логинимся
+        if (data) {
+          setLoggedIn(true);
+          // установить данные в профиле
+          setUserName(data.name);
+          history.push('/');
+        } else {
+          history.push('/');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // проверка наличия токена в хранилище при изменении loggedIn
+  React.useEffect(() => {
+    if (!loggedIn) {
+      if (localStorage.getItem('jwt')) {
+        const jwt = localStorage.getItem('jwt');
+        auth(jwt);
+      }
+    }
+  }, [loggedIn]);
+
   // обработчик Регистрации
-  const onRegister = ({name, email, password}) => {
-    console.log({name, email, password});
+  const onRegister = ({ name, email, password }) => {
+    console.log({ name, email, password });
     // отправляем запрос на наш API
     mainApi
       .register({ name, email, password })
       .then((data) => {
-        console.log(data)
+        console.log(data);
         // после успешной регистрации логинимся
         if (data) {
           onLogin({ email, password });
@@ -164,7 +194,7 @@ function App() {
         <ProtectedRoute
           exact
           path="/profile"
-          title="Привет, Виталий!"
+          title={`Привет, ${userName}`}
           component={Profile}
           onUpdateUser={handelEditProfile}
           handelLogUot={handelLogUot}

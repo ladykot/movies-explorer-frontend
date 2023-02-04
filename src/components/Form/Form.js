@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '../../images/logo.svg';
 import './Form.css';
 
-function Form({ title, buttonText, linkText, bottomText, onSubmit, errors, register }) {
-
-  
+function Form({
+  name,
+  title,
+  buttonText,
+  linkText,
+  bottomText,
+  onSubmit,
+  errors,
+  register,
+}) {
   // состояние кнопки Сохранить
   const [isDisabled, setIsDisabled] = useState(true);
   // состояния полей
-  const [name, setName] = useState('');
+  const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // состояния валидности полей
@@ -25,7 +31,7 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit, errors, regis
   // обработчики инпутов
   function handleNameChange(e) {
     const input = e.target;
-    setName(input.value);
+    setUserName(input.value);
     setIsValidName(input.validity.valid);
     if (!isValidName) {
       setErrorName(input.validationMessage);
@@ -60,62 +66,58 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit, errors, regis
   }
 
   return (
-    <div
-      className="form__container"
-    >
-      <Route exact path="/signup">
-        <form className="form" onSubmit={onSubmit}>
-          <div className="form-top">
-            <Link to="/">
-              <img className="header__logo" src={logo} alt="логотип" />
-            </Link>
-            <p className="form__title">{title}</p>
-          </div>
-          <fieldset className="form__inputs-register">
-            <label className="form__label">
-              <span className="form__label_title">Имя</span>
-              <input
-                {...register("name", {
-                  required: 'Поле обязательно для заполнения', 
-                  onChange: handleNameChange
-                })}
-                type="name"
-                className="form__inputs-item"
-                minLength={2}
-                maxLength={35}
-                placeholder="Имя"
-                id="name"
-                value={name || ''}
-                // onChange={handleNameChange}
-                required
-              ></input>
-              {errors?.name && <span className="form__inputs-error">Error</span>}
-              
-            </label>
+    <div className="form__container">
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form-top">
+          <Link to="/">
+            <img className="header__logo" src={logo} alt="логотип" />
+          </Link>
+          <p className="form__title">{title}</p>
+        </div>
+        <fieldset className="form__inputs-register">
+          <label className="form__label">
+            <span className="form__label_title">Имя</span>
+            <input
+              {...register('name', {
+                required: 'Поле обязательно для заполнения',
+                onChange: handleNameChange,
+              })}
+              type="name"
+              className="form__inputs-item"
+              minLength={2}
+              maxLength={35}
+              placeholder="Имя"
+              id="username"
+              value={username || ''}
+              // onChange={handleNameChange}
+              // required
+            ></input>
+            {errors?.name && <span className="form__inputs-error">Error</span>}
+          </label>
 
-            <label className="form__label">
-              <span className="form__label_title">E-mail</span>
-              <input
-              {...register("email", {
+          <label className="form__label">
+            <span className="form__label_title">E-mail</span>
+            <input
+              {...register('email', {
                 required: 'Поле обязательно для заполнения',
               })}
-                type="email"
-                className="form__inputs-item"
-                placeholder="E-mail"
-                required
-                value={email || ''}
-                onChange={handleEmailChange}
-              />
-              {/* <span className="form__inputs-error">{errorEmail}</span> */}
-              {errors?.email && <span className="form__inputs-error">Error</span>}
-            </label>
-
+              type="email"
+              className="form__inputs-item"
+              placeholder="E-mail"
+              required
+              value={email || ''}
+              onChange={handleEmailChange}
+            />
+            {/* <span className="form__inputs-error">{errorEmail}</span> */}
+            {errors?.email && <span className="form__inputs-error">Error</span>}
+          </label>
+          {name === 'signup' && 
             <label className="form__label">
               <span className="form__label_title">Пароль</span>
               <input
-              {...register("password", {
-                required: 'Поле обязательно для заполнения',
-              })}
+                {...register('password', {
+                  required: 'Поле обязательно для заполнения',
+                })}
                 type="password"
                 className="form__inputs-item"
                 placeholder="Придумайте пароль"
@@ -126,83 +128,29 @@ function Form({ title, buttonText, linkText, bottomText, onSubmit, errors, regis
                 onChange={handlePasswordChange}
               />
               {/* <span className="form__inputs-error">{errorPassword}</span> */}
-              {errors?.email && <span className="form__inputs-error">Error</span>}
+              {errors.email && (
+                <span className="form__inputs-error">Error</span>
+              )}
             </label>
-          </fieldset>
-          <div className="form__bottom">
-            <button
-              type="submit"
-              className={`button__sumbit ${
-                isDisabled && 'button__sumbit_disable'
-              } hover`}
-            >
-              {buttonText}
-            </button>
-            <div className="form__bottom-signin">
-              <p className="form__bottom-text">{bottomText}</p>
-              <Link to="/signin" className="form__bottom-link hover">
-                {linkText}
-              </Link>
-            </div>
-          </div>
-        </form>
-      </Route>
-
-      <Route exact path="/signin">
-        <form className="form" onSubmit={onSubmit}>
-          <div className="form-top">
-            <Link to="/">
-              <img className="header__logo" src={logo} alt="логотип" />
+          }
+        </fieldset>
+        <div className="form__bottom">
+          <button
+            type="submit"
+            className={`button__sumbit ${
+              isDisabled && 'button__sumbit_disable'
+            } hover`}
+          >
+            {buttonText}
+          </button>
+          <div className="form__bottom-signin">
+            <p className="form__bottom-text">{bottomText}</p>
+            <Link to="/signin" className="form__bottom-link hover">
+              {linkText}
             </Link>
-            <p className="form__title">{title}</p>
           </div>
-          <fieldset className="form__inputs-register">
-            <label className="form__label">
-              <span className="form__label_title">Имя</span>
-              <input
-                type="name"
-                className="form__inputs-item"
-                minLength={2}
-                maxLength={35}
-                placeholder="Имя"
-                id="name"
-                value={name || ''}
-                onChange={handleNameChange}
-                required
-              ></input>
-              <span className="form__inputs-error">{errorName}</span>
-            </label>
-            <label className="form__label">
-              <span className="form__label_title">E-mail</span>
-              <input
-                type="email"
-                className="form__inputs-item"
-                placeholder="E-mail"
-                required
-                value={email || ''}
-                onChange={handleEmailChange}
-              />
-              <span className="form__inputs-error">{errorEmail}</span>
-            </label>
-          </fieldset>
-          <div className="form__bottom">
-            <button
-              type="submit"
-              className={`button__sumbit ${
-                isDisabled && 'button__sumbit_disable'
-              } hover`}
-            >
-              {buttonText}
-            </button>
-            <div className="form__bottom-signin">
-              <p className="form__bottom-text">{bottomText}</p>
-              <Link to="/signup" className="form__bottom-link hover">
-                {linkText}
-              </Link>
-            </div>
-          </div>
-        </form>
-      </Route>
+        </div>
+      </form>
 
       <Route exact path="/profile">
         <form className="form">

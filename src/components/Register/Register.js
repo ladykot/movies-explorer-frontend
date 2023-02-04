@@ -14,12 +14,13 @@ function Register({ title, buttonText, linkText, bottomText, onRegister }) {
   // форма из хука
   const {
     register,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
   } = useForm();
 
   return (
     <Form
+      name="signup"
       onSubmit={handleSubmit(onRegister)}
       errors={errors}
       register={register}
