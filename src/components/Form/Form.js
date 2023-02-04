@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { Route, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import logo from '../../images/logo.svg';
 import './Form.css';
+import { useForm } from 'react-hook-form';
 
 function Form({
-  name,
+  nameForm,
   title,
   buttonText,
   linkText,
   bottomText,
   onSubmit,
-  errors,
-  register,
+  // errors,
+  // register,
 }) {
   // состояние кнопки Сохранить
   const [isDisabled, setIsDisabled] = useState(true);
   // состояния полей
-  const [username, setUserName] = useState('');
+  const [name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // состояния валидности полей
@@ -28,19 +29,30 @@ function Form({
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
 
+  // 
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  
+    
+  } = useForm();
+
   // обработчики инпутов
   function handleNameChange(e) {
     const input = e.target;
     setUserName(input.value);
     setIsValidName(input.validity.valid);
     if (!isValidName) {
-      setErrorName(input.validationMessage);
+      setErrorEmail(input.validationMessage);
     } else {
       setErrorName('');
       // включить кнопку
       setIsDisabled(false);
     }
   }
+
+
 
   function handleEmailChange(event) {
     const input = event.target;
@@ -65,9 +77,11 @@ function Form({
     }
   }
 
+  console.log(errors)
+
   return (
     <div className="form__container">
-      <form className="form" onSubmit={onSubmit}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-top">
           <Link to="/">
             <img className="header__logo" src={logo} alt="логотип" />
@@ -79,66 +93,65 @@ function Form({
             <span className="form__label_title">Имя</span>
             <input
               {...register('name', {
-                required: 'Поле обязательно для заполнения',
-                onChange: handleNameChange,
+                required: true,
+                onChange: (e) => handleNameChange(e),
+                minLength: {value: 2, message: 'Минимальное число символов - 2'},
+                maxLength: 35
               })}
               type="name"
               className="form__inputs-item"
-              minLength={2}
-              maxLength={35}
               placeholder="Имя"
-              id="username"
-              value={username || ''}
-              // onChange={handleNameChange}
-              // required
+              // id="name"
+              value={name || ''}
             ></input>
-            {errors?.name && <span className="form__inputs-error">Error</span>}
+            {errors.name && (
+              <span className="form__inputs-error">gtr</span>
+            )}
           </label>
 
           <label className="form__label">
             <span className="form__label_title">E-mail</span>
             <input
               {...register('email', {
-                required: 'Поле обязательно для заполнения',
+                required: true,
+                onChange: (e) => handleEmailChange(e),
+                pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
               })}
               type="email"
               className="form__inputs-item"
               placeholder="E-mail"
-              required
               value={email || ''}
-              onChange={handleEmailChange}
             />
             {/* <span className="form__inputs-error">{errorEmail}</span> */}
-            {errors?.email && <span className="form__inputs-error">Error</span>}
+            {errors.email && <span className="form__inputs-error">Error</span>}
           </label>
-          {name === 'signup' && 
+          {nameForm === 'signup' && (
             <label className="form__label">
               <span className="form__label_title">Пароль</span>
               <input
                 {...register('password', {
-                  required: 'Поле обязательно для заполнения',
+                  required: true,
+                  minLength: 2,
+                  maxLength: 35
                 })}
                 type="password"
                 className="form__inputs-item"
                 placeholder="Придумайте пароль"
-                required
-                minLength={2}
-                maxLength={35}
                 value={password || ''}
                 onChange={handlePasswordChange}
               />
               {/* <span className="form__inputs-error">{errorPassword}</span> */}
-              {errors.email && (
-                <span className="form__inputs-error">Error</span>
+              {errors.password && errors.password.type === "minLength" && (
+                <span className="form__inputs-error">gh</span>
               )}
             </label>
-          }
+          )}
         </fieldset>
         <div className="form__bottom">
           <button
             type="submit"
             className={`button__sumbit ${
-              isDisabled && 'button__sumbit_disable'
+              (errors.name || errors.password || errors.email) && 'button__sumbit_disable'
             } hover`}
           >
             {buttonText}

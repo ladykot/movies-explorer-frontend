@@ -33,7 +33,7 @@ register ({name, email, password}) {
     }).then(this._handleResponse);
   };
 
- authorize (email, password) {
+ authorize ({email, password}) {
     return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: {
