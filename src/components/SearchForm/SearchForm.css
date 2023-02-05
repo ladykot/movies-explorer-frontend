@@ -53,8 +53,19 @@
     outline: none;
 }
 
+.search-form__inputs-error {
+    justify-self: start;
+    color: #EE3465;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    padding: 2px 0 0 25px;
+    max-width: 396px;
+}
 
-
+.search-form__inputs-error_hidden {
+    visibility: hidden;
+}
 
 .search-form__button {
     grid-column: 1/3;

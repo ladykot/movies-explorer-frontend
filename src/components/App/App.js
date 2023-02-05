@@ -79,7 +79,6 @@ function App() {
 
   // обработчик Логина
   const onLogin = ({ email, password }) => {
-    console.log('зашли в логин', { email, password });
     mainApi
       .authorize({ email, password })
       .then((jwt) => {
@@ -122,6 +121,7 @@ function App() {
         console.log(err);
       });
   };
+
   // проверка наличия токена в хранилище при изменении loggedIn
   React.useEffect(() => {
     if (!loggedIn) {
@@ -182,9 +182,9 @@ function App() {
             path="/movies"
             loggedIn={loggedIn}
             component={Movies}
-            onCardLike={handleCardLike} // добавить в избранное
-            onCardClick={handleCardClick} // ссылка на ролик
-            cards={cards}
+            // onCardLike={handleCardLike} // добавить в избранное
+            // onCardClick={handleCardClick} // ссылка на ролик
+            // cards={cards}
           />
           <ProtectedRoute
             exact

@@ -37,10 +37,10 @@ function Form({
     handleSubmit,
   } = useForm();
 
-  const handelSubmitForm = ({name, email, password}) => {
-    // e.preventDefault();
-    onSubmit({name, email, password});
-  }
+  // const handelSubmitForm = ({name, email, password}) => {
+  //   // e.preventDefault();
+  //   onSubmit({name, email, password});
+  // }
 
   // обработчики инпутов
   function handleNameChange(e) {
