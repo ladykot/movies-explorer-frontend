@@ -10,19 +10,16 @@ import {
   MAX_MOVIES_STEP_1280,
   MAX_MOVIES_STEP_1000,
   MAX_MOVIES_STEP,
-} from "../../utils/constants";
-
+} from '../../utils/constants';
 
 function MoviesCardList({ movies, error }) {
-  const [maxMovies, setMaxMovies] = useState(0); // 
+  const [maxMovies, setMaxMovies] = useState(0); //
   const [step, setStep] = useState(0);
   const location = useLocation();
 
-
-
   useEffect(() => {
     setMoviesRules();
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       setTimeout(() => {
         setMoviesRules();
       }, 500);
@@ -37,7 +34,7 @@ function MoviesCardList({ movies, error }) {
   // адаптивная схема расположения карточек
   const setMoviesRules = () => {
     const width = window.innerWidth;
-    if (location.pathname === "/saved-movies") {
+    if (location.pathname === '/saved-movies') {
       setMaxMovies(movies.length);
     }
     if (width <= 720) {
@@ -58,23 +55,24 @@ function MoviesCardList({ movies, error }) {
   return (
     <section className="movies__cards-section">
       {error ? (
-        <span >Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</span>
-
+        <span>{error}</span>
       ) : (
-        {movies.map((movie, index) => {
-          if (index < maxMovies) {
-            return (
-              <MoviesCard key={movie.id || movie.movieId} movie={movie} />
-            );
-          }
-          return null;
-        })}
-        )}
+        <>
+          {movies.map((movie, index) => {
+            if (index < maxMovies) {
+              return (
+                <MoviesCard key={movie.id || movie.movieId} movie={movie} />
+              );
+            }
+            return null;
+          })}
+        </>
+      )}
+      {movies.length > maxMovies && location.pathname !== '/saved-movies' && (
         <button className="movies__more-button hover" onClick={showMoreMovies}>
-          Ещё
+          Еще
         </button>
       )}
-      
     </section>
   );
 }

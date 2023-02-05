@@ -58,14 +58,6 @@ function App() {
     // установить новые данные
   };
 
-  //обработка кнопки Выйти
-  const handelLogUot = () => {
-    // перенаправить на /login
-    history.push('/signin');
-  };
-
-  // обработка лайка
-  function handleCardLike() {}
 
   // обработка клика на фильм
   const handleCardClick = () => {};
@@ -191,8 +183,6 @@ function App() {
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
-            onCardLike={handleCardLike}
-            onCardClick={handleCardClick}
             cards={cards}
           />
           <ProtectedRoute

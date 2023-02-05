@@ -12,13 +12,14 @@ function Movies() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setLoading] = useState(false); // состояние загрузки фильмов из базы
   const [error, setError] = useState(''); // ошибка запроса
- 
+
   //
   useEffect(() => {
     const savedMovies = localStorage.getItem('savedMovies');
     if (!savedMovies) {
       setLoading(true);
-      mainApi.getUserMovies()
+      mainApi
+        .getUserMovies()
         .then((films) => {
           if (films.length > 0) {
             localStorage.setItem('savedMovies', JSON.stringify(films));
@@ -45,10 +46,12 @@ function Movies() {
   // обработчик кнопки Найти фильм
   const handleSearch = (query, shorts) => {
     setLoading(true);
+    
     // ищем фильмы в localStorage
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
     if (!storedMovies) {
-      moviesApi.getAllMovies()
+      moviesApi
+        .getAllMovies()
         .then((films) => {
           // сохраняем фильмы
           localStorage.setItem('movies', JSON.stringify(films));
@@ -58,24 +61,19 @@ function Movies() {
           setError(MOVVIES_MESSAGE);
         });
     } else {
-      // filter(query, shorts);
+      filter(query, shorts);
     }
-    
-
   };
 
   // обработчик кнопки Еще
 
   return (
-    
     <div className="movies">
       <SearchForm handleSearch={handleSearch} />
-      {!isLoading ? (
+      {isLoading ? (
         <Preloader />
       ) : (
-        <MoviesCardList
-          movies={movies} error={error} 
-        />
+        <MoviesCardList movies={movies} error={error} />
       )}
     </div>
   );

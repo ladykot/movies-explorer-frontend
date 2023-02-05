@@ -1,52 +1,115 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import link from '../../images/pic__card.png';
 import './MoviesCard.css';
 import '../../vendor/hover.css';
+import mainApi from 'utils/MainApi';
+import { BAD_REQUEST_CODE } from '../../utils/constants';
 
-function MoviesCard({ card, onCardLike, onCardClick }) {
-  const [isLiked, setIsLiked] = useState(false);
-  // обработчик клика на Сердечко
-  // onCardLike - свойство карточки, и обработчик извне
-  function handleLikeClick() {
-    // onCardLike();
-    setIsLiked(!isLiked);
-  }
+function MoviesCard({ movie }) {
+  const [isSaved, setIsSaved] = useState(false);
+  const [savedId, setSavedId] = useState('');
+  const location = useLocation(); // для установки кнопки лайка
 
-  // для проверки url и установки нужной кнопки Лайка на карточке
-  const location = useLocation();
+  // сделать попап с сообщением об ошибках
 
-  // обработчик клика по карточке для перехода на терейлер youtube
-  function handleImageClick() {
-    onCardClick();
-  }
+  const handleMovieSaved = (evt) => {
+    if (!isSaved) {
+      const newMovie = {};
+      const { image, id } = movie;
+      Object.assign(newMovie, movie);
+      delete newMovie.id;
+      delete newMovie.created_at;
+      delete newMovie.updated_at;
+
+      //  Фильтр для заполнения отсутствующих значений в ответе от сервера фильмов
+      Object.entries(newMovie).forEach((key) => {
+        if (!key[1]) {
+          newMovie[key[0]] = '...';
+        }
+      });
+      mainApi
+        .saveMovie({
+          ...newMovie,
+          image: `https://api.nomoreparties.co/${image.url}`,
+          thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
+          movieId: id,
+        })
+        .then((savedMovie) => {
+          setIsSaved(true);
+          setSavedId(savedMovie._id);
+          let savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+          if (!savedMovies) {
+            savedMovies = [];
+          }
+          savedMovies.push(savedMovie);
+          localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+        })
+        .catch((err) => {
+          if (err.status === BAD_REQUEST_CODE) {
+            console.log('Что-то пошло не так...');
+          } else {
+            console.log('Нет соединения');
+          }
+        });
+    } else {
+      mainApi
+        .deleteMovie(savedId)
+        .then(() => {
+          setIsSaved(false);
+          const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+          // Поиск и удаление сохраненного фильма из массива в localStorage
+          let index = 0;
+          for (let i = 0; i < savedMovies.length; i += 1) {
+            const film = savedMovies[i];
+            if (film._id === movie._id) {
+              index = i;
+            }
+          }
+          savedMovies.splice(index, 1);
+          localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+          if (location.pathname === '/saved-movies') {
+            evt.target.closest('.movies__list-item').remove();
+          }
+        })
+        .catch(() => console.log('Нет соединения'));
+    }
+  };
 
   return (
     <div className="movies-cards__item">
       <div className="movies-card__item-content">
-        <img
-          className="movies-card__pic"
-          src={link}
-          onClick={handleImageClick}
-          alt=""
-        />
+        <a href={movie.trailerLink}>
+          <img
+            className="movies-card__pic"
+            alt={movie.image.name}
+            src={
+              location.pathname === '/movies'
+                ? `https://api.nomoreparties.co/${movie.image.url}`
+                : movie.image
+            }
+          />
+        </a>
         <div className="movies-card__text">
-          <h2 className="movies-card__title">{card.title}</h2>
-          <p className="movies-card__description">{card.duration}</p>
+          <h2 className="movies-card__title">{movie.nameRU}</h2>
+          <p className="movies-card__description">{movie.duration}</p>
         </div>
         {location.pathname === '/saved-movies' ? (
           <button
             type="button"
             className="movies-card__like movies-card__like_type_selected hover"
             aria-label="лайк"
-            onClick={handleLikeClick}
+            onClick={handleMovieSaved}
           ></button>
         ) : (
           <button
             type="button"
-            className={isLiked ? "movies-card__like hover" : "movies-card__like movies-card__like_type_notliked hover"}
+            className={
+              isSaved
+                ? 'movies-card__like hover'
+                : 'movies-card__like movies-card__like_type_notliked hover'
+            }
             aria-label="лайк"
-            onClick={handleLikeClick}
+            onClick={handleMovieSaved}
           ></button>
         )}
       </div>
