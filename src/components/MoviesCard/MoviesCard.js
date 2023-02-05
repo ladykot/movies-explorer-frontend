@@ -78,7 +78,7 @@ function MoviesCard({ movie }) {
   return (
     <div className="movies-cards__item">
       <div className="movies-card__item-content">
-        <a href={movie.trailerLink}>
+        <a className="movies-card__pic" href={movie.trailerLink}>
           <img
             className="movies-card__pic"
             alt={movie.image.name}

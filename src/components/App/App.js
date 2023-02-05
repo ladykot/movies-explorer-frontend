@@ -42,31 +42,38 @@ function App() {
   // состояние, когда мы залогинились, равно true
   const [loggedIn, setLoggedIn] = useState(true);
   const [userName, setUserName] = useState('');
+    // успех/неуспех сохранения данных профиля
+    const [isEditData, setIsEditData] = useState(false);
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
 
-  // отобразим карточки при рендеринге (потом карточки появятся только после поиска)
-  // React.useEffect(() => {
-  //   if (loggedIn) {
-  //     setCards(data);
-  //   }
-  // });
 
+  // установить новые данные в профиле
   const handelEditProfile = () => {
-    // установить новые данные
+    mainApi
+      .saveUserInfoToServer(name, email)
+      .then((userData) => {
+        setCurrentUser(userData);
+        setIsEditData(true);
+        setIsEditError(false);
+      })
+      .catch(() => {
+        setIsEditError(true);
+      })
+      .finally(() => {
+        setIsEditError(false);
+      });
   };
 
-
-  // обработка клика на фильм
-  const handleCardClick = () => {};
-
-  // состояние разлогина
+  // состояние разлогина - переход на '/'
   const onSignOut = () => {
+    setCurrentUser({});
+    localStorage.clear();
     setLoggedIn(false);
     // localStorage.removeItem('jwt');
-    history.push('/signin');
+    history.push('/');
   };
 
   // обработчик Логина
@@ -114,6 +121,13 @@ function App() {
       });
   };
 
+  function handleLogout() {
+    setCurrentUser({});
+    localStorage.clear();
+    setLoggedIn(false);
+    history.push('/');
+  }
+
   // проверка наличия токена в хранилище при изменении loggedIn
   React.useEffect(() => {
     if (!loggedIn) {
@@ -123,6 +137,7 @@ function App() {
       }
     }
   }, [loggedIn]);
+  
 
   // обработчик Регистрации
   const onRegister = ({ name, email, password }) => {
@@ -174,9 +189,6 @@ function App() {
             path="/movies"
             loggedIn={loggedIn}
             component={Movies}
-            // onCardLike={handleCardLike} // добавить в избранное
-            // onCardClick={handleCardClick} // ссылка на ролик
-            // cards={cards}
           />
           <ProtectedRoute
             exact
@@ -189,11 +201,11 @@ function App() {
             exact
             path="/profile"
             loggedIn={loggedIn}
-            title={`Привет, ${userName}`}
+            currentUser={currentUser}
+            isEditData={isEditData}
             component={Profile}
             onUpdateUser={handelEditProfile}
-            handelLogUot={handelLogUot}
-            buttonText="Сохранить"
+            handleLogout={handleLogout}
           />
           <Route exact path="/">
             <Main />
