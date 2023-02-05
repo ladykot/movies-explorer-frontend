@@ -3,7 +3,6 @@ import Form from 'components/Form/Form';
 
 function Login({ title, buttonText, linkText, bottomText, onLogin }) {
 
-
   return (
     <Form
       nameForm="signin"

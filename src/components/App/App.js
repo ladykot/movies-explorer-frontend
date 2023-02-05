@@ -42,6 +42,7 @@ function App() {
   // состояние, когда мы залогинились, равно true
   const [loggedIn, setLoggedIn] = useState(true);
   const [userName, setUserName] = useState('');
+  const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
@@ -78,8 +79,9 @@ function App() {
 
   // обработчик Логина
   const onLogin = ({ email, password }) => {
+    console.log('зашли в логин', { email, password });
     mainApi
-      .authorize(email, password)
+      .authorize({ email, password })
       .then((jwt) => {
         if (jwt.token) {
           localStorage.setItem('jwt', jwt.token);
@@ -101,17 +103,17 @@ function App() {
       });
   };
 
-   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
-   const auth = async (jwt) => {
+  // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
+  const auth = async (jwt) => {
     return mainApi
       .getUserInfoFromServer()
       .then(({ data }) => {
-        // если такой есть, то логинимся
+        // если такой user есть, то логинимся
         if (data) {
           setLoggedIn(true);
           // установить данные в профиле
           setUserName(data.name);
-          history.push('/');
+          history.push('/movies');
         } else {
           history.push('/');
         }
@@ -138,10 +140,11 @@ function App() {
       .register({ name, email, password })
       .then((data) => {
         console.log(data);
-        // после успешной регистрации логинимся
+        // после успешной регистрации попадаем главную с фильмами
         if (data) {
           onLogin({ email, password });
         } else {
+          // history.push('./');
         }
       })
       .catch((err) => {
@@ -150,67 +153,70 @@ function App() {
   };
 
   return (
-    <div className="page">
-      <Route path={['/movies', '/saved-movies', '/', '/profile']}>
-        <Header loggedIn={loggedIn} />
-      </Route>
-      <Switch>
-        <Route exact path="/signin">
-          <Login
-            title="Вход"
-            buttonText="Войти"
-            linkText="Регистрация"
-            bottomText="Ещё не зарегистрированы?"
-            onLogin={onLogin}
-          />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <Route path={['/movies', '/saved-movies', '/', '/profile']}>
+          <Header loggedIn={loggedIn} />
         </Route>
-        <Route exact path="/signup">
-          <Register
-            title="Добро пожаловать!"
-            buttonText="Зарегистрироваться"
-            linkText="Войти"
-            bottomText="Уже зарегистрированы?"
-            onRegister={onRegister}
-          />
-        </Route>
+        <Switch>
+          <Route exact path="/signin">
+            <Login
+              title="Вход"
+              buttonText="Войти"
+              linkText="Регистрация"
+              bottomText="Ещё не зарегистрированы?"
+              onLogin={onLogin}
+            />
+          </Route>
+          <Route exact path="/signup">
+            <Register
+              title="Добро пожаловать!"
+              buttonText="Зарегистрироваться"
+              linkText="Войти"
+              bottomText="Уже зарегистрированы?"
+              onRegister={onRegister}
+            />
+          </Route>
 
-        <ProtectedRoute
-          path="/movies"
-          loggedIn={loggedIn}
-          component={Movies}
-          onCardLike={handleCardLike} // добавить в избранное
-          onCardClick={handleCardClick} // ссылка на ролик
-          cards={cards}
-        />
-        <ProtectedRoute
-          exact
-          path="/saved-movies"
-          loggedIn={loggedIn}
-          component={SavedMovies}
-          onCardLike={handleCardLike}
-          onCardClick={handleCardClick}
-          cards={cards}
-        />
-        <ProtectedRoute
-          exact
-          path="/profile"
-          title={`Привет, ${userName}`}
-          component={Profile}
-          onUpdateUser={handelEditProfile}
-          handelLogUot={handelLogUot}
-          buttonText="Сохранить"
-        />
-        <Route exact path="/">
-          <Main />
+          <ProtectedRoute
+            path="/movies"
+            loggedIn={loggedIn}
+            component={Movies}
+            onCardLike={handleCardLike} // добавить в избранное
+            onCardClick={handleCardClick} // ссылка на ролик
+            cards={cards}
+          />
+          <ProtectedRoute
+            exact
+            path="/saved-movies"
+            loggedIn={loggedIn}
+            component={SavedMovies}
+            onCardLike={handleCardLike}
+            onCardClick={handleCardClick}
+            cards={cards}
+          />
+          <ProtectedRoute
+            exact
+            path="/profile"
+            loggedIn={loggedIn}
+            title={`Привет, ${userName}`}
+            component={Profile}
+            onUpdateUser={handelEditProfile}
+            handelLogUot={handelLogUot}
+            buttonText="Сохранить"
+          />
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/*">
+            <PageNotFound />
+          </Route>
+        </Switch>
+        <Route exact path={['/', '/movies', '/saved-movies']}>
+          <Footer />
         </Route>
-        <Route path="/*">
-          <PageNotFound />
-        </Route>
-      </Switch>
-      <Route exact path={['/', '/movies', '/saved-movies']}>
-        <Footer />
-      </Route>
-    </div>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

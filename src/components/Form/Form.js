@@ -15,7 +15,7 @@ function Form({
   // register,
 }) {
   // состояние кнопки Сохранить
-  const [isDisabled, setIsDisabled] = useState(true);
+  // const [isDisabled, setIsDisabled] = useState(true);
   // состояния полей
   const [name, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -29,14 +29,18 @@ function Form({
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
 
-  // 
+
+  // объект хука формы
   const {
     register,
     formState: { errors },
     handleSubmit,
-  
-    
   } = useForm();
+
+  const handelSubmitForm = ({name, email, password}) => {
+    // e.preventDefault();
+    onSubmit({name, email, password});
+  }
 
   // обработчики инпутов
   function handleNameChange(e) {
@@ -48,11 +52,9 @@ function Form({
     } else {
       setErrorName('');
       // включить кнопку
-      setIsDisabled(false);
+      // setIsDisabled(false);
     }
   }
-
-
 
   function handleEmailChange(event) {
     const input = event.target;
@@ -77,7 +79,7 @@ function Form({
     }
   }
 
-  console.log(errors)
+  console.log(errors);
 
   return (
     <div className="form__container">
@@ -95,8 +97,8 @@ function Form({
               {...register('name', {
                 required: true,
                 onChange: (e) => handleNameChange(e),
-                minLength: {value: 2, message: 'Минимальное число символов - 2'},
-                maxLength: 35
+                minLength: 2,
+                maxLength: 35,
               })}
               type="name"
               className="form__inputs-item"
@@ -104,8 +106,15 @@ function Form({
               // id="name"
               value={name || ''}
             ></input>
-            {errors.name && (
-              <span className="form__inputs-error">gtr</span>
+            {errors.name && errors.name.type === 'required' && (
+              <span className="form__inputs-error">
+                Добавьте, пожалуйста, имя
+              </span>
+            )}
+            {errors.name && errors.name.type === 'minLength' && (
+              <span className="form__inputs-error">
+                Имя не бывает таким коротким
+              </span>
             )}
           </label>
 
@@ -115,15 +124,23 @@ function Form({
               {...register('email', {
                 required: true,
                 onChange: (e) => handleEmailChange(e),
-                pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/
+                pattern: /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/,
               })}
               type="email"
               className="form__inputs-item"
               placeholder="E-mail"
               value={email || ''}
             />
-            {/* <span className="form__inputs-error">{errorEmail}</span> */}
-            {errors.email && <span className="form__inputs-error">Error</span>}
+            {errors.email && errors.email.type === 'required' && (
+              <span className="form__inputs-error">
+                Добавьте, пожалуйста, ваш E-mail
+              </span>
+            )}
+            {errors.email && errors.email.type === 'pattern' && (
+              <span className="form__inputs-error">
+                E-mail написан с ошибкой
+              </span>
+            )}
           </label>
           {nameForm === 'signup' && (
             <label className="form__label">
@@ -131,18 +148,29 @@ function Form({
               <input
                 {...register('password', {
                   required: true,
-                  minLength: 2,
-                  maxLength: 35
+                  minLength: 6,
+                  maxLength: 35,
+                  onChange: (e) => handlePasswordChange(e),
                 })}
                 type="password"
                 className="form__inputs-item"
                 placeholder="Придумайте пароль"
                 value={password || ''}
-                onChange={handlePasswordChange}
               />
-              {/* <span className="form__inputs-error">{errorPassword}</span> */}
-              {errors.password && errors.password.type === "minLength" && (
-                <span className="form__inputs-error">gh</span>
+              {errors.password && errors.password.type === 'required' && (
+                <span className="form__inputs-error">
+                  Без пароля не получится, сорри
+                </span>
+              )}
+              {errors.password && errors.password.type === 'minLength' && (
+                <span className="form__inputs-error">
+                  Безопасный пароль включает не менее 6 символов
+                </span>
+              )}
+              {errors.password && errors.password.type === 'maxLength' && (
+                <span className="form__inputs-error">
+                  Слишком длинный пароль
+                </span>
               )}
             </label>
           )}
@@ -151,7 +179,10 @@ function Form({
           <button
             type="submit"
             className={`button__sumbit ${
-              (errors.name || errors.password || errors.email) && 'button__sumbit_disable'
+              errors.name &&
+              errors.password &&
+              errors.email &&
+              'button__sumbit_disable'
             } hover`}
           >
             {buttonText}
