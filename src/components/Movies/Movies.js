@@ -20,9 +20,9 @@ function Movies() {
       setLoading(true);
       mainApi
         .getUserMovies()
-        .then((films) => {
-          if (films.length > 0) {
-            localStorage.setItem('savedMovies', JSON.stringify(films));
+        .then((movies) => {
+          if (movies.length > 0) {
+            localStorage.setItem('savedMovies', JSON.stringify(movies));
           }
           setLoading(false);
         })

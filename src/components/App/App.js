@@ -42,38 +42,29 @@ function App() {
   // состояние, когда мы залогинились, равно true
   const [loggedIn, setLoggedIn] = useState(true);
   const [userName, setUserName] = useState('');
-    // успех/неуспех сохранения данных профиля
-    const [isEditData, setIsEditData] = useState(false);
+  const [isEditData, setIsEditData] = useState(false); // успех/неуспех сохранения данных профиля
+  const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
+
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
 
-
   // установить новые данные в профиле
-  const handelEditProfile = () => {
+  const handelEditProfile = ({ name, email }) => {
     mainApi
-      .saveUserInfoToServer(name, email)
+      .saveUserInfoToServer({ name, email })
       .then((userData) => {
         setCurrentUser(userData);
         setIsEditData(true);
-        setIsEditError(false);
+        setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
       })
       .catch(() => {
-        setIsEditError(true);
+        setErrorEdit(true);
       })
       .finally(() => {
-        setIsEditError(false);
+        setErrorEdit(false);
       });
-  };
-
-  // состояние разлогина - переход на '/'
-  const onSignOut = () => {
-    setCurrentUser({});
-    localStorage.clear();
-    setLoggedIn(false);
-    // localStorage.removeItem('jwt');
-    history.push('/');
   };
 
   // обработчик Логина
@@ -137,12 +128,10 @@ function App() {
       }
     }
   }, [loggedIn]);
-  
 
   // обработчик Регистрации
   const onRegister = ({ name, email, password }) => {
     console.log({ name, email, password });
-    // отправляем запрос на наш API
     mainApi
       .register({ name, email, password })
       .then((data) => {
@@ -151,7 +140,7 @@ function App() {
         if (data) {
           onLogin({ email, password });
         } else {
-          // history.push('./');
+          history.push('./');
         }
       })
       .catch((err) => {
@@ -206,6 +195,7 @@ function App() {
             component={Profile}
             onUpdateUser={handelEditProfile}
             handleLogout={handleLogout}
+            errorEdit={errorEdit}
           />
           <Route exact path="/">
             <Main />

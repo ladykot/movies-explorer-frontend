@@ -101,7 +101,7 @@ register ({name, email, password}) {
   }
 
   // Сохранение на сервере информация о пользователе
-  saveUserInfoToServer(name, email) {
+  saveUserInfoToServer({name, email}) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._getHeaders(),

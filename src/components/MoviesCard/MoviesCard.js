@@ -4,11 +4,16 @@ import './MoviesCard.css';
 import '../../vendor/hover.css';
 import mainApi from 'utils/MainApi';
 import { BAD_REQUEST_CODE } from '../../utils/constants';
+import {
+  Redirect,
+  useHistory,
+} from 'react-router-dom/cjs/react-router-dom.min';
 
 function MoviesCard({ movie }) {
   const [isSaved, setIsSaved] = useState(false);
   const [savedId, setSavedId] = useState('');
   const location = useLocation(); // для установки кнопки лайка
+  const history = useHistory();
 
   // сделать попап с сообщением об ошибках
 
@@ -78,17 +83,17 @@ function MoviesCard({ movie }) {
   return (
     <div className="movies-cards__item">
       <div className="movies-card__item-content">
-        <a className="movies-card__pic" href={movie.trailerLink}>
-          <img
-            className="movies-card__pic"
-            alt={movie.image.name}
-            src={
-              location.pathname === '/movies'
-                ? `https://api.nomoreparties.co/${movie.image.url}`
-                : movie.image
-            }
-          />
-        </a>
+        <img
+          onClick={event =>  window.location.href=`${movie.trailerLink}`}
+          className="movies-card__pic"
+          alt={movie.image.name}
+          src={
+            location.pathname === '/movies'
+              ? `https://api.nomoreparties.co/${movie.image.url}`
+              : movie.image
+          }
+        />
+
         <div className="movies-card__text">
           <h2 className="movies-card__title">{movie.nameRU}</h2>
           <p className="movies-card__description">{movie.duration}</p>

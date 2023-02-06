@@ -6,7 +6,7 @@ import './Profile.css';
 import '../../vendor/hover.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ handelLogUot, onUpdateUser, isEditData }) {
+function Profile({ handelLogUot, onUpdateUser, isEditData, errorEdit }) {
   const currentUser = useContext(CurrentUserContext);
   // переменные состояний инпутов
   const [name, setName] = useState('');
@@ -20,16 +20,13 @@ function Profile({ handelLogUot, onUpdateUser, isEditData }) {
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
 
-  // состояние сообщения о сохранении данных
-  const [message, setMessage] = useState('');
-
   // состояние кнопки Редактировать
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
   // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
-  useEffect(() => {
-    setMessage('');
-  }, [currentUser, name, email]);
+  // useEffect(() => {
+  //   setMessage('');
+  // }, [currentUser, name, email]);
 
   // обновить данные на текущего пользователя
   useEffect(() => {
@@ -67,18 +64,8 @@ function Profile({ handelLogUot, onUpdateUser, isEditData }) {
   // обработчик кнопки Редактировать
   const handleSubmitProfile = (e) => {
     e.preventDefault();
-    // кнопка Редактировать отключена
-    setIsActiveEdit(false);
-
-    // после сохранения/несохранения данных выводим сообщение
-    if (!isEditData) {
-      setMessage('Данные успешно сохранены');
-      setIsEditData(false); // начальное состояние
-    } else {
-      setMessage('Что-то пошло не так');
-    }
-
-    setIsActiveEdit(false);
+    setIsActiveEdit(false); // кнопка Редактировать отключена
+    onUpdateUser({ name, email }); // отправляем на сервер
   };
 
   return (
@@ -89,7 +76,6 @@ function Profile({ handelLogUot, onUpdateUser, isEditData }) {
         <p className="form-profile__title">{`Привет, ${name}`}</p>
 
         <form className="form-profile" onSubmit={handleSubmitProfile}>
-        
           <fieldset className="form__inputs-register">
             <label className="form__label form__label_profile">
               <span className="form__label_title form__label_title_profile">
@@ -131,12 +117,18 @@ function Profile({ handelLogUot, onUpdateUser, isEditData }) {
         </form>
 
         <div className="profile__links">
-          <span className="profile__links-item profile__edit-message">
-            {message}
-          </span>
+          {errorEdit && (
+            <span className="profile__links-item profile__edit-message">
+              Что-то пошло не так...
+            </span>
+          )}
+          {isEditData && (
+            <span className="profile__links-item profile__edit-message">
+              Данные успешно сохранены!
+            </span>
+          )}
 
           <button
-            
             type="submit"
             disabled={!isActiveEdit}
             className={`profile__links-item ${isActiveEdit && 'hover'}`}
