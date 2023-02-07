@@ -71,14 +71,15 @@ function App() {
   // проверим токен при загрузке страницы
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
+    // debugger
     if (jwt) {
       mainApi
         .getUserInfo()
-        .then((data) => {
-          if (data) {
+        .then((user) => {
+          if (user) {
             setLoggedIn(true);
-            localStorage.setItem('userId', data.user._id);
-            setCurrentUser(data.user);
+            localStorage.setItem('userId', user._id);
+            setCurrentUser(user);
           }
         })
         .catch((err) => {
@@ -149,25 +150,25 @@ function App() {
   //     });
   // };
 
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      mainApi
-        .getUserInfo()
-        .then((user) => {
-          if (user) {
-            setLoggedIn(true);
-            localStorage.setItem("userId", user._id);
-            setCurrentUser(user);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem("jwt");
+  //   if (jwt) {
+  //     mainApi
+  //       .getUserInfo()
+  //       .then((user) => {
+  //         if (user) {
+  //           setLoggedIn(true);
+  //           localStorage.setItem("userId", user._id);
+  //           setCurrentUser(user);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  // }, []);
 
     // проверка наличия токена в хранилище при изменении loggedIn
     // React.useEffect(() => {
@@ -242,7 +243,6 @@ function App() {
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
-            cards={cards}
           />
           <ProtectedRoute
             exact

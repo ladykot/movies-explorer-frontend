@@ -46,8 +46,7 @@ function Movies() {
   // обработчик кнопки Найти фильм
   const handleSearch = (query, shorts) => {
     setLoading(true);
-    
-    // ищем фильмы в localStorage
+    // ищем ВСЕ фильмы в localStorage
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
     if (!storedMovies) {
       moviesApi
@@ -64,8 +63,6 @@ function Movies() {
       filter(query, shorts);
     }
   };
-
-  // обработчик кнопки Еще
 
   return (
     <div className="movies">

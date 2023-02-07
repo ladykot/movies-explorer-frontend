@@ -8,7 +8,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser.data.name)
+  // console.log(currentUser.data.name)
   // переменные состояний инпутов
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -31,8 +31,8 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
 
   // обновить данные на текущего пользователя
   useEffect(() => {
-    setName(currentUser.data.name);
-    setEmail(currentUser.data.email);
+    setName(currentUser.name);
+    setEmail(currentUser.email);
   }, [currentUser]);
 
   // useEffect(() => {
@@ -86,7 +86,7 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
       <Header />
 
       <div className="profile__content">
-        <p className="form-profile__title">{`Привет, ${currentUser.data.name}!`}</p>
+        <p className="form-profile__title">{`Привет, ${currentUser.name}!`}</p>
 
         <form className="form-profile" onSubmit={handleSubmitProfile}>
           <fieldset className="form__inputs-register">

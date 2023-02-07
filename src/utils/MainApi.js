@@ -59,7 +59,6 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  // Получение юзером всех своих сохранненых карточек
   getUserMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
@@ -89,7 +88,6 @@ class MainApi {
 
   // Удаление на сервере фильма юзера
   deleteMovie(movieId) {
-    // debugger;
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
