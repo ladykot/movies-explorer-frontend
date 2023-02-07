@@ -32,6 +32,7 @@ function MoviesCard({ movie }) {
           newMovie[key[0]] = '...';
         }
       });
+
       mainApi
         .saveMovie({
           ...newMovie,
@@ -57,6 +58,8 @@ function MoviesCard({ movie }) {
           }
         });
     } else {
+      console.log(isSaved)
+      console.log(savedId)
       mainApi
         .deleteMovie(savedId)
         .then(() => {
@@ -96,7 +99,7 @@ function MoviesCard({ movie }) {
 
         <div className="movies-card__text">
           <h2 className="movies-card__title">{movie.nameRU}</h2>
-          <p className="movies-card__description">{movie.duration}</p>
+          <p className="movies-card__description">{`${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`}</p>
         </div>
         {location.pathname === '/saved-movies' ? (
           <button

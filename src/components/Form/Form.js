@@ -29,7 +29,6 @@ function Form({
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
 
-
   // объект хука формы
   const {
     register,
@@ -91,32 +90,34 @@ function Form({
           <p className="form__title">{title}</p>
         </div>
         <fieldset className="form__inputs-register">
-          <label className="form__label">
-            <span className="form__label_title">Имя</span>
-            <input
-              {...register('name', {
-                required: true,
-                onChange: (e) => handleNameChange(e),
-                minLength: 2,
-                maxLength: 35,
-              })}
-              type="name"
-              className="form__inputs-item"
-              placeholder="Имя"
-              // id="name"
-              value={name || ''}
-            ></input>
-            {errors.name && errors.name.type === 'required' && (
-              <span className="form__inputs-error">
-                Добавьте, пожалуйста, имя
-              </span>
-            )}
-            {errors.name && errors.name.type === 'minLength' && (
-              <span className="form__inputs-error">
-                Имя не бывает таким коротким
-              </span>
-            )}
-          </label>
+          {name === 'signup' && (
+            <label className="form__label">
+              <span className="form__label_title">Имя</span>
+              <input
+                {...register('name', {
+                  required: true,
+                  onChange: (e) => handleNameChange(e),
+                  minLength: 2,
+                  maxLength: 35,
+                })}
+                type="name"
+                className="form__inputs-item"
+                placeholder="Имя"
+                id="name"
+                value={name || ''}
+              ></input>
+              {errors.name && errors.name.type === 'required' && (
+                <span className="form__inputs-error">
+                  Добавьте, пожалуйста, имя
+                </span>
+              )}
+              {errors.name && errors.name.type === 'minLength' && (
+                <span className="form__inputs-error">
+                  Имя не бывает таким коротким
+                </span>
+              )}
+            </label>
+          )}
 
           <label className="form__label">
             <span className="form__label_title">E-mail</span>
@@ -142,38 +143,35 @@ function Form({
               </span>
             )}
           </label>
-          {nameForm === 'signup' && (
-            <label className="form__label">
-              <span className="form__label_title">Пароль</span>
-              <input
-                {...register('password', {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 35,
-                  onChange: (e) => handlePasswordChange(e),
-                })}
-                type="password"
-                className="form__inputs-item"
-                placeholder="Придумайте пароль"
-                value={password || ''}
-              />
-              {errors.password && errors.password.type === 'required' && (
-                <span className="form__inputs-error">
-                  Без пароля не получится, сорри
-                </span>
-              )}
-              {errors.password && errors.password.type === 'minLength' && (
-                <span className="form__inputs-error">
-                  Безопасный пароль включает не менее 6 символов
-                </span>
-              )}
-              {errors.password && errors.password.type === 'maxLength' && (
-                <span className="form__inputs-error">
-                  Слишком длинный пароль
-                </span>
-              )}
-            </label>
-          )}
+
+          <label className="form__label">
+            <span className="form__label_title">Пароль</span>
+            <input
+              {...register('password', {
+                required: true,
+                minLength: 6,
+                maxLength: 35,
+                onChange: (e) => handlePasswordChange(e),
+              })}
+              type="password"
+              className="form__inputs-item"
+              placeholder="Пароль"
+              value={password || ''}
+            />
+            {errors.password && errors.password.type === 'required' && (
+              <span className="form__inputs-error">
+                Без пароля не получится, сорри
+              </span>
+            )}
+            {errors.password && errors.password.type === 'minLength' && (
+              <span className="form__inputs-error">
+                Безопасный пароль включает не менее 6 символов
+              </span>
+            )}
+            {errors.password && errors.password.type === 'maxLength' && (
+              <span className="form__inputs-error">Слишком длинный пароль</span>
+            )}
+          </label>
         </fieldset>
         <div className="form__bottom">
           <button
@@ -189,9 +187,16 @@ function Form({
           </button>
           <div className="form__bottom-signin">
             <p className="form__bottom-text">{bottomText}</p>
-            <Link to="/signin" className="form__bottom-link hover">
-              {linkText}
-            </Link>
+            {nameForm === 'signup' && (
+              <Link to="/signin" className="form__bottom-link hover">
+                {linkText}
+              </Link>
+            )}
+            {nameForm === 'signin' && (
+              <Link to="/signup" className="form__bottom-link hover">
+                {linkText}
+              </Link>
+            )}
           </div>
         </div>
       </form>

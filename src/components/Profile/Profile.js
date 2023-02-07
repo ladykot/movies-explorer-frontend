@@ -73,7 +73,7 @@ function Profile({ handelLogUot, onUpdateUser, isEditData, errorEdit }) {
       <Header />
 
       <div className="profile__content">
-        <p className="form-profile__title">{`Привет, ${name}`}</p>
+        <p className="form-profile__title">{`Привет, ${currentUser && currentUser.name}`}</p>
 
         <form className="form-profile" onSubmit={handleSubmitProfile}>
           <fieldset className="form__inputs-register">

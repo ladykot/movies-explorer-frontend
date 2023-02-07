@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import Form from 'components/Form/Form';
 
-function Login({ title, buttonText, linkText, bottomText, onLogin }) {
+function Login ({ title, buttonText, linkText, bottomText, onLogin} ) {
+
 
   return (
     <Form
@@ -13,6 +14,6 @@ function Login({ title, buttonText, linkText, bottomText, onLogin }) {
       bottomText={bottomText}
     ></Form>
   );
-}
+};
 
 export default Login;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from 'components/Header/Header';
 import Main from 'components/Main/Main';
@@ -49,11 +49,12 @@ function App() {
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
+  const isJwt = localStorage.getItem("jwt") || false;
 
   // установить новые данные в профиле
   const handelEditProfile = ({ name, email }) => {
     mainApi
-      .saveUserInfoToServer({ name, email })
+      .saveUserInfo({ name, email })
       .then((userData) => {
         setCurrentUser(userData);
         setIsEditData(true);
@@ -67,8 +68,30 @@ function App() {
       });
   };
 
+  // проверим токен при загрузке страницы
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      mainApi
+        .getUserInfo()
+        .then((user) => {
+          if (user) {
+            setLoggedIn(true);
+            localStorage.setItem('userId', user._id);
+            setCurrentUser(user);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
+
   // обработчик Логина
   const onLogin = ({ email, password }) => {
+    console.log({ email, password });
     mainApi
       .authorize({ email, password })
       .then((jwt) => {
@@ -92,25 +115,69 @@ function App() {
       });
   };
 
+    //запрос инфо при успешном токене
+    useEffect(() => {
+      if (loggedIn) {
+        mainApi
+          .getUserInfo()
+          .then((user) => {
+            setCurrentUser(user);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }, [loggedIn]);
+
   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
-  const auth = async (jwt) => {
-    return mainApi
-      .getUserInfoFromServer()
-      .then(({ data }) => {
-        // если такой user есть, то логинимся
-        if (data) {
-          setLoggedIn(true);
-          // установить данные в профиле
-          setUserName(data.name);
-          history.push('/movies');
-        } else {
-          history.push('/');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const auth = async (jwt) => {
+  //   return mainApi
+  //     .getUserInfo()
+  //     .then((data) => {
+  //       // если такой user есть, то логинимся
+  //       if (data) {
+  //         setLoggedIn(true);
+  //         // установить данные в профиле
+  //         setUserName(data.name);
+  //         history.push('/movies');
+  //       } else {
+  //         history.push('/');
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      mainApi
+        .getUserInfo()
+        .then((user) => {
+          if (user) {
+            setLoggedIn(true);
+            localStorage.setItem("userId", user._id);
+            setCurrentUser(user);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
+
+    // проверка наличия токена в хранилище при изменении loggedIn
+    // React.useEffect(() => {
+    //   if (!loggedIn) {
+    //     if (localStorage.getItem('jwt')) {
+    //       const jwt = localStorage.getItem('jwt');
+    //       auth(jwt);
+    //     }
+    //   }
+    // }, [loggedIn]);
 
   function handleLogout() {
     setCurrentUser({});
@@ -118,16 +185,6 @@ function App() {
     setLoggedIn(false);
     history.push('/');
   }
-
-  // проверка наличия токена в хранилище при изменении loggedIn
-  React.useEffect(() => {
-    if (!loggedIn) {
-      if (localStorage.getItem('jwt')) {
-        const jwt = localStorage.getItem('jwt');
-        auth(jwt);
-      }
-    }
-  }, [loggedIn]);
 
   // обработчик Регистрации
   const onRegister = ({ name, email, password }) => {
@@ -175,6 +232,7 @@ function App() {
           </Route>
 
           <ProtectedRoute
+            exact
             path="/movies"
             loggedIn={loggedIn}
             component={Movies}
