@@ -6,8 +6,9 @@ import './Profile.css';
 import '../../vendor/hover.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ handelLogUot, onUpdateUser, isEditData, errorEdit }) {
+function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
   const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser.data.name)
   // переменные состояний инпутов
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,9 +31,21 @@ function Profile({ handelLogUot, onUpdateUser, isEditData, errorEdit }) {
 
   // обновить данные на текущего пользователя
   useEffect(() => {
-    setName(currentUser.email);
-    setEmail(currentUser.name);
+    setName(currentUser.data.name);
+    setEmail(currentUser.data.email);
   }, [currentUser]);
+
+  // useEffect(() => {
+  //   const { name, email } = form.values;
+  //   if (
+  //     form.isValid &&
+  //     (currentUser.name !== name || currentUser.email !== email)
+  //   ) {
+  //     setDisabled(false);
+  //   } else {
+  //     setDisabled(true);
+  //   }
+  // }, [form.values, currentUser]);
 
   // обработчики инпутов
   function handleNameChange(event) {
@@ -73,7 +86,7 @@ function Profile({ handelLogUot, onUpdateUser, isEditData, errorEdit }) {
       <Header />
 
       <div className="profile__content">
-        <p className="form-profile__title">{`Привет, ${currentUser && currentUser.name}`}</p>
+        <p className="form-profile__title">{`Привет, ${currentUser.data.name}!`}</p>
 
         <form className="form-profile" onSubmit={handleSubmitProfile}>
           <fieldset className="form__inputs-register">
@@ -137,7 +150,7 @@ function Profile({ handelLogUot, onUpdateUser, isEditData, errorEdit }) {
           </button>
           <button
             className="profile__links-item profile__links-item_signout hover"
-            onClick={handelLogUot}
+            onClick={handleLogout}
           >
             Выйти из аккаунта
           </button>

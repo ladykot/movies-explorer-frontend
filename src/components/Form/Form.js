@@ -11,11 +11,8 @@ function Form({
   linkText,
   bottomText,
   onSubmit,
-  // errors,
-  // register,
 }) {
-  // состояние кнопки Сохранить
-  // const [isDisabled, setIsDisabled] = useState(true);
+
   // состояния полей
   const [name, setUserName] = useState('');
   const [email, setEmail] = useState('');

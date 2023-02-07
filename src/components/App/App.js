@@ -74,11 +74,11 @@ function App() {
     if (jwt) {
       mainApi
         .getUserInfo()
-        .then((user) => {
-          if (user) {
+        .then((data) => {
+          if (data) {
             setLoggedIn(true);
-            localStorage.setItem('userId', user._id);
-            setCurrentUser(user);
+            localStorage.setItem('userId', data.user._id);
+            setCurrentUser(data.user);
           }
         })
         .catch((err) => {
