@@ -25,9 +25,12 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
   // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
-  // useEffect(() => {
-  //   setMessage('');
-  // }, [currentUser, name, email]);
+  useEffect((e) => {
+    // if (e.target.value !== currentUser.name || e.target.value !== currentUser.email) {
+      
+      
+    // }
+  }, [currentUser, name, email]);
 
   // обновить данные на текущего пользователя
   useEffect(() => {
@@ -79,6 +82,7 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
     e.preventDefault();
     setIsActiveEdit(false); // кнопка Редактировать отключена
     onUpdateUser({ name, email }); // отправляем на сервер
+    // setName(currentUser.name);
   };
 
   return (
@@ -88,7 +92,7 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
       <div className="profile__content">
         <p className="form-profile__title">{`Привет, ${currentUser.name}!`}</p>
 
-        <form className="form-profile" onSubmit={handleSubmitProfile}>
+        <form id="profile" className="form-profile" onSubmit={handleSubmitProfile} noValidate>
           <fieldset className="form__inputs-register">
             <label className="form__label form__label_profile">
               <span className="form__label_title form__label_title_profile">
@@ -143,6 +147,7 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
 
           <button
             type="submit"
+            form='profile'
             disabled={!isActiveEdit}
             className={`profile__links-item ${isActiveEdit && 'hover'}`}
           >

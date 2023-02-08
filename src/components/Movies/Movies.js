@@ -10,21 +10,21 @@ import { MOVVIES_MESSAGE, NOT_FOUND_MESSAGE } from '../../utils/constants';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setLoading] = useState(false); // состояние загрузки фильмов из базы
+  const [isLoading, setIsLoading] = useState(false); // состояние загрузки фильмов из базы
   const [error, setError] = useState(''); // ошибка запроса
 
   //
   useEffect(() => {
     const savedMovies = localStorage.getItem('savedMovies');
     if (!savedMovies) {
-      setLoading(true);
+      setIsLoading(true);
       mainApi
         .getUserMovies()
         .then((movies) => {
           if (movies.length > 0) {
             localStorage.setItem('savedMovies', JSON.stringify(movies));
           }
-          setLoading(false);
+          setIsLoading(false);
         })
         .catch(() => {
           setError(MOVVIES_MESSAGE);
@@ -40,12 +40,12 @@ function Movies() {
       setError(NOT_FOUND_MESSAGE);
     }
     setMovies(filtered);
-    setLoading(false);
+    setIsLoading(false);
   };
 
   // обработчик кнопки Найти фильм
   const handleSearch = (query, shorts) => {
-    setLoading(true);
+    setIsLoading(true);
     // ищем ВСЕ фильмы в localStorage
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
     if (!storedMovies) {

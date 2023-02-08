@@ -18,6 +18,7 @@ function MoviesCard({ movie }) {
   // сделать попап с сообщением об ошибках
 
   const handleMovieSaved = (evt) => {
+    // debugger
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
@@ -26,7 +27,7 @@ function MoviesCard({ movie }) {
       delete newMovie.created_at;
       delete newMovie.updated_at;
 
-      //  Фильтр для заполнения отсутствующих значений в ответе от сервера фильмов
+      // Добавить значения 
       Object.entries(newMovie).forEach((key) => {
         if (!key[1]) {
           newMovie[key[0]] = '...';
@@ -41,6 +42,8 @@ function MoviesCard({ movie }) {
           movieId: id,
         })
         .then((savedMovie) => {
+          // debugger
+
           setIsSaved(true);
           setSavedId(savedMovie._id);
           let savedMovies = JSON.parse(localStorage.getItem('savedMovies'));

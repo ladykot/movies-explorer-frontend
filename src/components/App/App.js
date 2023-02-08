@@ -41,7 +41,7 @@ function App() {
 
   // состояние, когда мы залогинились, равно true
   const [loggedIn, setLoggedIn] = useState(true);
-  const [userName, setUserName] = useState('');
+  // const [userName, setUserName] = useState('');
   const [isEditData, setIsEditData] = useState(false); // успех/неуспех сохранения данных профиля
   const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
 
@@ -53,10 +53,11 @@ function App() {
 
   // установить новые данные в профиле
   const handelEditProfile = ({ name, email }) => {
+    console.log('зашли')
     mainApi
       .saveUserInfo({ name, email })
       .then((userData) => {
-        setCurrentUser(userData);
+        console.log('сохранено')
         setIsEditData(true);
         setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
       })
@@ -85,6 +86,7 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
+        
     } else {
       setLoggedIn(false);
     }
@@ -93,6 +95,7 @@ function App() {
   // обработчик Логина
   const onLogin = ({ email, password }) => {
     console.log({ email, password });
+    // debugger
     mainApi
       .authorize({ email, password })
       .then((jwt) => {

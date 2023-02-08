@@ -115,6 +115,7 @@ function Header(loggedIn) {
               </nav>
               <Link className="profile-button-wraper-burger" to="/profile">
                 <button
+                  type="button"
                   className="profile-button hover"
                   onClick={handleActiveBurger}
                 >

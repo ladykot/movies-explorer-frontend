@@ -36,6 +36,8 @@ class MainApi {
   }
 
   authorize({ email, password }) {
+    console.log('f')
+    // debugger
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
