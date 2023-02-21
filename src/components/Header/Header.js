@@ -7,9 +7,9 @@ import menuLogo from '../../images/icon__COLOR_icon-main.svg';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 // header вместе с бургер-меню
-function Header(loggedIn) {
+function Header({loggedIn}) {
   const [activeBurger, setActiveBurger] = useState(false);
-  loggedIn = false;
+  // loggedIn = false;
 
   // переключатель бургер-меню
   function handleActiveBurger() {
@@ -115,7 +115,6 @@ function Header(loggedIn) {
               </nav>
               <Link className="profile-button-wraper-burger" to="/profile">
                 <button
-                  type="button"
                   className="profile-button hover"
                   onClick={handleActiveBurger}
                 >

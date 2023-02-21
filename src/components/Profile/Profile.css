@@ -165,7 +165,5 @@ profile__edit-message_disable {
 }
 
 @media screen and (min-width: 1280px) {
-    .header__menu-icon {
-        display: none;
-    }
+
 }

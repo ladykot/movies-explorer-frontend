@@ -88,7 +88,6 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  // Удаление на сервере фильма юзера
   deleteMovie(movieId) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
@@ -96,7 +95,6 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  // Получение с сервера информация о пользователе
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
@@ -104,7 +102,6 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  // Сохранение на сервере информация о пользователе
   saveUserInfo({ name, email }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',

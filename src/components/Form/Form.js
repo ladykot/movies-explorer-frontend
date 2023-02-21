@@ -87,7 +87,7 @@ function Form({
           <p className="form__title">{title}</p>
         </div>
         <fieldset className="form__inputs-register">
-          {name === 'signup' && (
+          {nameForm === 'signup' && (
             <label className="form__label">
               <span className="form__label_title">Имя</span>
               <input

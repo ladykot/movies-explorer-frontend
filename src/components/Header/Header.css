@@ -228,4 +228,8 @@
     .burger-menu {
         display: none;
     }
+
+    .header__menu-icon {
+        display: none;
+    }
 }

@@ -18,29 +18,7 @@ import { UNAUTHORIZED } from '../../utils/constants';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
-  // временный объект с данными для карточек (не забыть добавить link)
-  const data = [
-    {
-      title: '33 слова о дизайне',
-      duration: '1ч 42м',
-      _id: '1',
-    },
-    {
-      title: '33 слова о дизайне',
-      duration: '1ч 42м',
-      _id: '2',
-    },
-    {
-      title: '33 слова о дизайне',
-      duration: '1ч 42м',
-      _id: '3',
-    },
-  ];
-
-  const [cards] = useState(data);
-
-  // состояние, когда мы залогинились, равно true
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   // const [userName, setUserName] = useState('');
   const [isEditData, setIsEditData] = useState(false); // успех/неуспех сохранения данных профиля
   const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
@@ -49,15 +27,15 @@ function App() {
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
-  const isJwt = localStorage.getItem("jwt") || false;
+  const isJwt = localStorage.getItem('jwt') || false;
 
   // установить новые данные в профиле
   const handelEditProfile = ({ name, email }) => {
-    console.log('зашли')
+    console.log('зашли');
     mainApi
       .saveUserInfo({ name, email })
       .then((userData) => {
-        console.log('сохранено')
+        console.log('сохранено');
         setIsEditData(true);
         setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
       })
@@ -69,7 +47,9 @@ function App() {
       });
   };
 
-  // проверим токен при загрузке страницы
+  // проверим при загрузке страницы, есть ли токен
+  // - если есть - запрашиваем в апи данные пользователя по токену, логинимся, сохраняем id пользователя в localStorage
+  // - если нет -
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     // debugger
@@ -78,7 +58,7 @@ function App() {
         .getUserInfo()
         .then((user) => {
           if (user) {
-            setLoggedIn(true);
+            setLoggedIn(true); // логин!!
             localStorage.setItem('userId', user._id);
             setCurrentUser(user);
           }
@@ -86,7 +66,6 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-        
     } else {
       setLoggedIn(false);
     }
@@ -94,7 +73,6 @@ function App() {
 
   // обработчик Логина
   const onLogin = ({ email, password }) => {
-    console.log({ email, password });
     // debugger
     mainApi
       .authorize({ email, password })
@@ -119,19 +97,21 @@ function App() {
       });
   };
 
-    //запрос инфо при успешном токене
-    useEffect(() => {
-      if (loggedIn) {
-        mainApi
-          .getUserInfo()
-          .then((user) => {
-            setCurrentUser(user);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    }, [loggedIn]);
+  // запросить инфо при успешном токене
+  // и подставить данные в текущего полоьзователя
+  useEffect(() => {
+    console.log(loggedIn);
+    if (loggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((user) => {
+          setCurrentUser(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
 
   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
   // const auth = async (jwt) => {
@@ -153,35 +133,15 @@ function App() {
   //     });
   // };
 
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem("jwt");
-  //   if (jwt) {
-  //     mainApi
-  //       .getUserInfo()
-  //       .then((user) => {
-  //         if (user) {
-  //           setLoggedIn(true);
-  //           localStorage.setItem("userId", user._id);
-  //           setCurrentUser(user);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     setLoggedIn(false);
+  // проверка наличия токена в хранилище при изменении loggedIn
+  // React.useEffect(() => {
+  //   if (!loggedIn) {
+  //     if (localStorage.getItem('jwt')) {
+  //       const jwt = localStorage.getItem('jwt');
+  //       auth(jwt);
+  //     }
   //   }
-  // }, []);
-
-    // проверка наличия токена в хранилище при изменении loggedIn
-    // React.useEffect(() => {
-    //   if (!loggedIn) {
-    //     if (localStorage.getItem('jwt')) {
-    //       const jwt = localStorage.getItem('jwt');
-    //       auth(jwt);
-    //     }
-    //   }
-    // }, [loggedIn]);
+  // }, [loggedIn]);
 
   function handleLogout() {
     setCurrentUser({});
@@ -190,14 +150,14 @@ function App() {
     history.push('/');
   }
 
-  // обработчик Регистрации
+  // обработчик Регистрации: после успешной регистрации - логинимся и попадаем главную с фильмами
+  // иначе - на главную презентационную
   const onRegister = ({ name, email, password }) => {
     console.log({ name, email, password });
     mainApi
       .register({ name, email, password })
       .then((data) => {
         console.log(data);
-        // после успешной регистрации попадаем главную с фильмами
         if (data) {
           onLogin({ email, password });
         } else {
