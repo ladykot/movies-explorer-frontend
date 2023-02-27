@@ -43,6 +43,7 @@ function SearchForm({ handleSearch }) {
     if (pathname === '/movies') {
       const savedInputValue = localStorage.getItem('query');
       const savedShorts = JSON.parse(localStorage.getItem('shorts'));
+      console.log(savedInputValue)
       if (savedInputValue) {
         setInputValue(savedInputValue);
       }
@@ -67,10 +68,11 @@ function SearchForm({ handleSearch }) {
           type="text"
           id="search-query"
           name="search-query"
-          placeholder="Название"
+          placeholder={placeholderContent}
           className="search-form__input"
           onChange={handeleInput}
           required
+          value={inputValue}
         />
         <button
           type="submit"
