@@ -13,7 +13,7 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false); // состояние загрузки фильмов из базы
   const [error, setError] = useState(''); // ошибка запроса
 
-  //
+  // 
   useEffect(() => {
     const savedMovies = localStorage.getItem('savedMovies');
     if (!savedMovies) {

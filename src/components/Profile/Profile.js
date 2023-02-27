@@ -6,7 +6,7 @@ import './Profile.css';
 import '../../vendor/hover.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
+function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
   // console.log(currentUser.data.name)
   // переменные состояний инпутов
@@ -87,7 +87,7 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit }) {
 
   return (
     <div className="profile">
-      <Header />
+      <Header loggedIn={loggedIn}/>
 
       <div className="profile__content">
         <p className="form-profile__title">{`Привет, ${currentUser.name}!`}</p>

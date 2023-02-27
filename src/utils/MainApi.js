@@ -51,16 +51,6 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  getUserToken(jwt) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      },
-    }).then(this._handleResponse);
-  }
-
   getUserMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
@@ -69,7 +59,7 @@ class MainApi {
   }
 
   // Сохранение на сервере фильма юзера
-  saveMovie(movie) {
+  saveMovie({movie}) {
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._getHeaders(),
       method: 'POST',
@@ -95,10 +85,21 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  getUserInfo() {
+  // getUserInfo() {
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     method: 'GET',
+  //     headers: this._getHeaders(),
+  //   }).then(this._handleResponse);
+  // }
+
+  getUserInfo(jwt) {
+    console.log(jwt)
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: this._getHeaders(),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -113,6 +114,8 @@ class MainApi {
     }).then(this._handleResponse);
   }
 }
+
+
 
 const mainApi = new MainApi({
   baseUrl: BASE_URL,

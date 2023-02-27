@@ -43,7 +43,6 @@ function MoviesCard({ movie }) {
         })
         .then((savedMovie) => {
           // debugger
-
           setIsSaved(true);
           setSavedId(savedMovie._id);
           let savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
@@ -61,7 +60,7 @@ function MoviesCard({ movie }) {
           }
         });
     } else {
-      console.log(isSaved)
+      console.log("состояние фильма по которому клик:", isSaved)
       console.log(savedId)
       mainApi
         .deleteMovie(savedId)
@@ -83,6 +82,7 @@ function MoviesCard({ movie }) {
           }
         })
         .catch(() => console.log('Нет соединения'));
+        // .catch((err) => console.dir(err));
     }
   };
 

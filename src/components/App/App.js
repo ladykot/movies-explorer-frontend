@@ -47,29 +47,29 @@ function App() {
       });
   };
 
-  // проверим при загрузке страницы, есть ли токен
+  // проверим при загрузке страницы, есть ли токен (чтобы пользователь не вылетел и не вводил заново данные)
   // - если есть - запрашиваем в апи данные пользователя по токену, логинимся, сохраняем id пользователя в localStorage
   // - если нет -
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    // debugger
-    if (jwt) {
-      mainApi
-        .getUserInfo()
-        .then((user) => {
-          if (user) {
-            setLoggedIn(true); // логин!!
-            localStorage.setItem('userId', user._id);
-            setCurrentUser(user);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     mainApi
+  //       .getUserInfo()
+  //       .then((user) => {
+  //         // debugger
+  //         if (user) {
+  //           setLoggedIn(true); // логин!!
+  //           localStorage.setItem('userId', user._id);
+  //           setCurrentUser(user);
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     setLoggedIn(false);
+  //   }
+  // }, []);
 
   // обработчик Логина
   const onLogin = ({ email, password }) => {
@@ -99,49 +99,51 @@ function App() {
 
   // запросить инфо при успешном токене
   // и подставить данные в текущего полоьзователя
-  useEffect(() => {
-    console.log(loggedIn);
-    if (loggedIn) {
-      mainApi
-        .getUserInfo()
-        .then((user) => {
-          setCurrentUser(user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [loggedIn]);
-
-  // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
-  // const auth = async (jwt) => {
-  //   return mainApi
-  //     .getUserInfo()
-  //     .then((data) => {
-  //       // если такой user есть, то логинимся
-  //       if (data) {
-  //         setLoggedIn(true);
-  //         // установить данные в профиле
-  //         setUserName(data.name);
-  //         history.push('/movies');
-  //       } else {
-  //         history.push('/');
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // проверка наличия токена в хранилище при изменении loggedIn
-  // React.useEffect(() => {
-  //   if (!loggedIn) {
-  //     if (localStorage.getItem('jwt')) {
-  //       const jwt = localStorage.getItem('jwt');
-  //       auth(jwt);
-  //     }
+  // useEffect(() => {
+  //   console.log(loggedIn);
+  //   if (loggedIn) {
+  //     mainApi
+  //       .getUserInfo()
+  //       .then((user) => {
+          
+  //         setCurrentUser(user);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
   //   }
   // }, [loggedIn]);
+
+  // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
+  const auth = async (jwt) => {
+    return mainApi
+      .getUserInfo(jwt)
+      .then((user) => {
+        // если такой user есть, то логинимся
+        if (user) {
+          setLoggedIn(true);
+          localStorage.setItem('userId', user._id);
+          setCurrentUser(user);
+          history.push('/movies');
+        } else {
+          history.push('/');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // проверка наличия токена в хранилище при изменении loggedIn
+  // если токен есть - аутотенфицируемся
+  React.useEffect(() => {
+    if (!loggedIn) {
+      if (localStorage.getItem('jwt')) {
+        const jwt = localStorage.getItem('jwt');
+        auth(jwt);
+      }
+    }
+  }, [loggedIn]);
 
   function handleLogout() {
     setCurrentUser({});
@@ -150,7 +152,7 @@ function App() {
     history.push('/');
   }
 
-  // обработчик Регистрации: после успешной регистрации - логинимся и попадаем главную с фильмами
+  // обработчик Регистрации: после успешной регистрации - логинимся (при этом нужно установить данные пользователя в текущего юзера) и попадаем главную с фильмами
   // иначе - на главную презентационную
   const onRegister = ({ name, email, password }) => {
     console.log({ name, email, password });
@@ -220,6 +222,24 @@ function App() {
           />
           <Route exact path="/">
             <Main />
+          </Route>
+          <Route exact path='/movies'>
+            { loggedIn
+              ? <Redirect to='/movies' />
+              : <Redirect to='/' />
+            }
+          </Route>
+          <Route exact path='/saved-movies'>
+            { loggedIn
+              ? <Redirect to='/saved-movies' />
+              : <Redirect to='/' />
+            }
+          </Route>
+          <Route exact path='/profile'>
+            { loggedIn
+              ? <Redirect to='/profile' />
+              : <Redirect to='/' />
+            }
           </Route>
           <Route path="/*">
             <PageNotFound />
