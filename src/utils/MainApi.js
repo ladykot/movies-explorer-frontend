@@ -36,7 +36,7 @@ class MainApi {
   }
 
   authorize({ email, password }) {
-    console.log('f')
+    console.log('авторизация...')
     // debugger
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
@@ -58,8 +58,8 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  // Сохранение на сервере фильма юзера
-  saveMovie({movie}) {
+  // Сохранение на сервере фильма юзера (лайк)
+  saveMovie(movie) {
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._getHeaders(),
       method: 'POST',

@@ -13,7 +13,7 @@ function MoviesCard({ movie }) {
   const [isSaved, setIsSaved] = useState(false);
   const [savedId, setSavedId] = useState('');
   const location = useLocation(); // для установки кнопки лайка
-  const history = useHistory();
+  // const history = useHistory();
 
   // сделать попап с сообщением об ошибках
 
@@ -22,7 +22,8 @@ function MoviesCard({ movie }) {
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
-      Object.assign(newMovie, movie);
+
+      Object.assign(newMovie, movie); // копируем всё в новый объект
       delete newMovie.id;
       delete newMovie.created_at;
       delete newMovie.updated_at;
@@ -50,6 +51,7 @@ function MoviesCard({ movie }) {
             savedMovies = [];
           }
           savedMovies.push(savedMovie);
+          // debugger
           localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
         })
         .catch((err) => {
@@ -59,7 +61,7 @@ function MoviesCard({ movie }) {
             console.log('Нет соединения');
           }
         });
-    } else {
+    } else { // если isSaved === true
       console.log("состояние фильма по которому клик:", isSaved)
       console.log(savedId)
       mainApi

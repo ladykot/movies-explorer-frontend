@@ -122,10 +122,11 @@ function App() {
         // если такой user есть, то логинимся
         if (user) {
           setLoggedIn(true);
-          localStorage.setItem('userId', user._id);
+          localStorage.setItem('userId', user._id); // сохраняем id в хранилище
           setCurrentUser(user);
           history.push('/movies');
         } else {
+          setLoggedIn(false);
           history.push('/');
         }
       })
