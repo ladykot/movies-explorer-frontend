@@ -7,7 +7,7 @@ import mainApi from 'utils/MainApi';
 import './SavedMovies.css';
 
 function SavedMovies() {
-  debugger;
+  // debugger;
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem('savedMovies')) || []
   ); // берем фильмы из базы

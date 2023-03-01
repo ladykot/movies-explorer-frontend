@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import './MoviesCard.css';
 import '../../vendor/hover.css';
 import mainApi from 'utils/MainApi';
 import { BAD_REQUEST_CODE } from '../../utils/constants';
-import {
-  Redirect,
-  useHistory,
-} from 'react-router-dom/cjs/react-router-dom.min';
 
 function MoviesCard({ movie }) {
   const [isSaved, setIsSaved] = useState(false);
@@ -17,8 +14,23 @@ function MoviesCard({ movie }) {
 
   // сделать попап с сообщением об ошибках
 
+  // при обновлении страницы нужно загрузить фильмы
+  useEffect(() => {
+    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+    if (savedMovies) {
+      savedMovies.forEach((savedMovie) => {
+        if (savedMovie.movieId === movie.id || savedMovie._id === movie._id) {
+          setIsSaved(true);
+          setSavedId(savedMovie._id);
+        }
+      });
+    }
+  }, []);
+
+
   const handleMovieSaved = (evt) => {
     // debugger
+    // если фильм сохранен
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
@@ -43,6 +55,8 @@ function MoviesCard({ movie }) {
           movieId: id,
         })
         .then((savedMovie) => {
+          // добавить метку, что фильм сохранен
+          // savedMovie.saved = true;
           // debugger
           setIsSaved(true);
           setSavedId(savedMovie._id);
