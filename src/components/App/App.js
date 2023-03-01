@@ -20,8 +20,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   // const [userName, setUserName] = useState('');
-  const [isEditData, setIsEditData] = useState(false); // успех/неуспех сохранения данных профиля
-  const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
+
 
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
 
@@ -29,23 +28,6 @@ function App() {
   const history = useHistory();
   const isJwt = localStorage.getItem('jwt') || false;
 
-  // установить новые данные в профиле
-  const handelEditProfile = ({ name, email }) => {
-    console.log('зашли');
-    mainApi
-      .saveUserInfo({ name, email })
-      .then((userData) => {
-        console.log('сохранено');
-        setIsEditData(true);
-        setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
-      })
-      .catch(() => {
-        setErrorEdit(true);
-      })
-      .finally(() => {
-        setErrorEdit(false);
-      });
-  };
 
   // проверим при загрузке страницы, есть ли токен (чтобы пользователь не вылетел и не вводил заново данные)
   // - если есть - запрашиваем в апи данные пользователя по токену, логинимся, сохраняем id пользователя в localStorage
@@ -215,11 +197,10 @@ function App() {
             path="/profile"
             loggedIn={loggedIn}
             currentUser={currentUser}
-            isEditData={isEditData}
             component={Profile}
-            onUpdateUser={handelEditProfile}
+            // onUpdateUser={handelEditProfile}
             handleLogout={handleLogout}
-            errorEdit={errorEdit}
+            // errorEdit={errorEdit}
           />
           <Route exact path="/">
             <Main />

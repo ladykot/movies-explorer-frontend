@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Profile.css';
 import Header from 'components/Header/Header';
+import mainApi from 'utils/MainApi';
 import '../Form/Form.css';
 import './Profile.css';
 import '../../vendor/hover.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit, loggedIn }) {
+function Profile({ handleLogout, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
+  const [isEditData, setIsEditData] = useState(false); // состояние факта сохранения данных
+  const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
+
   // console.log(currentUser.data.name)
   // переменные состояний инпутов
   const [name, setName] = useState('');
@@ -25,12 +29,14 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit, loggedIn }
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
   // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
-  useEffect((e) => {
-    // if (e.target.value !== currentUser.name || e.target.value !== currentUser.email) {
-      
-      
-    // }
-  }, [currentUser, name, email]);
+  useEffect(
+    () => {
+      if (currentUser.name !== name || currentUser.email !== email) {
+        setIsEditData(false);
+      }
+    },
+    [currentUser, name, email]
+  );
 
   // обновить данные на текущего пользователя
   useEffect(() => {
@@ -38,17 +44,23 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit, loggedIn }
     setEmail(currentUser.email);
   }, [currentUser]);
 
-  // useEffect(() => {
-  //   const { name, email } = form.values;
-  //   if (
-  //     form.isValid &&
-  //     (currentUser.name !== name || currentUser.email !== email)
-  //   ) {
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // }, [form.values, currentUser]);
+  // установить новые данные в профиле
+  const handelEditProfile = ({ name, email }) => {
+    console.log('зашли');
+    mainApi
+      .saveUserInfo({ name, email })
+      .then((userData) => {
+        console.log('сохранено');
+        setIsEditData(true);
+        setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
+      })
+      .catch(() => {
+        setErrorEdit(true);
+      })
+      .finally(() => {
+        setErrorEdit(false);
+      });
+  };
 
   // обработчики инпутов
   function handleNameChange(event) {
@@ -81,18 +93,23 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit, loggedIn }
   const handleSubmitProfile = (e) => {
     e.preventDefault();
     setIsActiveEdit(false); // кнопка Редактировать отключена
-    onUpdateUser({ name, email }); // отправляем на сервер
+    handelEditProfile({ name, email }); // отправляем на сервер
     // setName(currentUser.name);
   };
 
   return (
     <div className="profile">
-      <Header loggedIn={loggedIn}/>
+      <Header loggedIn={loggedIn} />
 
       <div className="profile__content">
         <p className="form-profile__title">{`Привет, ${currentUser.name}!`}</p>
 
-        <form id="profile" className="form-profile" onSubmit={handleSubmitProfile} noValidate>
+        <form
+          id="profile"
+          className="form-profile"
+          onSubmit={handleSubmitProfile}
+          noValidate
+        >
           <fieldset className="form__inputs-register">
             <label className="form__label form__label_profile">
               <span className="form__label_title form__label_title_profile">
@@ -147,7 +164,7 @@ function Profile({ handleLogout, onUpdateUser, isEditData, errorEdit, loggedIn }
 
           <button
             type="submit"
-            form='profile'
+            form="profile"
             disabled={!isActiveEdit}
             className={`profile__links-item ${isActiveEdit && 'hover'}`}
           >

@@ -36,7 +36,7 @@ class MainApi {
   }
 
   authorize({ email, password }) {
-    console.log('авторизация...')
+    console.log('авторизация...');
     // debugger
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
@@ -51,7 +51,7 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  getUserMovies() {
+  getUsersMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
       headers: this._getHeaders(),
@@ -93,7 +93,7 @@ class MainApi {
   // }
 
   getUserInfo(jwt) {
-    console.log(jwt)
+    console.log(jwt);
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
@@ -114,8 +114,6 @@ class MainApi {
     }).then(this._handleResponse);
   }
 }
-
-
 
 const mainApi = new MainApi({
   baseUrl: BASE_URL,

@@ -13,16 +13,16 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false); // состояние загрузки фильмов из базы
   const [error, setError] = useState(''); // ошибка запроса
 
-  // 
+  //
   useEffect(() => {
     const savedMovies = localStorage.getItem('savedMovies');
     if (!savedMovies) {
       setIsLoading(true);
       mainApi
-        .getUserMovies()
-        .then((movies) => {
-          if (movies.length > 0) {
-            localStorage.setItem('savedMovies', JSON.stringify(movies));
+        .getUsersMovies()
+        .then((data) => {
+          if (data.length > 0) {
+            localStorage.setItem('savedMovies', JSON.stringify(data));
           }
           setIsLoading(false);
         })
@@ -45,7 +45,7 @@ function Movies() {
 
   // обработчик кнопки Найти фильм
   const handleSearch = (query, shorts) => {
-    console.log(query, shorts)
+    console.log(query, shorts);
     setIsLoading(true);
     // ищем ВСЕ фильмы в localStorage
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
