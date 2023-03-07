@@ -28,14 +28,13 @@ function SavedMovies() {
     setIsLoading(false);
   };
 
-  // отобразим все фильмы конкретного пользователя
+  // отобразим все фильмы конкретного пользователя при загрузке страницы
   useEffect(() => {
     setIsLoading(true);
     mainApi
       .getUsersMovies() // фильмы всех пользователей
       .then((savedMovies) => {
         const user = localStorage.getItem('userId');
-
         const userMovies = savedMovies.filter((film) => film.owner === user); // из всех фильмов выбираем с подходщим id и сохраняем в переменную
         // debugger
         localStorage.setItem('savedMovies', JSON.stringify(userMovies)); // сохраняем их в хранилище
@@ -44,7 +43,6 @@ function SavedMovies() {
           setError('Вы еще ничего не добавили в избранное');
         }
       })
-      // .catch(() => setTooltipMessage(NO_CONNECTION_MESSAGE));
       .catch(() => console.log('ошибочка'));
   }, []);
 

@@ -13,13 +13,13 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false); // состояние загрузки фильмов из базы
   const [error, setError] = useState(''); // ошибка запроса
 
-  //
+  // при открытии главной страницы с фильмами загрузили все сохраненки в хранилище key = savedMovies
   useEffect(() => {
     const savedMovies = localStorage.getItem('savedMovies');
     if (!savedMovies) {
       setIsLoading(true);
       mainApi
-        .getUsersMovies()
+        .getUsersMovies() //
         .then((data) => {
           if (data.length > 0) {
             localStorage.setItem('savedMovies', JSON.stringify(data));

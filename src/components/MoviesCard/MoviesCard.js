@@ -12,7 +12,6 @@ function MoviesCard({ movie }) {
   const location = useLocation(); // для установки кнопки лайка
   // const history = useHistory();
 
-  // сделать попап с сообщением об ошибках
 
   // при обновлении страницы нужно загрузить фильмы
   useEffect(() => {
@@ -29,11 +28,10 @@ function MoviesCard({ movie }) {
 
 
   const handleMovieSaved = (evt) => {
-    // debugger
-    // если фильм сохранен
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
+      // const user = localStorage.getItem('userId');
 
       Object.assign(newMovie, movie); // копируем всё в новый объект
       delete newMovie.id;
@@ -55,8 +53,6 @@ function MoviesCard({ movie }) {
           movieId: id,
         })
         .then((savedMovie) => {
-          // добавить метку, что фильм сохранен
-          // savedMovie.saved = true;
           // debugger
           setIsSaved(true);
           setSavedId(savedMovie._id);
@@ -65,7 +61,6 @@ function MoviesCard({ movie }) {
             savedMovies = [];
           }
           savedMovies.push(savedMovie);
-          // debugger
           localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
         })
         .catch((err) => {
@@ -76,7 +71,6 @@ function MoviesCard({ movie }) {
           }
         });
     } else { // если isSaved === true
-      console.log("состояние фильма по которому клик:", isSaved)
       console.log(savedId)
       mainApi
         .deleteMovie(savedId)
@@ -97,8 +91,8 @@ function MoviesCard({ movie }) {
             evt.target.closest('.movies__list-item').remove();
           }
         })
-        .catch(() => console.log('Нет соединения'));
-        // .catch((err) => console.dir(err));
+        // .catch(() => console.log('Нет соединения'));
+        .catch((err) => console.log('error:', err));
     }
   };
 

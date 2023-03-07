@@ -7,6 +7,7 @@ class MainApi {
   }
 
   _handleResponse(res) {
+    console.log(res)
     if (res.ok) {
       return res.json();
     }
@@ -52,7 +53,7 @@ class MainApi {
   }
 
   getUsersMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
+    return fetch(`${this._baseUrl}/movies`, { 
       method: 'GET',
       headers: this._getHeaders(),
     }).then(this._handleResponse);
@@ -60,27 +61,18 @@ class MainApi {
 
   // Сохранение на сервере фильма юзера (лайк)
   saveMovie(movie) {
+    debugger
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._getHeaders(),
       method: 'POST',
       body: JSON.stringify(movie),
-      // country: movie.country,
-      // director: movie.director,
-      // duration: movie.duration,
-      // year: movie.year,
-      // description: movie.description,
-      // image: movie.image,
-      // trailerLink: movie.trailerLink,
-      // movieId: movie.id,
-      // nameRU: movie.nameRU,
-      // nameEN: movie.nameEN,
-      // thumbnail: movie.thumbnail,
     }).then(this._handleResponse);
   }
 
   deleteMovie(movieId) {
+    // debugger
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: this._getHeaders(),
     }).then(this._handleResponse);
   }
@@ -96,10 +88,7 @@ class MainApi {
     console.log(jwt);
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-      },
+      headers: this._getHeaders(),
     }).then(this._handleResponse);
   }
 

@@ -26,7 +26,7 @@ function App() {
 
   const [textError, setTextError] = useState('');
   const history = useHistory();
-  const isJwt = localStorage.getItem('jwt') || false;
+  // const isJwt = localStorage.getItem('jwt') || false;
 
 
   // проверим при загрузке страницы, есть ли токен (чтобы пользователь не вылетел и не вводил заново данные)
