@@ -61,7 +61,7 @@ class MainApi {
 
   // Сохранение на сервере фильма юзера (лайк)
   saveMovie(movie) {
-    debugger
+    // debugger
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._getHeaders(),
       method: 'POST',

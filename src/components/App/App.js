@@ -101,11 +101,12 @@ function App() {
     return mainApi
       .getUserInfo(jwt)
       .then((user) => {
+        console.log('user', user)
         // если такой user есть, то логинимся
         if (user) {
           setLoggedIn(true);
-          localStorage.setItem('userId', user._id); // сохраняем id в хранилище
-          setCurrentUser(user);
+          localStorage.setItem('userId', user.data._id); // сохраняем id в хранилище
+          setCurrentUser(user.data);
           history.push('/movies');
         } else {
           setLoggedIn(false);
