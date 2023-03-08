@@ -31,7 +31,7 @@ function MoviesCard({ movie }) {
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
-      // const user = localStorage.getItem('userId');
+      const user = localStorage.getItem('userId');
 
       Object.assign(newMovie, movie); // копируем всё в новый объект
       delete newMovie.id;
@@ -51,6 +51,7 @@ function MoviesCard({ movie }) {
           image: `https://api.nomoreparties.co/${image.url}`,
           thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
           movieId: id,
+          // owner: user,
         })
         .then((savedMovie) => {
           // debugger
