@@ -23,7 +23,7 @@ function Movies() {
         .then((data) => {
           console.log('фильмы пользователя', data);
           if (data.length > 0) {
-            console.log(data.length)
+            console.log()
             localStorage.setItem('savedMovies', JSON.stringify(data));
           }
           setIsLoading(false);
