@@ -101,7 +101,6 @@ function App() {
     return mainApi
       .getUserInfo(jwt)
       .then((user) => {
-        console.log('user', user)
         // если такой user есть, то логинимся
         if (user) {
           setLoggedIn(true);

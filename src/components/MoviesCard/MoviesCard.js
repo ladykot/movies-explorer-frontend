@@ -13,7 +13,7 @@ function MoviesCard({ movie }) {
   // const history = useHistory();
 
 
-  // при обновлении страницы нужно загрузить фильмы
+  // при обновлении страницы нужно правильно отображать лайки
   useEffect(() => {
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
     if (savedMovies) {
@@ -31,7 +31,7 @@ function MoviesCard({ movie }) {
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
-      const user = localStorage.getItem('userId');
+      // const user = localStorage.getItem('userId');
 
       Object.assign(newMovie, movie); // копируем всё в новый объект
       delete newMovie.id;
@@ -45,17 +45,21 @@ function MoviesCard({ movie }) {
         }
       });
 
+      // проверить наличие фильма в базе
+
+
+
       mainApi
         .saveMovie({
           ...newMovie,
           image: `https://api.nomoreparties.co/${image.url}`,
           thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
           movieId: id,
-          // owner: user,
         })
         .then((savedMovie) => {
           // debugger
           setIsSaved(true);
+          console.log()
           setSavedId(savedMovie._id);
           let savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
           if (!savedMovies) {

@@ -19,6 +19,7 @@ function SavedMovies() {
   const handleSearch = (query, isShort) => {
     setIsLoading(true);
     setError('');
+    // debugger
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies')); // кладем в переменную все фильмы
     const filtered = searchFilter(savedMovies, query, isShort); // фильтрация по запросу
     if (filtered.length === 0) {
@@ -38,6 +39,7 @@ function SavedMovies() {
         const userMovies = savedMovies.filter((film) => film.owner === user); // из всех фильмов выбираем с подходщим id и сохраняем в переменную
         // debugger
         localStorage.setItem('savedMovies', JSON.stringify(userMovies)); // сохраняем их в хранилище
+        setMovies(userMovies);
         setIsLoading(false);
         if (savedMovies.length === 0) {
           setError('Вы еще ничего не добавили в избранное');

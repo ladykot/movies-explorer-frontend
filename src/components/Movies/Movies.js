@@ -19,9 +19,11 @@ function Movies() {
     if (!savedMovies) {
       setIsLoading(true);
       mainApi
-        .getUsersMovies() //
+        .getUsersMovies()
         .then((data) => {
+          console.log('фильмы пользователя', data);
           if (data.length > 0) {
+            console.log(data.length)
             localStorage.setItem('savedMovies', JSON.stringify(data));
           }
           setIsLoading(false);
@@ -45,9 +47,10 @@ function Movies() {
 
   // обработчик кнопки Найти фильм
   const handleSearch = (query, shorts) => {
-    console.log(query, shorts);
+    // console.log(query, shorts);
     setIsLoading(true);
     // ищем ВСЕ фильмы в localStorage
+    // если их нет - загружаем с beatfilm
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
     if (!storedMovies) {
       moviesApi

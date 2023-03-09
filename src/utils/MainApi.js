@@ -7,7 +7,7 @@ class MainApi {
   }
 
   _handleResponse(res) {
-    console.log(res)
+    // console.log(res)
     if (res.ok) {
       return res.json();
     }
@@ -53,6 +53,7 @@ class MainApi {
   }
 
   getUsersMovies() {
+    // debugger
     return fetch(`${this._baseUrl}/movies`, { 
       method: 'GET',
       headers: this._getHeaders(),
@@ -85,7 +86,7 @@ class MainApi {
   // }
 
   getUserInfo(jwt) {
-    console.log(jwt);
+    // console.log(jwt);
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: this._getHeaders(),
