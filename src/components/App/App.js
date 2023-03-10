@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import mainApi from 'utils/MainApi';
 import { UNAUTHORIZED } from '../../utils/constants';
+import {errors} from '../../utils/errors';
 // импортируем контекст пользователя
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -26,7 +27,6 @@ function App() {
   const [statusInfo, setStatusInfo] = useState(false);
   const history = useHistory();
   // const isJwt = localStorage.getItem('jwt') || false;
-
 
   // проверим при загрузке страницы, есть ли токен (чтобы пользователь не вылетел и не вводил заново данные)
   // - если есть - запрашиваем в апи данные пользователя по токену, логинимся, сохраняем id пользователя в localStorage
@@ -62,21 +62,14 @@ function App() {
           localStorage.setItem('jwt', jwt.token);
           setLoggedIn(true);
           setStatusInfo(true);
-          setTextError('Вы успешно вошли в аккаунт')
+          setTextError('Вы успешно вошли в аккаунт');
           history.push('/movies');
         }
       })
       .catch((err) => {
         // debugger
-        setStatusInfo(false);
-        if (err === UNAUTHORIZED) {
-          setTextError('Неверный логин или пароль');
-        } else {
-          console.log(err);
-          setTextError('Ошибка входа');
-          setStatusInfo(true);
-        }
-        console.error(err);
+          setTextError(errors(err));
+          setStatusInfo(false);
       })
       .finally(() => {
         setInfoTooltipOpen(true);
@@ -95,7 +88,7 @@ function App() {
   //     mainApi
   //       .getUserInfo()
   //       .then((user) => {
-          
+
   //         setCurrentUser(user);
   //       })
   //       .catch((err) => {
@@ -121,7 +114,8 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        setTextError(errors(err));
+        setInfoTooltipOpen(true);
       });
   };
 
@@ -150,15 +144,19 @@ function App() {
     mainApi
       .register({ name, email, password })
       .then((data) => {
-        console.log(data);
         if (data) {
           onLogin({ email, password });
+          setTextError('Вы успешно зарегистрировались!');
         } else {
           history.push('./');
         }
       })
       .catch((err) => {
-        console.error(err);
+        setTextError(errors(err));
+        setStatusInfo(false);
+      })
+      .finally(() => {
+        setInfoTooltipOpen(true);
       });
   };
 
@@ -213,23 +211,14 @@ function App() {
           <Route exact path="/">
             <Main />
           </Route>
-          <Route exact path='/movies'>
-            { loggedIn
-              ? <Redirect to='/movies' />
-              : <Redirect to='/' />
-            }
+          <Route exact path="/movies">
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           </Route>
-          <Route exact path='/saved-movies'>
-            { loggedIn
-              ? <Redirect to='/saved-movies' />
-              : <Redirect to='/' />
-            }
+          <Route exact path="/saved-movies">
+            {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
           </Route>
-          <Route exact path='/profile'>
-            { loggedIn
-              ? <Redirect to='/profile' />
-              : <Redirect to='/' />
-            }
+          <Route exact path="/profile">
+            {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
           </Route>
           <Route path="/*">
             <PageNotFound />

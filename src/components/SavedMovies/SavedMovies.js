@@ -5,6 +5,7 @@ import Preloader from 'components/Preloader/Preloader';
 import searchFilter from 'utils/Filter';
 import mainApi from 'utils/MainApi';
 import './SavedMovies.css';
+import {errors} from '../../utils/errors';
 
 function SavedMovies() {
   // debugger;
@@ -13,8 +14,6 @@ function SavedMovies() {
   ); // берем фильмы из базы
   const [isLoading, setIsLoading] = useState(false); // состояние загрузки фильмов из базы
   const [error, setError] = useState('');
-
-  console.log(movies);
 
   const handleSearch = (query, isShort) => {
     setIsLoading(true);
@@ -45,7 +44,9 @@ function SavedMovies() {
           setError('Вы еще ничего не добавили в избранное');
         }
       })
-      .catch(() => console.log('ошибочка'));
+      .catch((err) => {
+        setError(errors(err));
+      });
   }, []);
 
   return (
