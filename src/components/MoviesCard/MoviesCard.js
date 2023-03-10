@@ -10,8 +10,6 @@ function MoviesCard({ movie }) {
   const [isSaved, setIsSaved] = useState(false);
   const [savedId, setSavedId] = useState('');
   const location = useLocation(); // для установки кнопки лайка
-  // const history = useHistory();
-
 
   // при обновлении страницы нужно правильно отображать лайки
   useEffect(() => {
@@ -31,7 +29,6 @@ function MoviesCard({ movie }) {
     if (!isSaved) {
       const newMovie = {};
       const { image, id } = movie;
-      // const user = localStorage.getItem('userId');
 
       Object.assign(newMovie, movie); // копируем всё в новый объект
       delete newMovie.id;
@@ -46,7 +43,6 @@ function MoviesCard({ movie }) {
       });
 
       // проверить наличие фильма в базе
-
 
 
       mainApi

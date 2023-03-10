@@ -4,6 +4,7 @@ import Header from 'components/Header/Header';
 import Main from 'components/Main/Main';
 import Footer from 'components/Footer/Footer';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import InfoTooltip from 'components/InfoTooltip/InfoTooltip';
 import Register from 'components/Register/Register';
 import Login from 'components/Login/Login';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
@@ -19,12 +20,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [userName, setUserName] = useState('');
-
-
   const [currentUser, setCurrentUser] = useState({}); // текущий пользователь
-
   const [textError, setTextError] = useState('');
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
+  const [statusInfo, setStatusInfo] = useState(false);
   const history = useHistory();
   // const isJwt = localStorage.getItem('jwt') || false;
 
@@ -62,22 +61,31 @@ function App() {
         if (jwt.token) {
           localStorage.setItem('jwt', jwt.token);
           setLoggedIn(true);
+          setStatusInfo(true);
+          setTextError('Вы успешно вошли в аккаунт')
           history.push('/movies');
         }
       })
       .catch((err) => {
-        if (err.status === UNAUTHORIZED) {
+        // debugger
+        setStatusInfo(false);
+        if (err === UNAUTHORIZED) {
           setTextError('Неверный логин или пароль');
         } else {
           console.log(err);
           setTextError('Ошибка входа');
+          setStatusInfo(true);
         }
         console.error(err);
       })
       .finally(() => {
-        setTextError('');
+        setInfoTooltipOpen(true);
       });
   };
+
+  function closeAllPopups() {
+    setInfoTooltipOpen(false);
+  }
 
   // запросить инфо при успешном токене
   // и подставить данные в текущего полоьзователя
@@ -230,6 +238,12 @@ function App() {
         <Route exact path={['/', '/movies', '/saved-movies']}>
           <Footer />
         </Route>
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          isSucess={statusInfo}
+          onClose={closeAllPopups}
+          textError={textError}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
