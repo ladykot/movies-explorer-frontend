@@ -10,7 +10,7 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.3s, opacity 0.3s linear;
-    
+    z-index: 101;
 }
 
 .popup_opened {
@@ -38,7 +38,7 @@
 }
 
 .popup__form-info {
-    width: 430px;
+    /* width: 430px; */
     height: 330px;
     box-sizing: border-box;
     top: 36px;
@@ -50,6 +50,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .popup__info-image {

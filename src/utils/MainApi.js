@@ -78,20 +78,20 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  // getUserInfo() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: 'GET',
-  //     headers: this._getHeaders(),
-  //   }).then(this._handleResponse);
-  // }
-
-  getUserInfo(jwt) {
-    // console.log(jwt);
+  getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: this._getHeaders(),
     }).then(this._handleResponse);
   }
+
+  // getUserInfo(jwt) {
+  //   // console.log(jwt);
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     method: 'GET',
+  //     headers: this._getHeaders(),
+  //   }).then(this._handleResponse);
+  // }
 
   saveUserInfo({ name, email }) {
     return fetch(`${this._baseUrl}/users/me`, {

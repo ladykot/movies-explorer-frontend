@@ -55,7 +55,7 @@ function MoviesCardList({ movies, error }) {
   return (
     <section className="movies__cards-section">
       {error ? (
-        <span>{error}</span>
+        <span className='movies__error'>{error}</span>
       ) : (
         <>
           {movies.map((movie, index) => {
