@@ -53,27 +53,27 @@ function App() {
   // }, []);
 
   // обработчик Логина
-  const onLogin = ({ email, password }) => {
-    // debugger
-    mainApi
-      .authorize({ email, password })
-      .then((jwt) => {
-        if (jwt.token) {
-          localStorage.setItem('jwt', jwt.token);
+  const onLogin = async ({ email, password }) => {
+    try {
+      const jwt = await mainApi.authorize({ email, password });
+      if (jwt.token) {
+        localStorage.setItem('jwt', jwt.token);
+        const user = await mainApi.getUserInfo();
+        if (user) {
+          localStorage.setItem('userId', user.data._id);
+          setCurrentUser(user.data);
           setLoggedIn(true);
           setStatusInfo(true);
           setTextError('Вы успешно вошли в аккаунт');
           history.push('/movies');
         }
-      })
-      .catch((err) => {
-        // debugger
-          setTextError(errors(err));
-          setStatusInfo(false);
-      })
-      .finally(() => {
-        setInfoTooltipOpen(true);
-      });
+      }
+    } catch (err) {
+      setTextError(errors(err));
+      setStatusInfo(false);
+    } finally {
+      setInfoTooltipOpen(true);
+    }
   };
 
   function closeAllPopups() {
