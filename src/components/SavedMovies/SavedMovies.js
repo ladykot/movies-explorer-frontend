@@ -8,7 +8,6 @@ import './SavedMovies.css';
 import {errors} from '../../utils/errors';
 
 function SavedMovies() {
-  // debugger;
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem('savedMovies')) || []
   ); // берем фильмы из базы
@@ -18,7 +17,6 @@ function SavedMovies() {
   const handleSearch = (query, isShort) => {
     setIsLoading(true);
     setError('');
-    // debugger
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies')); // кладем в переменную все фильмы
     const filtered = searchFilter(savedMovies, query, isShort); // фильтрация по запросу
     if (filtered.length === 0) {
@@ -36,7 +34,6 @@ function SavedMovies() {
       .then((savedMovies) => {
         const user = localStorage.getItem('userId');
         const userMovies = savedMovies.filter((film) => film.owner === user); // из всех фильмов выбираем с подходщим id и сохраняем в переменную
-        // debugger
         localStorage.setItem('savedMovies', JSON.stringify(userMovies)); // сохраняем их в хранилище
         setMovies(userMovies);
         setIsLoading(false);

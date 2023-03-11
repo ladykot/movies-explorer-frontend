@@ -5,6 +5,8 @@ import './MoviesCard.css';
 import '../../vendor/hover.css';
 import mainApi from 'utils/MainApi';
 import { BAD_REQUEST_CODE } from '../../utils/constants';
+import {errors} from '../../utils/errors';
+
 
 function MoviesCard({ movie }) {
   const [isSaved, setIsSaved] = useState(false);
@@ -42,9 +44,6 @@ function MoviesCard({ movie }) {
         }
       });
 
-      // проверить наличие фильма в базе
-
-
       mainApi
         .saveMovie({
           ...newMovie,
@@ -53,9 +52,7 @@ function MoviesCard({ movie }) {
           movieId: id,
         })
         .then((savedMovie) => {
-          // debugger
           setIsSaved(true);
-          console.log()
           setSavedId(savedMovie._id);
           let savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
           if (!savedMovies) {
@@ -92,7 +89,6 @@ function MoviesCard({ movie }) {
             evt.target.closest('.movies-cards__item').remove();
           }
         })
-        // .catch(() => console.log('Нет соединения'));
         .catch((err) => console.log('error:', err));
     }
   };

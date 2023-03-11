@@ -7,7 +7,6 @@ class MainApi {
   }
 
   _handleResponse(res) {
-    // console.log(res)
     if (res.ok) {
       return res.json();
     }
@@ -38,7 +37,6 @@ class MainApi {
 
   authorize({ email, password }) {
     console.log('авторизация...');
-    // debugger
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
@@ -53,7 +51,6 @@ class MainApi {
   }
 
   getUsersMovies() {
-    // debugger
     return fetch(`${this._baseUrl}/movies`, { 
       method: 'GET',
       headers: this._getHeaders(),
@@ -62,7 +59,6 @@ class MainApi {
 
   // Сохранение на сервере фильма юзера (лайк)
   saveMovie(movie) {
-    // debugger
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._getHeaders(),
       method: 'POST',
@@ -71,19 +67,11 @@ class MainApi {
   }
 
   deleteMovie(movieId) {
-    // debugger
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: "DELETE",
       headers: this._getHeaders(),
     }).then(this._handleResponse);
   }
-
-  // getUserInfo() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: 'GET',
-  //     headers: this._getHeaders(),
-  //   }).then(this._handleResponse);
-  // }
 
   getUserInfo(jwt) {
     // console.log(jwt);

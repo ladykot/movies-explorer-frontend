@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from 'components/Header/Header';
 import Main from 'components/Main/Main';
@@ -14,8 +14,7 @@ import SavedMovies from 'components/SavedMovies/SavedMovies';
 import { useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import mainApi from 'utils/MainApi';
-import { UNAUTHORIZED } from '../../utils/constants';
-import {errors} from '../../utils/errors';
+import { errors } from '../../utils/errors';
 // импортируем контекст пользователя
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -28,31 +27,7 @@ function App() {
   const history = useHistory();
   // const isJwt = localStorage.getItem('jwt') || false;
 
-  // проверим при загрузке страницы, есть ли токен (чтобы пользователь не вылетел и не вводил заново данные)
-  // - если есть - запрашиваем в апи данные пользователя по токену, логинимся, сохраняем id пользователя в localStorage
-  // - если нет -
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     mainApi
-  //       .getUserInfo()
-  //       .then((user) => {
-  //         // debugger
-  //         if (user) {
-  //           setLoggedIn(true); // логин!!
-  //           localStorage.setItem('userId', user._id);
-  //           setCurrentUser(user);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     setLoggedIn(false);
-  //   }
-  // }, []);
-
-  // обработчик Логина
+  // асинхронный обработчик Логина
   const onLogin = async ({ email, password }) => {
     try {
       const jwt = await mainApi.authorize({ email, password });
@@ -79,23 +54,6 @@ function App() {
   function closeAllPopups() {
     setInfoTooltipOpen(false);
   }
-
-  // запросить инфо при успешном токене
-  // и подставить данные в текущего полоьзователя
-  // useEffect(() => {
-  //   console.log(loggedIn);
-  //   if (loggedIn) {
-  //     mainApi
-  //       .getUserInfo()
-  //       .then((user) => {
-
-  //         setCurrentUser(user);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [loggedIn]);
 
   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
   const auth = async (jwt) => {
@@ -204,9 +162,7 @@ function App() {
             loggedIn={loggedIn}
             currentUser={currentUser}
             component={Profile}
-            // onUpdateUser={handelEditProfile}
             handleLogout={handleLogout}
-            // errorEdit={errorEdit}
           />
           <Route exact path="/">
             <Main />

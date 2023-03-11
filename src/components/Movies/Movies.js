@@ -47,7 +47,6 @@ function Movies() {
 
   // обработчик кнопки Найти фильм
   const handleSearch = (query, shorts) => {
-    // console.log(query, shorts);
     setIsLoading(true);
     // ищем ВСЕ фильмы в localStorage
     // если их нет - загружаем с beatfilm

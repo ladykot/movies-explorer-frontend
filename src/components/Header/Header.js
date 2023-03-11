@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import '../../vendor/hover.css';
 import menuLogo from '../../images/icon__COLOR_icon-main.svg';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 // header вместе с бургер-меню
 function Header({ loggedIn }) {
@@ -15,7 +14,6 @@ function Header({ loggedIn }) {
   function handleActiveBurger() {
     setActiveBurger(!activeBurger);
   }
-
   // закрыть меню при переходе на другой роут
   useEffect(() => {
     setActiveBurger(false);
