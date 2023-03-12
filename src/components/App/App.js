@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCallback } from 'react';
 import './App.css';
 import Header from 'components/Header/Header';
 import Main from 'components/Main/Main';
@@ -56,7 +57,39 @@ function App() {
   }
 
   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
-  const auth = async (jwt) => {
+  // const auth = async (jwt) => {
+  //   return mainApi
+  //     .getUserInfo(jwt)
+  //     .then((user) => {
+  //       // если такой user есть, то логинимся
+  //       if (user) {
+  //         setLoggedIn(true);
+  //         localStorage.setItem('userId', user.data._id); // сохраняем id в хранилище
+  //         setCurrentUser(user.data);
+  //         history.push('/movies');
+  //       } else {
+  //         setLoggedIn(false);
+  //         history.push('/');
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setTextError(errors(err));
+  //       setInfoTooltipOpen(true);
+  //     });
+  // };
+
+  // // проверка наличия токена в хранилище при изменении loggedIn
+  // // если токен есть - аутотенфицируемся
+  // React.useEffect(() => {
+  //   if (!loggedIn) {
+  //     if (localStorage.getItem('jwt')) {
+  //       const jwt = localStorage.getItem('jwt');
+  //       auth(jwt);
+  //     }
+  //   }
+  // }, [loggedIn, auth]);
+
+  const auth = useCallback(async (jwt) => {
     return mainApi
       .getUserInfo(jwt)
       .then((user) => {
@@ -75,10 +108,8 @@ function App() {
         setTextError(errors(err));
         setInfoTooltipOpen(true);
       });
-  };
-
-  // проверка наличия токена в хранилище при изменении loggedIn
-  // если токен есть - аутотенфицируемся
+  }, [setLoggedIn, setCurrentUser, setTextError, setInfoTooltipOpen, history]);
+  
   React.useEffect(() => {
     if (!loggedIn) {
       if (localStorage.getItem('jwt')) {
@@ -86,7 +117,7 @@ function App() {
         auth(jwt);
       }
     }
-  }, [loggedIn]);
+  }, [loggedIn, auth]);
 
   function handleLogout() {
     setCurrentUser({});
