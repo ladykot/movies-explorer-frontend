@@ -24,7 +24,7 @@ function MoviesCard({ movie }) {
         }
       });
     }
-  }, []);
+  }, [movie._id, movie.id]);
 
 
   const handleMovieSaved = (evt) => {

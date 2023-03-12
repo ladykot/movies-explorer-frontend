@@ -54,7 +54,7 @@ function SearchForm({ handleSearch }) {
         handleSearch(savedInputValue, savedShorts);
       }
     }
-  }, []);
+  }, [pathname, handleSearch]);
 
   return (
     <div className="search-container">

@@ -39,42 +39,41 @@ function Form({
   // }
 
   // обработчики инпутов
-  function handleNameChange(e) {
-    const input = e.target;
-    setUserName(input.value);
-    setIsValidName(input.validity.valid);
-    if (!isValidName) {
-      setErrorEmail(input.validationMessage);
-    } else {
-      setErrorName('');
-      // включить кнопку
-      // setIsDisabled(false);
+    function handleNameChange(e) {
+      const input = e.target;
+      setUserName(input.value);
+      setIsValidName(input.validity.valid);
+      if (!isValidName) {
+        setErrorEmail(input.validationMessage);
+      } else {
+        setErrorName('');
+        // включить кнопку
+        // setIsDisabled(false);
+      }
     }
-  }
-
-  function handleEmailChange(event) {
-    const input = event.target;
-    setEmail(input.value);
-    setIsValidEmail(input.validity.valid);
-    if (!isValidEmail) {
-      setErrorEmail(input.validationMessage);
-    } else {
-      setErrorEmail('');
+  
+    function handleEmailChange(event) {
+      const input = event.target;
+      setEmail(input.value);
+      setIsValidEmail(input.validity.valid);
+      if (!isValidEmail) {
+        setErrorEmail(input.validationMessage);
+      } else {
+        setErrorEmail('');
+      }
     }
-  }
-
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-    const input = event.target;
-    setPassword(input.value);
-    setIsValidPassword(input.validity.valid);
-    if (!isValidPassword) {
-      setErrorPassword(input.validationMessage);
-    } else {
-      setErrorPassword('');
+  
+    function handlePasswordChange(event) {
+      setPassword(event.target.value);
+      const input = event.target;
+      setPassword(input.value);
+      setIsValidPassword(input.validity.valid);
+      if (!isValidPassword) {
+        setErrorPassword(input.validationMessage);
+      } else {
+        setErrorPassword('');
+      }
     }
-  }
-
   console.log(errors);
 
   return (
