@@ -129,7 +129,6 @@ function App() {
   // обработчик Регистрации: после успешной регистрации - логинимся (при этом нужно установить данные пользователя в текущего юзера) и попадаем главную с фильмами
   // иначе - на главную презентационную
   const onRegister = ({ name, email, password }) => {
-    console.log({ name, email, password });
     mainApi
       .register({ name, email, password })
       .then((data) => {

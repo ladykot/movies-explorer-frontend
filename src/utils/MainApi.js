@@ -36,7 +36,6 @@ class MainApi {
   }
 
   authorize({ email, password }) {
-    console.log('авторизация...');
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
@@ -74,7 +73,6 @@ class MainApi {
   }
 
   getUserInfo(jwt) {
-    // console.log(jwt);
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: this._getHeaders(),

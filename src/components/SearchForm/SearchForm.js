@@ -24,7 +24,6 @@ function SearchForm({ handleSearch }) {
   };
 
   const handleSubmit = (evt) => {
-    console.log('ищу');
     evt.preventDefault();
     if (!inputValue) {
       setError(true);
@@ -43,7 +42,6 @@ function SearchForm({ handleSearch }) {
     if (pathname === '/movies') {
       const savedInputValue = localStorage.getItem('query');
       const savedShorts = JSON.parse(localStorage.getItem('shorts'));
-      console.log(savedInputValue);
       if (savedInputValue) {
         setInputValue(savedInputValue);
       }

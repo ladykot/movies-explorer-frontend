@@ -69,7 +69,6 @@ function MoviesCard({ movie }) {
           }
         });
     } else { // если isSaved === true
-      console.log(savedId)
       mainApi
         .deleteMovie(savedId)
         .then(() => {

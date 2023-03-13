@@ -12,7 +12,6 @@ function Profile({ handleLogout, loggedIn }) {
   const [isEditData, setIsEditData] = useState(false); // состояние факта сохранения данных
   const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
 
-  // console.log(currentUser.data.name)
   // переменные состояний инпутов
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -46,11 +45,9 @@ function Profile({ handleLogout, loggedIn }) {
 
   // установить новые данные в профиле
   const handelEditProfile = ({ name, email }) => {
-    console.log('зашли');
     mainApi
       .saveUserInfo({ name, email })
       .then((userData) => {
-        console.log('сохранено');
         setIsEditData(true);
         setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
       })
