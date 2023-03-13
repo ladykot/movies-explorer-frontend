@@ -4,15 +4,7 @@ import logo from '../../images/logo.svg';
 import './Form.css';
 import { useForm } from 'react-hook-form';
 
-function Form({
-  nameForm,
-  title,
-  buttonText,
-  linkText,
-  bottomText,
-  onSubmit,
-}) {
-
+function Form({ nameForm, title, buttonText, linkText, bottomText, onSubmit }) {
   // состояния полей
   const [name, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,11 +24,6 @@ function Form({
     formState: { errors },
     handleSubmit,
   } = useForm();
-
-  // const handelSubmitForm = ({name, email, password}) => {
-  //   // e.preventDefault();
-  //   onSubmit({name, email, password});
-  // }
 
   // обработчики инпутов
     function handleNameChange(e) {

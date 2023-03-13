@@ -43,7 +43,7 @@ function SearchForm({ handleSearch }) {
     if (pathname === '/movies') {
       const savedInputValue = localStorage.getItem('query');
       const savedShorts = JSON.parse(localStorage.getItem('shorts'));
-      console.log(savedInputValue)
+      console.log(savedInputValue);
       if (savedInputValue) {
         setInputValue(savedInputValue);
       }
@@ -54,7 +54,7 @@ function SearchForm({ handleSearch }) {
         handleSearch(savedInputValue, savedShorts);
       }
     }
-  }, [pathname, handleSearch]);
+  }, []);
 
   return (
     <div className="search-container">
