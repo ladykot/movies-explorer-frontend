@@ -26,9 +26,7 @@ function App() {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [statusInfo, setStatusInfo] = useState(false);
   const history = useHistory();
-  // const isJwt = localStorage.getItem('jwt') || false;
 
-  // асинхронный обработчик Логина
   const onLogin = async ({ email, password }) => {
     try {
       const jwt = await mainApi.authorize({ email, password });
@@ -51,6 +49,37 @@ function App() {
       setInfoTooltipOpen(true);
     }
   };
+
+
+  const auth = useCallback(async (jwt) => {
+    return mainApi
+      .getUserInfo(jwt)
+      .then((user) => {
+        // если такой user есть, то логинимся
+        if (user) {
+          setLoggedIn(true);
+          localStorage.setItem('userId', user.data._id); // сохраняем id в хранилище
+          setCurrentUser(user.data);
+          history.push('/movies');
+        } else {
+          setLoggedIn(false);
+          history.push('/');
+        }
+      })
+      .catch((err) => {
+        setTextError(errors(err));
+        setInfoTooltipOpen(true);
+      });
+  }, [setLoggedIn, setCurrentUser, setTextError, setInfoTooltipOpen, history]);
+  
+  React.useEffect(() => {
+    if (!loggedIn) {
+      if (localStorage.getItem('jwt')) {
+        const jwt = localStorage.getItem('jwt');
+        auth(jwt);
+      }
+    }
+  }, [loggedIn, auth]);
 
   function closeAllPopups() {
     setInfoTooltipOpen(false);
@@ -89,35 +118,7 @@ function App() {
   //   }
   // }, [loggedIn, auth]);
 
-  const auth = useCallback(async (jwt) => {
-    return mainApi
-      .getUserInfo(jwt)
-      .then((user) => {
-        // если такой user есть, то логинимся
-        if (user) {
-          setLoggedIn(true);
-          localStorage.setItem('userId', user.data._id); // сохраняем id в хранилище
-          setCurrentUser(user.data);
-          history.push('/movies');
-        } else {
-          setLoggedIn(false);
-          history.push('/');
-        }
-      })
-      .catch((err) => {
-        setTextError(errors(err));
-        setInfoTooltipOpen(true);
-      });
-  }, [setLoggedIn, setCurrentUser, setTextError, setInfoTooltipOpen, history]);
-  
-  React.useEffect(() => {
-    if (!loggedIn) {
-      if (localStorage.getItem('jwt')) {
-        const jwt = localStorage.getItem('jwt');
-        auth(jwt);
-      }
-    }
-  }, [loggedIn, auth]);
+
 
   function handleLogout() {
     setCurrentUser({});
@@ -190,14 +191,14 @@ function App() {
             exact
             path="/profile"
             loggedIn={loggedIn}
-            currentUser={currentUser}
+            // currentUser={currentUser}
             component={Profile}
             handleLogout={handleLogout}
           />
           <Route exact path="/">
             <Main />
           </Route>
-          <Route exact path="/movies">
+          {/* <Route exact path="/movies">
             {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/saved-movies">
@@ -205,7 +206,7 @@ function App() {
           </Route>
           <Route exact path="/profile">
             {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
-          </Route>
+          </Route> */}
           <Route path="/*">
             <PageNotFound />
           </Route>

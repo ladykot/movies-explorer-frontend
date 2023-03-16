@@ -9,34 +9,23 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ handleLogout, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser)
+  console.log(currentUser);
   const [isEditData, setIsEditData] = useState(false); // состояние факта сохранения данных
   const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
-
-  // переменные состояний инпутов
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
-  // состояния валидности полей
   const [isValidName, setIsValidName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-
-  // состояния ошибок
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
-
-  // состояние кнопки Редактировать
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
   // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
-  useEffect(
-    () => {
-      if (currentUser.name !== name || currentUser.email !== email) {
-        setIsEditData(false);
-      }
-    },
-    [currentUser, name, email]
-  );
+  useEffect(() => {
+    if (currentUser.name !== name || currentUser.email !== email) {
+      setIsEditData(false);
+    }
+  }, [currentUser, name, email]);
 
   // обновить данные на текущего пользователя
   useEffect(() => {
@@ -49,6 +38,7 @@ function Profile({ handleLogout, loggedIn }) {
     mainApi
       .saveUserInfo({ name, email })
       .then((userData) => {
+        console.log('текущий', currentUser);
         setIsEditData(true);
         setErrorEdit(false);
       })
@@ -60,9 +50,22 @@ function Profile({ handleLogout, loggedIn }) {
       });
   };
 
+  // обработчик кнопки Редактировать
+  const handleSubmitProfile = (e) => {
+    e.preventDefault();
+    // Проверка на отличие данных
+    if (name !== currentUser.name || email !== currentUser.email) {
+      setIsActiveEdit(true); // кнопка Редактировать отключена
+      handelEditProfile({ name, email }); // отправляем на сервер
+    } else {
+      setIsActiveEdit(false); // кнопка Редактировать включена, но не будет отправки на сервер без изменений
+    }
+  };
+
   // обработчики инпутов
   function handleNameChange(event) {
     setIsActiveEdit(true);
+    setIsEditData(false);
     setName(event.target.value);
     const input = event.target;
     setName(input.value);
@@ -86,19 +89,6 @@ function Profile({ handleLogout, loggedIn }) {
       setErrorEmail('');
     }
   }
-
-  // обработчик кнопки Редактировать
-  const handleSubmitProfile = (e) => {
-  e.preventDefault();
-  
-  // Проверка на отличие данных
-  if (name !== currentUser.name || email !== currentUser.email) {
-    setIsActiveEdit(true); // кнопка Редактировать отключена
-    handelEditProfile({ name, email }); // отправляем на сервер
-  } else {
-    setIsActiveEdit(false); // кнопка Редактировать включена, но не будет отправки на сервер без изменений
-  }
-};
 
   return (
     <div className="profile">
