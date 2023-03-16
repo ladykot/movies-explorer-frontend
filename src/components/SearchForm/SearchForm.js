@@ -32,7 +32,9 @@ function SearchForm({ handleSearch }) {
     }
     setError(false);
     setPlaceholderContent('Movie');
-    localStorage.setItem('query', inputValue);
+    if (pathname === '/movies') {
+      localStorage.setItem('query', inputValue);
+    }
     handleSearch(inputValue, shorts);
   };
 
