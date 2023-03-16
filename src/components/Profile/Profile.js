@@ -9,6 +9,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ handleLogout, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser)
   const [isEditData, setIsEditData] = useState(false); // состояние факта сохранения данных
   const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
 
@@ -49,7 +50,7 @@ function Profile({ handleLogout, loggedIn }) {
       .saveUserInfo({ name, email })
       .then((userData) => {
         setIsEditData(true);
-        setErrorEdit(false); // ошибки нет - ставим в Profile зеленое сообщение успеха
+        setErrorEdit(false);
       })
       .catch(() => {
         setErrorEdit(true);
@@ -88,11 +89,16 @@ function Profile({ handleLogout, loggedIn }) {
 
   // обработчик кнопки Редактировать
   const handleSubmitProfile = (e) => {
-    e.preventDefault();
-    setIsActiveEdit(false); // кнопка Редактировать отключена
+  e.preventDefault();
+  
+  // Проверка на отличие данных
+  if (name !== currentUser.name || email !== currentUser.email) {
+    setIsActiveEdit(true); // кнопка Редактировать отключена
     handelEditProfile({ name, email }); // отправляем на сервер
-    // setName(currentUser.name);
-  };
+  } else {
+    setIsActiveEdit(false); // кнопка Редактировать включена, но не будет отправки на сервер без изменений
+  }
+};
 
   return (
     <div className="profile">
