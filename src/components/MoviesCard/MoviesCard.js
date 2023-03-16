@@ -96,7 +96,7 @@ function MoviesCard({ movie }) {
     <div className="movies-cards__item">
       <div className="movies-card__item-content">
         <img
-          onClick={event =>  window.location.href=`${movie.trailerLink}`}
+          onClick={event =>  window.open(`${movie.trailerLink}`, '_blank')}
           className="movies-card__pic"
           alt={movie.image.name}
           src={
