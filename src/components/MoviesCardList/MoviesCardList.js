@@ -17,7 +17,14 @@ function MoviesCardList({ movies, error }) {
   const [step, setStep] = useState(0);
   const location = useLocation();
 
-
+  useEffect(() => {
+    setMoviesRules();
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        setMoviesRules();
+      }, 500);
+    });
+  }, []);
 
   // обработчик кнопки Еще
   const showMoreMovies = () => {
@@ -44,15 +51,6 @@ function MoviesCardList({ movies, error }) {
       setStep(MAX_MOVIES_STEP_1280);
     }
   };
-
-  useEffect(() => {
-    setMoviesRules();
-    window.addEventListener('resize', () => {
-      setTimeout(() => {
-        setMoviesRules();
-      }, 500);
-    });
-  }, [setMoviesRules]);
 
   return (
     <section className="movies__cards-section">
