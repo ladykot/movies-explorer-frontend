@@ -18,7 +18,7 @@ import ProtectedRoute from '../ProtectedRoute';
 import mainApi from 'utils/MainApi';
 import { errors } from '../../utils/errors';
 // импортируем контекст пользователя
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import {CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,6 +28,11 @@ function App() {
   const [statusInfo, setStatusInfo] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  
+  // функция обновляет текущего пользователя в профиле
+  const updateCurrentUser = (updatedUserData) => { 
+    setCurrentUser(updatedUserData);
+  };
   
 
   const onLogin = async ({ email, password }) => {
@@ -156,7 +161,7 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={{ user: currentUser, updateUser: updateCurrentUser }}>
       <div className="page">
         <Route path="/" exact>
           <Header loggedIn={loggedIn} />

@@ -8,8 +8,7 @@ import '../../vendor/hover.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ handleLogout, loggedIn }) {
-  const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser);
+  const { user: currentUser, updateUser } = useContext(CurrentUserContext);
   const [isEditData, setIsEditData] = useState(false); // состояние факта сохранения данных
   const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
   const [name, setName] = useState('');
@@ -20,10 +19,12 @@ function Profile({ handleLogout, loggedIn }) {
   const [errorEmail, setErrorEmail] = useState('');
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
-  // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
+  // хук ловит изменения в инпутах, скрывает сообщение о сохранении данных и кнопку Редактировать
   useEffect(() => {
     if (currentUser.name !== name || currentUser.email !== email) {
       setIsEditData(false);
+    } else {
+      setIsActiveEdit(false);
     }
   }, [currentUser, name, email]);
 
@@ -38,8 +39,6 @@ function Profile({ handleLogout, loggedIn }) {
     mainApi
       .saveUserInfo({ name, email })
       .then((userData) => {
-        console.log('текущий', currentUser);
-        // нужно изменить текущего пользователя
         setIsEditData(true);
         setErrorEdit(false);
       })
@@ -56,8 +55,9 @@ function Profile({ handleLogout, loggedIn }) {
     e.preventDefault();
     // Проверка на отличие данных
     if (name !== currentUser.name || email !== currentUser.email) {
-      setIsActiveEdit(true); // кнопка Редактировать отключена
+      setIsActiveEdit(true);
       handelEditProfile({ name, email }); // отправляем на сервер
+      updateUser({ name, email }); // меняем пользователя
     } else {
       setIsActiveEdit(false); // кнопка Редактировать включена, но не будет отправки на сервер без изменений
     }
