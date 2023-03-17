@@ -158,9 +158,19 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Route path={['/movies', '/saved-movies', '/', '/profile']}>
+        <Route path="/" exact>
           <Header loggedIn={loggedIn} />
         </Route>
+        <Route path="/movies" exact>
+          <Header loggedIn={loggedIn} />
+        </Route>
+        <Route path="/saved-movies" exact>
+          <Header loggedIn={loggedIn} />
+        </Route>
+        <Route path="/profile" exact>
+          <Header loggedIn={loggedIn} />
+        </Route>
+  
         <Route exact path="/">
           <Main />
         </Route>
@@ -183,7 +193,7 @@ function App() {
               onRegister={onRegister}
             />
           </Route>
-
+  
           <ProtectedRoute
             exact
             path="/movies"
@@ -200,24 +210,16 @@ function App() {
             exact
             path="/profile"
             loggedIn={loggedIn}
-            // currentUser={currentUser}
             component={Profile}
             handleLogout={handleLogout}
+            
           />
-
-          {/* <Route exact path="/movies">
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
-          </Route>
-          <Route exact path="/saved-movies">
-            {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
-          </Route>
-          <Route exact path="/profile">
-            {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
-          </Route> */}
+  
           <Route path="/*">
             <PageNotFound />
           </Route>
         </Switch>
+  
         <Route exact path={['/', '/movies', '/saved-movies']}>
           <Footer />
         </Route>
@@ -230,6 +232,7 @@ function App() {
       </div>
     </CurrentUserContext.Provider>
   );
+  
 }
 
 export default App;

@@ -39,6 +39,7 @@ function Profile({ handleLogout, loggedIn }) {
       .saveUserInfo({ name, email })
       .then((userData) => {
         console.log('текущий', currentUser);
+        // нужно изменить текущего пользователя
         setIsEditData(true);
         setErrorEdit(false);
       })
