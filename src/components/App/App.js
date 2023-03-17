@@ -13,6 +13,7 @@ import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
 import SavedMovies from 'components/SavedMovies/SavedMovies';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute';
 import mainApi from 'utils/MainApi';
 import { errors } from '../../utils/errors';
@@ -26,6 +27,8 @@ function App() {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [statusInfo, setStatusInfo] = useState(false);
   const history = useHistory();
+  const location = useLocation();
+  
 
   const onLogin = async ({ email, password }) => {
     try {
@@ -50,36 +53,41 @@ function App() {
     }
   };
 
+  const auth = useCallback(
+    async (jwt, realPath) => {
+      return mainApi
+        .getUserInfo(jwt)
+        .then((user) => {
+          // если такой user есть, то логинимся
+          if (user) {
+            setLoggedIn(true);
+            localStorage.setItem('userId', user.data._id); // сохраняем id в хранилище
+            console.log('realPath', realPath);
+            // debugger
+            setCurrentUser(user.data);
+            history.push(realPath);
+          } else {
+            setLoggedIn(false);
+            history.push('/');
+          }
+        })
+        .catch((err) => {
+          setTextError(errors(err));
+          setInfoTooltipOpen(true);
+        });
+    },
+    [setLoggedIn, history]
+  );
 
-  const auth = useCallback(async (jwt) => {
-    return mainApi
-      .getUserInfo(jwt)
-      .then((user) => {
-        // если такой user есть, то логинимся
-        if (user) {
-          setLoggedIn(true);
-          localStorage.setItem('userId', user.data._id); // сохраняем id в хранилище
-          setCurrentUser(user.data);
-          history.push('/movies');
-        } else {
-          setLoggedIn(false);
-          history.push('/');
-        }
-      })
-      .catch((err) => {
-        setTextError(errors(err));
-        setInfoTooltipOpen(true);
-      });
-  }, [setLoggedIn, setCurrentUser, setTextError, setInfoTooltipOpen, history]);
-  
   React.useEffect(() => {
     if (!loggedIn) {
       if (localStorage.getItem('jwt')) {
         const jwt = localStorage.getItem('jwt');
-        auth(jwt);
+        const realPath = location.pathname;
+        auth(jwt, realPath);
       }
     }
-  }, [loggedIn, auth]);
+  }, [loggedIn]);
 
   function closeAllPopups() {
     setInfoTooltipOpen(false);
@@ -118,8 +126,6 @@ function App() {
   //   }
   // }, [loggedIn, auth]);
 
-
-
   function handleLogout() {
     setCurrentUser({});
     localStorage.clear();
@@ -137,7 +143,7 @@ function App() {
           onLogin({ email, password });
           setTextError('Вы успешно зарегистрировались!');
         } else {
-          history.push('./');
+          history.push('/');
         }
       })
       .catch((err) => {
@@ -154,6 +160,9 @@ function App() {
       <div className="page">
         <Route path={['/movies', '/saved-movies', '/', '/profile']}>
           <Header loggedIn={loggedIn} />
+        </Route>
+        <Route exact path="/">
+          <Main />
         </Route>
         <Switch>
           <Route exact path="/signin">
@@ -195,9 +204,7 @@ function App() {
             component={Profile}
             handleLogout={handleLogout}
           />
-          <Route exact path="/">
-            <Main />
-          </Route>
+
           {/* <Route exact path="/movies">
             {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           </Route>
