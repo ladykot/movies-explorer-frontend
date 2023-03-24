@@ -1,73 +1,85 @@
-import React, { useState } from 'react';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
 import '../../vendor/hover.css';
 import menuLogo from '../../images/icon__COLOR_icon-main.svg';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
-// вместе с бургер-меню
-function Header(loggedIn) {
-  const [activeBurger, setActiveBurger] = useState(false);
-  loggedIn = false;
-
+// header вместе с бургер-меню
+function Header({ loggedIn }) {
+  const [activeBurger, setActiveBurger] = useState(false); // активация бургер-меню
+  const location = useLocation();
   // переключатель бургер-меню
   function handleActiveBurger() {
     setActiveBurger(!activeBurger);
   }
+  // закрыть меню при переходе на другой роут
+  useEffect(() => {
+    setActiveBurger(false);
+  }, [location.pathname]);
 
   return (
     <header className="header">
-      <Link to="/">
-        <img className="header__logo" src={logo} alt="логотип" />
-      </Link>
-
       <Route exact path="/">
         {!loggedIn && (
-          <ul className="header__links">
-            <li className="header__link-item">
-              <Link to="/signup" className="header__link hover">
-                Регистрация
-              </Link>
-            </li>
-            <li className="header__link-item header__link-item_login">
-              <Link to="/signin" className="header__link hover">
-                Войти
-              </Link>
-            </li>
-          </ul>
+          <>
+            <Link to="/">
+              <img className="header__logo" src={logo} alt="логотип" />
+            </Link>
+            <ul className="header__links">
+              <li className="header__link-item">
+                <Link to="/signup" className="header__link hover">
+                  Регистрация
+                </Link>
+              </li>
+              <li className="header__link-item header__link-item_login">
+                <Link to="/signin" className="header__link hover">
+                  Войти
+                </Link>
+              </li>
+            </ul>
+          </>
         )}
       </Route>
 
-      <Route path={['/movies', '/saved-movies', '/profile']}>
-        <nav className="header__links-movies">
-          <NavLink
-            exact
-            to="/movies"
-            className="header__link header__link_auth hover"
-            activeClassName="header__link_active"
-          >
-            Фильмы
-          </NavLink>
-          <NavLink
-            exact
-            to="/saved-movies"
-            className="header__link header__link_auth hover"
-            activeClassName="header__link_active"
-          >
-            Сохрененные фильмы
-          </NavLink>
-        </nav>
-        <Link to="/profile" className="profile-button-wraper">
-          <button className="profile-button hover">Аккаунт</button>
-        </Link>
+      <Route path={['/movies', '/saved-movies', '/profile', '/']}>
+        {loggedIn && (
+          <>
+            <Link to="/">
+              <img className="header__logo" src={logo} alt="логотип" />
+            </Link>
+            <nav className="header__links-movies">
+              <NavLink
+                exact
+                to="/movies"
+                className="header__link header__link_auth hover"
+                activeClassName="header__link_active"
+              >
+                Фильмы
+              </NavLink>
+              <NavLink
+                exact
+                to="/saved-movies"
+                className="header__link header__link_auth hover"
+                activeClassName="header__link_active"
+              >
+                Сохрененные фильмы
+              </NavLink>
+            </nav>
 
-        <img
-          className="header__menu-icon hover"
-          src={menuLogo}
-          alt="иконка меню"
-          onClick={handleActiveBurger}
-        />
+            <Link to="/profile" className="profile-button-wraper">
+              <button className="profile-button hover">Аккаунт</button>
+            </Link>
+
+            <img
+              className="header__menu-icon hover"
+              src={menuLogo}
+              alt="иконка меню"
+              onClick={handleActiveBurger}
+            />
+          </>
+        )}
 
         {activeBurger && (
           <section className="burger-menu-section">

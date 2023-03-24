@@ -7,6 +7,15 @@
     justify-items: center;
 }
 
+.movies__error {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #EE3465;
+}
+
 .movies__more-button {
     width: 240px;
     height: 36px;

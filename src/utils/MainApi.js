@@ -1,4 +1,4 @@
-import { BASE_URL } from './constants';
+import { BASE_URL } from './constants'; // наш бек
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -10,81 +10,61 @@ class MainApi {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res);
   }
 
   _getHeaders() {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem('jwt');
     return {
       Authorization: `Bearer ${jwt}`,
       ...this._headers,
     };
   }
 
-register (name, email, password) {
+  register({ name, email, password }) {
     return fetch(`${this._baseUrl}/signup`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ 
-        name, email, password,
-      }),
-    }).then(this._handleResponse);
-  };
-
- authorize (email, password) {
-    return fetch(`${this._baseUrl}/signin`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email, password
+        name,
+        email,
+        password,
       }),
     }).then(this._handleResponse);
-  };
+  }
 
-  getUserToken(jwt){
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
+  authorize({ email, password }) {
+    return fetch(`${this._baseUrl}/signin`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${jwt}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
     }).then(this._handleResponse);
-  };
+  }
 
-  // Получение юзером всех своих сохранненых карточек
-  getUserMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
-      method: "GET",
+  getUsersMovies() {
+    return fetch(`${this._baseUrl}/movies`, { 
+      method: 'GET',
       headers: this._getHeaders(),
     }).then(this._handleResponse);
   }
 
-  // Сохранение на сервере фильма юзера
+  // Сохранение на сервере фильма юзера (лайк)
   saveMovie(movie) {
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._getHeaders(),
       method: 'POST',
       body: JSON.stringify(movie),
-        // country: movie.country,
-        // director: movie.director,
-        // duration: movie.duration,
-        // year: movie.year,
-        // description: movie.description,
-        // image: movie.image,
-        // trailerLink: movie.trailerLink,
-        // movieId: movie.id,
-        // nameRU: movie.nameRU,
-        // nameEN: movie.nameEN,
-        // thumbnail: movie.thumbnail,
     }).then(this._handleResponse);
   }
 
-  // Удаление на сервере фильма юзера
   deleteMovie(movieId) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: "DELETE",
@@ -92,18 +72,16 @@ register (name, email, password) {
     }).then(this._handleResponse);
   }
 
-  // Получение с сервера информация о пользователе
-  getUserInfoFromServer() {
+  getUserInfo(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: this._getHeaders(),
     }).then(this._handleResponse);
   }
 
-  // Сохранение на сервере информация о пользователе
-  saveUserInfoToServer(name, email) {
+  saveUserInfo({ name, email }) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this._getHeaders(),
       body: JSON.stringify({
         name,
@@ -113,7 +91,7 @@ register (name, email, password) {
   }
 }
 
- const mainApi = new MainApi({
+const mainApi = new MainApi({
   baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
