@@ -11,6 +11,8 @@ import Login from 'components/Login/Login';
 import PageNotFound from 'components/PageNotFound/PageNotFound';
 import Profile from 'components/Profile/Profile';
 import Movies from 'components/Movies/Movies';
+import Preloader from 'components/Preloader/Preloader';
+
 import SavedMovies from 'components/SavedMovies/SavedMovies';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -18,7 +20,7 @@ import ProtectedRoute from '../ProtectedRoute';
 import mainApi from 'utils/MainApi';
 import { errors } from '../../utils/errors';
 // импортируем контекст пользователя
-import {CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,12 +30,12 @@ function App() {
   const [statusInfo, setStatusInfo] = useState(false);
   const history = useHistory();
   const location = useLocation();
-  
+  const [isLoading, setIsLoading] = useState(true); // загрузка информации о токене
+
   // функция обновляет текущего пользователя в профиле
-  const updateCurrentUser = (updatedUserData) => { 
+  const updateCurrentUser = (updatedUserData) => {
     setCurrentUser(updatedUserData);
   };
-  
 
   const onLogin = async ({ email, password }) => {
     try {
@@ -89,7 +91,12 @@ function App() {
       if (localStorage.getItem('jwt')) {
         const jwt = localStorage.getItem('jwt');
         const realPath = location.pathname;
-        auth(jwt, realPath);
+        setIsLoading(true);
+        auth(jwt, realPath).finally(() => {
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
       }
     }
   }, [loggedIn]);
@@ -161,83 +168,89 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={{ user: currentUser, updateUser: updateCurrentUser }}>
+    <CurrentUserContext.Provider
+      value={{ user: currentUser, updateUser: updateCurrentUser }}
+    >
       <div className="page">
-        <Route path="/" exact>
-          <Header loggedIn={loggedIn} />
-        </Route>
-        <Route path="/movies" exact>
-          <Header loggedIn={loggedIn} />
-        </Route>
-        <Route path="/saved-movies" exact>
-          <Header loggedIn={loggedIn} />
-        </Route>
-        <Route path="/profile" exact>
-          <Header loggedIn={loggedIn} />
-        </Route>
-  
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Switch>
-          <Route exact path="/signin">
-            <Login
-              title="Вход"
-              buttonText="Войти"
-              linkText="Регистрация"
-              bottomText="Ещё не зарегистрированы?"
-              onLogin={onLogin}
+        {isLoading ? (
+          < Preloader/>
+        ) : (
+          <>
+            <Route path="/" exact>
+              <Header loggedIn={loggedIn} />
+            </Route>
+            <Route path="/movies" exact>
+              <Header loggedIn={loggedIn} />
+            </Route>
+            <Route path="/saved-movies" exact>
+              <Header loggedIn={loggedIn} />
+            </Route>
+            <Route path="/profile" exact>
+              <Header loggedIn={loggedIn} />
+            </Route>
+
+            <Route exact path="/">
+              <Main />
+            </Route>
+            <Switch>
+              <Route exact path="/signin">
+                <Login
+                  title="Вход"
+                  buttonText="Войти"
+                  linkText="Регистрация"
+                  bottomText="Ещё не зарегистрированы?"
+                  onLogin={onLogin}
+                />
+              </Route>
+              <Route exact path="/signup">
+                <Register
+                  title="Добро пожаловать!"
+                  buttonText="Зарегистрироваться"
+                  linkText="Войти"
+                  bottomText="Уже зарегистрированы?"
+                  onRegister={onRegister}
+                />
+              </Route>
+
+              <ProtectedRoute
+                exact
+                path="/movies"
+                loggedIn={loggedIn}
+                component={Movies}
+              />
+              <ProtectedRoute
+                exact
+                path="/saved-movies"
+                loggedIn={loggedIn}
+                component={SavedMovies}
+              />
+              <ProtectedRoute
+                exact
+                path="/profile"
+                loggedIn={loggedIn}
+                component={Profile}
+                handleLogout={handleLogout}
+              />
+
+              <Route path="/*">
+                <PageNotFound />
+              </Route>
+            </Switch>
+
+            <Route exact path={['/', '/movies', '/saved-movies']}>
+              <Footer />
+            </Route>
+            <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              isSucess={statusInfo}
+              onClose={closeAllPopups}
+              textError={textError}
             />
-          </Route>
-          <Route exact path="/signup">
-            <Register
-              title="Добро пожаловать!"
-              buttonText="Зарегистрироваться"
-              linkText="Войти"
-              bottomText="Уже зарегистрированы?"
-              onRegister={onRegister}
-            />
-          </Route>
-  
-          <ProtectedRoute
-            exact
-            path="/movies"
-            loggedIn={loggedIn}
-            component={Movies}
-          />
-          <ProtectedRoute
-            exact
-            path="/saved-movies"
-            loggedIn={loggedIn}
-            component={SavedMovies}
-          />
-          <ProtectedRoute
-            exact
-            path="/profile"
-            loggedIn={loggedIn}
-            component={Profile}
-            handleLogout={handleLogout}
-            
-          />
-  
-          <Route path="/*">
-            <PageNotFound />
-          </Route>
-        </Switch>
-  
-        <Route exact path={['/', '/movies', '/saved-movies']}>
-          <Footer />
-        </Route>
-        <InfoTooltip
-          isOpen={isInfoTooltipOpen}
-          isSucess={statusInfo}
-          onClose={closeAllPopups}
-          textError={textError}
-        />
+          </>
+        )}
       </div>
     </CurrentUserContext.Provider>
   );
-  
 }
 
 export default App;
