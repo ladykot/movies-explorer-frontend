@@ -173,7 +173,7 @@ function App() {
     >
       <div className="page">
         {isLoading ? (
-          < Preloader/>
+          <Preloader />
         ) : (
           <>
             <Route path="/" exact>
@@ -232,7 +232,7 @@ function App() {
                 handleLogout={handleLogout}
               />
 
-              <Route path="/*">
+              <Route path="*">
                 <PageNotFound />
               </Route>
             </Switch>
