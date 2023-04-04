@@ -1,47 +1,72 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Profile.css';
 import Header from 'components/Header/Header';
+import mainApi from 'utils/MainApi';
 import '../Form/Form.css';
 import './Profile.css';
 import '../../vendor/hover.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
-  // переменные состояний инпутов
+function Profile({ handleLogout, loggedIn }) {
+  const { user: currentUser, updateUser } = useContext(CurrentUserContext);
+  const [isEditData, setIsEditData] = useState(false); // состояние факта сохранения данных
+  const [errorEdit, setErrorEdit] = useState(false); // состояние ошибки редактирования
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
-  // состояния валидности полей
   const [isValidName, setIsValidName] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(false);
-
-  // состояния ошибок
   const [errorName, setErrorName] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
-
-  // успех/неуспех сохранения данных
-  const [isSaveData, setIsSaveData] = useState(false);
-
-  // состояние сообщения о сохранении данных
-  const [message, setMessage] = useState('');
-
-  // состояние кнопки Редактировать
   const [isActiveEdit, setIsActiveEdit] = useState(false);
 
-  // const input = useRef();
+  // хук ловит изменения в инпутах, скрывает сообщение о сохранении данных и кнопку Редактировать
+  useEffect(() => {
+    if (currentUser.name !== name || currentUser.email !== email) {
+      setIsEditData(false);
+    } else {
+      setIsActiveEdit(false);
+    }
+  }, [currentUser, name, email]);
 
-  // обработчик кнопки Выйти вызывает внешнюю функцию, переданную пропсом
-  const handelLogoutProfile = () => {
-    handelLogUot();
+  // обновить данные на текущего пользователя
+  useEffect(() => {
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser]);
+
+  // установить новые данные в профиле
+  const handelEditProfile = ({ name, email }) => {
+    mainApi
+      .saveUserInfo({ name, email })
+      .then((userData) => {
+        setIsEditData(true);
+        setErrorEdit(false);
+      })
+      .catch(() => {
+        setErrorEdit(true);
+      })
+      .finally(() => {
+        setErrorEdit(false);
+      });
   };
 
-  // хук ловит изменения в инпутах и скрывает сообщение о сохранении данных
-  React.useEffect(() => {
-    setMessage('');
-  }, [name, email]);
+  // обработчик кнопки Редактировать
+  const handleSubmitProfile = (e) => {
+    e.preventDefault();
+    // Проверка на отличие данных
+    if (name !== currentUser.name || email !== currentUser.email) {
+      setIsActiveEdit(true);
+      handelEditProfile({ name, email }); // отправляем на сервер
+      updateUser({ name, email }); // меняем пользователя
+    } else {
+      setIsActiveEdit(false); // кнопка Редактировать включена, но не будет отправки на сервер без изменений
+    }
+  };
 
   // обработчики инпутов
   function handleNameChange(event) {
     setIsActiveEdit(true);
+    setIsEditData(false);
     setName(event.target.value);
     const input = event.target;
     setName(input.value);
@@ -66,75 +91,24 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
     }
   }
 
-  // обработчик кнопки Редактировать
-  const handleSubmitProfile = (e) => {
-    e.preventDefault();
-    // setIsActiveEdit(false)
-    // Передаём значения управляемых компонентов во внешний обработчик
-    // onUpdateUser({
-    //   name,
-    //   email,
-    // });
-
-    // после сохранения/несохранения данных выводим сообщение
-    if (!isSaveData) {
-      setMessage('Данные успешно сохранены');
-      setIsSaveData(false); // начальное состояние
-    } else {
-      setMessage('Что-то пошло не так');
-    }
-
-    setIsActiveEdit(false);
-  };
-
   return (
     <div className="profile">
-      <Header />
+      <Header loggedIn={loggedIn} />
 
       <div className="profile__content">
-        <p className="form-profile__title">{title}</p>
+        <p className="form-profile__title">{`Привет, ${currentUser.name}!`}</p>
 
-        <form className="form-profile">
-          {/* <fieldset className="form-profile__inputs">
-          <span className="form__label_title">Имя</span>
-            <label className="form-profile__label">
-              
-              <input
-                type="name"
-                className="form-profile__inputs-item"
-                placeholder="Имя"
-                required
-                value={name || ''}
-                minLength={2}
-                maxLength={35}
-                onChange={handleNameChange}
-              />
-            </label>
-
-            <span className="form__inputs-error form__inputs-error_profile">
-              {errorName}
-            </span>
-            <div className="form__line"></div>
-
-            <label className="form-profile__label">
-              E-mail
-              <input
-                type="email"
-                className="form-profile__inputs-item"
-                placeholder="E-mail"
-                required
-                value={email || ''}
-                onChange={handleEmailChange}
-              />
-            </label>
-
-            <span className="form__inputs-error form__inputs-error_profile">
-              {errorEmail}
-            </span>
-          </fieldset> */}
+        <form
+          id="profile"
+          className="form-profile"
+          onSubmit={handleSubmitProfile}
+          noValidate
+        >
           <fieldset className="form__inputs-register">
             <label className="form__label form__label_profile">
-              <span className="form__label_title form__label_title_profile">Имя</span>
+              <span className="form__label_title form__label_title_profile">
+                Имя
+              </span>
               <input
                 type="name"
                 className="form__inputs-item form__inputs-item_profile"
@@ -146,11 +120,15 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
                 onChange={handleNameChange}
                 required
               ></input>
-              <span className="form__inputs-error form__inputs-error_profile">{errorName}</span>
+              <span className="form__inputs-error form__inputs-error_profile">
+                {errorName}
+              </span>
             </label>
 
             <label className="form__label form__label_profile">
-              <span className="form__label_title form__label_title_profile">E-mail</span>
+              <span className="form__label_title form__label_title_profile">
+                E-mail
+              </span>
               <input
                 type="email"
                 className="form__inputs-item_profile form__inputs-item_profile_last"
@@ -159,19 +137,28 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
                 value={email || ''}
                 onChange={handleEmailChange}
               />
-              <span className="form__inputs-error form__inputs-error_profile ">{errorEmail}</span>
+              <span className="form__inputs-error form__inputs-error_profile ">
+                {errorEmail}
+              </span>
             </label>
           </fieldset>
         </form>
 
         <div className="profile__links">
-          <span className="profile__links-item profile__edit-message">
-            {message}
-          </span>
+          {errorEdit && (
+            <span className="profile__links-item profile__edit-message">
+              Что-то пошло не так...
+            </span>
+          )}
+          {isEditData && (
+            <span className="profile__links-item profile__edit-message">
+              Данные успешно сохранены!
+            </span>
+          )}
 
           <button
-            onClick={handleSubmitProfile}
             type="submit"
+            form="profile"
             disabled={!isActiveEdit}
             className={`profile__links-item ${isActiveEdit && 'hover'}`}
           >
@@ -179,7 +166,7 @@ function Profile({ title, handelLogUot, buttonText, onUpdateUser }) {
           </button>
           <button
             className="profile__links-item profile__links-item_signout hover"
-            onClick={handelLogoutProfile}
+            onClick={handleLogout}
           >
             Выйти из аккаунта
           </button>
