@@ -1,11 +1,18 @@
-# movies-explorer-frontend
+# Фронтэнд приложения movies-explorer
 
-Frontend for movies-explorer-app
+Фронтенд часть для итогового проекта по крусу Я.Практикум.
+movies-explorer представляет собой React-приложение для поиска и сохранения любимых фильмов.
 
-Pull request: https://github.com/ladykot/movies-explorer-frontend/pull/8
+## Функционал
+- Регистрация и авторизация;
+- Сохранение/удаление фильмов в личном кабинете;
+- Редактирование личных данных;
+- Обработка запросов на внешние API;
 
-Frontend: https://movies.ladykot.nomoredomains.icu/
-Backend: https://api.movies.ladykot.nomoredomains.icu/
-
-Макет приложения от дизайнера находится по ссылке:
-https://drive.google.com/file/d/1OoycjQyCqf-K3CzdbvUqTpU5UvhRS1qk/view?usp=sharing
+## Технологии
+- Файловая структура по БЭМ;
+- CSS Grid Layout, Flexbox;
+- Запросы media для различных разрешений экрана;
+- React (функциональные компоненты и хуки) + JavaScript;
+- Webpack;
+- ChatGPT (для поиска ошибок);
