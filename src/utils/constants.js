@@ -2,7 +2,7 @@
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:7777'
-    : 'https://fluoridated-sugared-teal.glitch.me/';
+    : 'https://fluoridated-sugared-teal.glitch.me';
 
 export const URL_BEATFILM = 'https://api.nomoreparties.co/beatfilm-movies';
 
