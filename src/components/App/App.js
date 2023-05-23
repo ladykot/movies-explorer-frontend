@@ -232,9 +232,11 @@ function App() {
                 handleLogout={handleLogout}
               />
 
-              <Route path="*">
-                <PageNotFound />
-              </Route>
+              {location.pathname !== '/' && ( // Добавлено условие рендеринга
+                <Route path="*">
+                  <PageNotFound />
+                </Route>
+              )}
             </Switch>
 
             <Route exact path={['/', '/movies', '/saved-movies']}>
