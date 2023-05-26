@@ -2,7 +2,7 @@
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:7777'
-    : 'https://api-movies-explorer-ladykot.glitch.me/';
+    : 'https://api-movies-explorer-ladykot.glitch.me';
 
 export const URL_BEATFILM = 'https://api.nomoreparties.co/beatfilm-movies';
 
